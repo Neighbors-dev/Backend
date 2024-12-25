@@ -72,6 +72,7 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_KEY }}
           script: |
+            cd ~/Backend/.deploy
             rm -rf ./.env
             touch ./.env
             echo "DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}" >> ./.env
@@ -79,7 +80,6 @@ jobs:
             echo "DATASOURCE_URL_LOCAL=${{ secrets.DATASOURCE_URL_LOCAL }}" >> ./.env
             echo "DATASOURCE_USERNAME=${{ secrets.DATASOURCE_USERNAME }}" >> ./.env
             echo "DATASOURCE_PASSWORD=${{ secrets.DATASOURCE_PASSWORD }}" >> ./.env
-            cd ~/Backend
             chmod +x deploy.sh
             source deploy.sh
       
