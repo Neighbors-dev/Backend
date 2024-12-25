@@ -9,8 +9,14 @@ services:
       - "8081"
     ports:
       - "8081:8081"
+    networks:
+      - app-network
     environment:
       - TZ=Asia/Seoul
       - DB_URL=${DATASOURCE_URL_LOCAL}
       - DB_USERNAME=${DATASOURCE_USERNAME}
       - DB_PASSWORD=${DATASOURCE_PASSWORD}
+
+networks:
+  app-network:
+    driver: bridge
