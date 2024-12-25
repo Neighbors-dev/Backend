@@ -49,7 +49,7 @@ sleep 50
 NGINX_ID=$(sudo docker ps --filter "name=nginx" --quiet)
 NGINX_CONFIG="/etc/nginx/conf.d/default.conf"
 
-sudo docker exec $NGINX_ID /bin/bash -c "sed -i 's/$STOP_TARGET:$WAS_STOP_PORT/$RUN_TARGET:$WAS_RUN_PORT/' $NGINX_CONFIG"
+sudo docker exec $NGINX_ID /bin/bash -c "sed -i 's/$STOP_TARGET:8080/$RUN_TARGET:8080/' $NGINX_CONFIG"
 sudo docker exec $NGINX_ID /bin/bash -c "nginx -s reload" || { ERR_MSG='Failed to reload nginx'; exit 1; }
 
 echo "Terminating the $STOP_TARGET applications."
