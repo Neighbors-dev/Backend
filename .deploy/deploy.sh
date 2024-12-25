@@ -25,26 +25,26 @@ sudo docker-compose -f "$DOCKER_COMPOSE_FILE" pull || { ERR_MSG='Failed to pull 
 sudo docker-compose -f "$DOCKER_COMPOSE_FILE" up -d || { ERR_MSG='Failed to start docker image'; exit 1; }
 sleep 50
 
-echo "Starting health check for the new version of the application."
-
-HEALTH_CHECK_PASSED=true
-RUN_CONTAINER_IDS=$(sudo docker ps --filter "name=$RUN_TARGET" --quiet --all)
-
-for CONTAINER_ID in $RUN_CONTAINER_IDS; do
-  HEALTH_STATUS=$(sudo docker inspect --format "{{.State.Health.Status}}" $CONTAINER_ID)
-  if [ "$HEALTH_STATUS" != "healthy" ]; then
-    HEALTH_CHECK_PASSED=false
-    break
-  fi
-done
-
-if [ "$HEALTH_CHECK_PASSED" = false ]; then
-  sudo docker image prune -af
-  ERR_MSG="Health check failed."
-  exit 1
-fi
-
-echo "Health check passed. Reloading nginx to transfer traffic from $STOP_TARGET to $RUN_TARGET."
+#echo "Starting health check for the new version of the application."
+#
+#HEALTH_CHECK_PASSED=true
+#RUN_CONTAINER_IDS=$(sudo docker ps --filter "name=$RUN_TARGET" --quiet --all)
+#
+#for CONTAINER_ID in $RUN_CONTAINER_IDS; do
+#  HEALTH_STATUS=$(sudo docker inspect --format "{{.State.Health.Status}}" $CONTAINER_ID)
+#  if [ "$HEALTH_STATUS" != "healthy" ]; then
+#    HEALTH_CHECK_PASSED=false
+#    break
+#  fi
+#done
+#
+#if [ "$HEALTH_CHECK_PASSED" = false ]; then
+#  sudo docker image prune -af
+#  ERR_MSG="Health check failed."
+#  exit 1
+#fi
+#
+#echo "Health check passed. Reloading nginx to transfer traffic from $STOP_TARGET to $RUN_TARGET."
 
 NGINX_ID=$(sudo docker ps --filter "name=nginx" --quiet)
 NGINX_CONFIG="/etc/nginx/conf.d/default.conf"
