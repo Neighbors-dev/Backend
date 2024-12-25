@@ -20,7 +20,7 @@ fi
 
 echo "The $STOP_TARGET version is currently running on the server. Starting the $RUN_TARGET version."
 
-DOCKER_COMPOSE_FILE=".deploy/$RUN_TARGET-deploy.yml"
+DOCKER_COMPOSE_FILE="$RUN_TARGET-deploy.yml"
 sudo docker-compose -f "$DOCKER_COMPOSE_FILE" pull || { ERR_MSG='Failed to pull docker image'; exit 1; }
 sudo docker-compose -f "$DOCKER_COMPOSE_FILE" up -d || { ERR_MSG='Failed to start docker image'; exit 1; }
 sleep 50
