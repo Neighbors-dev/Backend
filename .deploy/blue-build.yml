@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+
+  web:
+    container_name: neighbors-blue
+    image: ${DOCKER_USERNAME}/${DOCKER_BLUE_REPOSITORY}
+    expose:
+      - "8080"
+    ports:
+      - "8080:8080"
+    environment:
+      - TZ=Asia/Seoul
+      - DB_URL=${DATASOURCE_URL_LOCAL}
+      - DB_USERNAME=${DATASOURCE_USERNAME}
+      - DB_PASSWORD=${DATASOURCE_PASSWORD}
