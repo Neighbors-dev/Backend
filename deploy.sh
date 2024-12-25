@@ -6,7 +6,7 @@ ERR_MSG=''
 
 trap 'echo "Error occured: $ERR_MSG. Exiting deploy script."; exit 1' ERR
 
-if sudo docker ps --filter "name=blue" --format '{{.ID}}' | grep -E .; then
+if sudo docker ps --filter "name=blue" | grep -E .; then
   RUN_TARGET="green"
   STOP_TARGET="blue"
   WAS_RUN_PORT=8081
@@ -20,7 +20,7 @@ fi
 
 echo "The $STOP_TARGET version is currently running on the server. Starting the $RUN_TARGET version."
 
-DOCKER_COMPOSE_FILE="$RUN_TARGET-deploy.yml"
+DOCKER_COMPOSE_FILE=".deploy/$RUN_TARGET-deploy.yml"
 sudo docker-compose -f "$DOCKER_COMPOSE_FILE" pull || { ERR_MSG='Failed to pull docker image'; exit 1; }
 sudo docker-compose -f "$DOCKER_COMPOSE_FILE" up -d || { ERR_MSG='Failed to start docker image'; exit 1; }
 sleep 50
