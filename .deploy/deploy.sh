@@ -6,7 +6,7 @@ ERR_MSG=''
 
 trap 'echo "Error occured: $ERR_MSG. Exiting deploy script."; exit 1' ERR
 
-if sudo docker ps --filter "name=neighbors-blue" | grep -E .; then
+if sudo docker ps --filter "name=neighbors-blue" --quiet | grep -E .; then
   RUN_TARGET="neighbors-green"
   STOP_TARGET="neighbors-blue"
   WAS_RUN_PORT=8081
