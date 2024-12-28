@@ -30,3 +30,10 @@ secret:
   jwt-expired-in:
     access-token: ${JWT_EXPIRED_IN}
     refresh-token: ${REFRESH_TOKEN_EXPIRED_IN}
+
+oauth:
+  kakao:
+    token-url: https://kauth.kakao.com/oauth/token
+    userInfo-url: https://kapi.kakao.com/v2/user/me
+    client-key: ${KAKAO_CLIENT_KEY}
+    redirect-uri: ${KAKAO_REDIRECT_URL}

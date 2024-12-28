@@ -1,4 +1,4 @@
-package com.neighbors.santa.application.dto;
+package com.neighbors.santa.application.oauth.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.neighbors.santa.common.jwt.AuthTokens;

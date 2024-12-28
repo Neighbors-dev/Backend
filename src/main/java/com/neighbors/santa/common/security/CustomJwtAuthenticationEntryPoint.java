@@ -1,6 +1,6 @@
 package com.neighbors.santa.common.security;
 
-import com.neighbors.santa.application.dto.response.BaseResponseStatus;
+import com.neighbors.santa.application.baseResponse.BaseResponseStatus;
 import com.neighbors.santa.common.ErrorResponseUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

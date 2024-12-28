@@ -1,4 +1,4 @@
-package com.neighbors.santa.application.dto;
+package com.neighbors.santa.application.oauth.dto.kakao;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

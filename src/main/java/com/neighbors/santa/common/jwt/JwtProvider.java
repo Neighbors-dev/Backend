@@ -1,7 +1,7 @@
 package com.neighbors.santa.common.jwt;
 
-import com.neighbors.santa.application.dto.response.BaseResponseMessage;
-import com.neighbors.santa.application.dto.response.BaseResponseStatus;
+import com.neighbors.santa.application.baseResponse.BaseResponseMessage;
+import com.neighbors.santa.application.baseResponse.BaseResponseStatus;
 import com.neighbors.santa.common.enums.Role;
 import com.neighbors.santa.common.exception.jwt.bad_request.JwtUnsupportedTokenException;
 import com.neighbors.santa.common.exception.jwt.unauthorized.JwtInvalidTokenException;

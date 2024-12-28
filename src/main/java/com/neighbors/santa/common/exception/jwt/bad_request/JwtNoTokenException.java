@@ -1,7 +1,6 @@
 package com.neighbors.santa.common.exception.jwt.bad_request;
 
-import com.neighbors.santa.application.dto.response.BaseResponseMessage;
-import com.neighbors.santa.application.dto.response.BaseResponseStatus;
+import com.neighbors.santa.application.baseResponse.BaseResponseStatus;
 import lombok.Getter;
 
 @Getter

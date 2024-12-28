@@ -1,8 +1,8 @@
 package com.neighbors.santa.presentation;
 
-import com.neighbors.santa.application.dto.OAuthLoginResponse;
-import com.neighbors.santa.application.service.OAuthService;
-import com.neighbors.santa.application.dto.response.BaseResponse;
+import com.neighbors.santa.application.oauth.dto.OAuthLoginResponse;
+import com.neighbors.santa.application.oauth.service.OAuthService;
+import com.neighbors.santa.application.baseResponse.BaseResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +17,6 @@ public class OAuthController {
     @GetMapping("/oauth/kakao/callback")
     public ResponseEntity<BaseResponse<OAuthLoginResponse>> kakaoLogin(@RequestParam("code") String code) {
         return ResponseEntity.ok()
-                .body(oAuthService.oAuthLoin(code));
+                .body(oAuthService.oAuthKaKaoLoin(code));
     }
 }

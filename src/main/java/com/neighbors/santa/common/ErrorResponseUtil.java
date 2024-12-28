@@ -1,8 +1,8 @@
 package com.neighbors.santa.common;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.neighbors.santa.application.dto.response.BaseResponse;
-import com.neighbors.santa.application.dto.response.BaseResponseStatus;
+import com.neighbors.santa.application.baseResponse.BaseResponse;
+import com.neighbors.santa.application.baseResponse.BaseResponseStatus;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;

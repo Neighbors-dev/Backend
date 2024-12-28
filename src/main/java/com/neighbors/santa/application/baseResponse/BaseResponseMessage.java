@@ -1,4 +1,4 @@
-package com.neighbors.santa.application.dto.response;
+package com.neighbors.santa.application.baseResponse;
 
 import lombok.Getter;
 
