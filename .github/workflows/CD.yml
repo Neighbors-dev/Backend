@@ -45,6 +45,9 @@ jobs:
           DATASOURCE_URL_LOCAL: ${{ secrets.DATASOURCE_URL_LOCAL }}
           DATASOURCE_USERNAME: ${{ secrets.DATASOURCE_USERNAME }}
           DATASOURCE_PASSWORD: ${{ secrets.DATASOURCE_PASSWORD }}
+          JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
+          JWT_EXPIRED_IN: ${{ secrets.JWT_EXPIRED_IN }}
+          REFRESH_TOKEN_EXPIRED_IN: ${{ secrets.REFRESH_TOKEN_EXPIRED_IN }}
         run: ./gradlew build
 
       # docker image를 build 하고 docker hub에 push
