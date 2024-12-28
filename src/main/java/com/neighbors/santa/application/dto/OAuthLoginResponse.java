@@ -3,8 +3,10 @@ package com.neighbors.santa.application.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.neighbors.santa.common.jwt.AuthTokens;
 import lombok.Builder;
+import lombok.Data;
 
 @Builder
+@Data
 public class OAuthLoginResponse {
     private boolean isMember;
 

@@ -1,9 +1,11 @@
 package com.neighbors.santa.application.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Builder;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import lombok.Data;
 
-@Builder
+@Data
+@JsonPropertyOrder({"code", "message", "data"})
 public class BaseResponse<T> {
     private final BaseResponseStatus status;
     private final String message;

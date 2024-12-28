@@ -35,8 +35,8 @@ public class JwtProvider {
                 .setSubject(jwtUserDetails.getEmail())
                 .setIssuer("zipkok");
 
-        claims.put("role", jwtUserDetails.getRole().toString());
-        claims.put("id", jwtUserDetails.getUserId().toString());
+        claims.put("role", jwtUserDetails.getRole());
+        claims.put("id", jwtUserDetails.getUserId());
 
         Date now = new Date();
         Date accessTokenExpiredAt = new Date(now.getTime() + JWT_EXPIRED_IN);

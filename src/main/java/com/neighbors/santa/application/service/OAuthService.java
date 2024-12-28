@@ -28,7 +28,7 @@ public class OAuthService {
     private final CreateUser createUser;
     private final JwtProvider jwtProvider;
 
-    public BaseResponse oAuthLoin(String code){
+    public BaseResponse<OAuthLoginResponse> oAuthLoin(String code){
         String accessToken = requestToken(code);
         KakaoInfoResponse kakaoInfoResponse = requestUserInfo(accessToken);
 
@@ -40,11 +40,12 @@ public class OAuthService {
         createUser.createUser(user);
 
         AuthTokens authTokens = jwtProvider.createToken(JwtUserDetails.from(user));
-        return BaseResponse.builder()
-                .status(BaseResponseStatus.OK)
-                .message(BaseResponseMessage.로그인_성공했습니다.getMessage())
-                .data(OAuthLoginResponse.createSuccessObjFrom(authTokens, kakaoInfoResponse.getEmail()))
-                .build();
+
+        return new BaseResponse<>(
+            BaseResponseStatus.OK,
+            BaseResponseMessage.로그인_성공했습니다.getMessage(),
+            OAuthLoginResponse.createSuccessObjFrom(authTokens, kakaoInfoResponse.getEmail())
+        );
     }
 
     private String requestToken(String code) {
@@ -56,7 +57,7 @@ public class OAuthService {
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("grant_type", "authorization_code");
         body.add("client_id", "ba2aa0b8b2d94dd49ad6b044e464ed71");
-        body.add("redirect_uri", "http://localhost:5173/callback/kakaotalk");
+        body.add("redirect_uri", "https://glittery-madeleine-215e2f.netlify.app/callback/kakaotalk");
         body.add("code", code);
 
         HttpEntity<?> request = new HttpEntity<>(body, httpHeaders);
