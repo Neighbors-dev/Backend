@@ -1,7 +1,9 @@
 package com.neighbors.santa.application.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Builder;
 
+@Builder
 public class BaseResponse<T> {
     private final BaseResponseStatus status;
     private final String message;
@@ -13,5 +15,9 @@ public class BaseResponse<T> {
         this.status = status;
         this.message = message;
         this.data = data;
+    }
+
+    public BaseResponse(BaseResponseStatus status, String message) {
+        this(status, message, null);
     }
 }

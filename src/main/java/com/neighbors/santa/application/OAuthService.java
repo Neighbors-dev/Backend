@@ -4,6 +4,11 @@ import com.neighbors.santa.application.dto.KakaoInfoResponse;
 import com.neighbors.santa.application.dto.KakaoTokens;
 import com.neighbors.santa.application.dto.OAuthLoginResponse;
 import com.neighbors.santa.application.dto.response.BaseResponse;
+import com.neighbors.santa.application.dto.response.BaseResponseMessage;
+import com.neighbors.santa.application.dto.response.BaseResponseStatus;
+import com.neighbors.santa.common.jwt.AuthTokens;
+import com.neighbors.santa.common.jwt.JwtProvider;
+import com.neighbors.santa.common.jwt.JwtUserDetails;
 import com.neighbors.santa.domain.model.User;
 import com.neighbors.santa.domain.service.CreateUser;
 import lombok.RequiredArgsConstructor;
@@ -21,8 +26,9 @@ public class OAuthService {
 
     private final RestTemplate restTemplate;
     private final CreateUser createUser;
+    private final JwtProvider jwtProvider;
 
-    public BaseResponse<OAuthLoginResponse> oAuthLoin(String code){
+    public BaseResponse oAuthLoin(String code){
         String accessToken = requestToken(code);
         KakaoInfoResponse kakaoInfoResponse = requestUserInfo(accessToken);
 
@@ -33,7 +39,12 @@ public class OAuthService {
 
         createUser.createUser(user);
 
-        //TODO JWT 토큰 발급
+        AuthTokens authTokens = jwtProvider.createToken(JwtUserDetails.from(user));
+        return BaseResponse.builder()
+                .status(BaseResponseStatus.OK)
+                .message(BaseResponseMessage.로그인_성공했습니다.getMessage())
+                .data(OAuthLoginResponse.createSuccessObjFrom(authTokens, kakaoInfoResponse.getEmail()))
+                .build();
     }
 
     private String requestToken(String code) {

@@ -1,4 +1,4 @@
-package com.neighbors.santa.config;
+package com.neighbors.santa.common.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
