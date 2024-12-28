@@ -8,10 +8,10 @@ import lombok.Getter;
 public class JwtUnauthorizedTokenException extends RuntimeException {
 
     private final BaseResponseStatus status;
-    private final BaseResponseMessage message;
+    private final String message;
 
-    public JwtUnauthorizedTokenException(BaseResponseStatus status, BaseResponseMessage message) {
-        super(message.getMessage());
+    public JwtUnauthorizedTokenException(BaseResponseStatus status, String message) {
+        super(message);
         this.status = status;
         this.message = message;
     }

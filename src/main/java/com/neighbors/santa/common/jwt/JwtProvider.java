@@ -73,13 +73,13 @@ public class JwtProvider {
             return true;
         } catch (UnsupportedJwtException e) {
             log.error("[UnsupportedJwtException]");
-            throw new JwtUnsupportedTokenException(BaseResponseStatus.JWT_ERROR, BaseResponseMessage.지원하지_않는_토큰_입니다);
+            throw new JwtUnsupportedTokenException(BaseResponseStatus.JWT_ERROR, BaseResponseMessage.지원하지_않는_토큰_입니다.getMessage());
         } catch (MalformedJwtException e) {
             log.error("[MalformedJwtException]");
-            throw new JwtMalformedTokenException(BaseResponseStatus.JWT_ERROR, BaseResponseMessage.토큰이_올바르지_못한_형식입니다);
+            throw new JwtMalformedTokenException(BaseResponseStatus.JWT_ERROR, BaseResponseMessage.토큰이_올바르지_못한_형식입니다.getMessage());
         } catch (IllegalArgumentException e) {
             log.error("[IllegalArgumentException]");
-            throw new JwtInvalidTokenException(BaseResponseStatus.JWT_ERROR, BaseResponseMessage.유효하지_않은_토큰_입니다);
+            throw new JwtInvalidTokenException(BaseResponseStatus.JWT_ERROR, BaseResponseMessage.유효하지_않은_토큰_입니다.getMessage());
         } catch (JwtException e) {
             log.error("[JwtTokenProvider.validateAccessToken]", e);
             throw e;

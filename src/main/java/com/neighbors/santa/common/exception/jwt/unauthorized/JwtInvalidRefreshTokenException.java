@@ -8,9 +8,9 @@ import lombok.Getter;
 public class JwtInvalidRefreshTokenException extends JwtUnauthorizedTokenException {
 
     private final BaseResponseStatus status;
-    private final BaseResponseMessage message;
+    private final String message;
 
-    public JwtInvalidRefreshTokenException(BaseResponseStatus status, BaseResponseMessage message) {
+    public JwtInvalidRefreshTokenException(BaseResponseStatus status, String message) {
         super(status, message);
         this.status = status;
         this.message = message;

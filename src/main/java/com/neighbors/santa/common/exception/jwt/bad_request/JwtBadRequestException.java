@@ -8,10 +8,10 @@ import lombok.Getter;
 public class JwtBadRequestException extends RuntimeException {
 
     private final BaseResponseStatus status;
-    private final BaseResponseMessage message;
+    private final String message;
 
-    public JwtBadRequestException(BaseResponseStatus status, BaseResponseMessage message) {
-        super(message.getMessage());
+    public JwtBadRequestException(BaseResponseStatus status, String message) {
+        super(message);
         this.status = status;
         this.message = message;
     }

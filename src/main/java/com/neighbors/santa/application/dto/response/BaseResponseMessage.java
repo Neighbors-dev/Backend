@@ -2,6 +2,7 @@ package com.neighbors.santa.application.dto.response;
 
 import lombok.Getter;
 
+@Getter
 public enum BaseResponseMessage {
 
     //oauth success
@@ -13,7 +14,6 @@ public enum BaseResponseMessage {
     토큰이_올바르지_못한_형식입니다("토큰이 올바르지 못한 형식입니다"),
     유효하지_않은_토큰_입니다("유효하지 않은 토큰입니다");
 
-    @Getter
     private final String message;
 
     private BaseResponseMessage(String message) {

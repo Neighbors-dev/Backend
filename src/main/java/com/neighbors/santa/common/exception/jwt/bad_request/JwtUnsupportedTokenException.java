@@ -8,9 +8,9 @@ import lombok.Getter;
 public class JwtUnsupportedTokenException extends JwtBadRequestException {
 
     private final BaseResponseStatus status;
-    private final BaseResponseMessage message;
+    private final String message;
 
-    public JwtUnsupportedTokenException(BaseResponseStatus status, BaseResponseMessage message) {
+    public JwtUnsupportedTokenException(BaseResponseStatus status, String message) {
         super(status, message);
         this.status = status;
         this.message = message;
