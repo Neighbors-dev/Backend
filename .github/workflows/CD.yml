@@ -52,10 +52,19 @@ jobs:
         run: ./gradlew build
 
       # docker image를 build 하고 docker hub에 push
+      # docker image를 build 하고 docker hub에 push
       - name: Docker Build and Push
         run: |
           sudo docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          sudo docker build -f ./.deploy/Dockerfile -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY }} .
+          sudo docker build \
+            --build-arg DATASOURCE_URL_LOCAL=${{ secrets.DATASOURCE_URL_LOCAL }} \
+            --build-arg DATASOURCE_USERNAME=${{ secrets.DATASOURCE_USERNAME }} \
+            --build-arg DATASOURCE_PASSWORD=${{ secrets.DATASOURCE_PASSWORD }} \
+            --build-arg JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }} \
+            --build-arg JWT_EXPIRED_IN=${{ secrets.JWT_EXPIRED_IN }} \
+            --build-arg REFRESH_TOKEN_EXPIRED_IN=${{ secrets.REFRESH_TOKEN_EXPIRED_IN }} \
+            -f ./.deploy/Dockerfile \
+            -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY }} .
           sudo docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY }}
           
   deploy:
