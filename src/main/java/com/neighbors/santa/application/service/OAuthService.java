@@ -1,4 +1,4 @@
-package com.neighbors.santa.application;
+package com.neighbors.santa.application.service;
 
 import com.neighbors.santa.application.dto.KakaoInfoResponse;
 import com.neighbors.santa.application.dto.KakaoTokens;

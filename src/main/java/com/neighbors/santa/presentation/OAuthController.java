@@ -1,6 +1,6 @@
 package com.neighbors.santa.presentation;
 
-import com.neighbors.santa.application.OAuthService;
+import com.neighbors.santa.application.service.OAuthService;
 import com.neighbors.santa.application.dto.response.BaseResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

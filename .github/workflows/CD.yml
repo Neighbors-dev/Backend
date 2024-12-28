@@ -80,6 +80,9 @@ jobs:
             echo "DATASOURCE_URL_LOCAL=${{ secrets.DATASOURCE_URL_LOCAL }}" >> ./.env
             echo "DATASOURCE_USERNAME=${{ secrets.DATASOURCE_USERNAME }}" >> ./.env
             echo "DATASOURCE_PASSWORD=${{ secrets.DATASOURCE_PASSWORD }}" >> ./.env
+            echo "JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }}" >> ./.env
+            echo "JWT_EXPIRED_IN=${{ secrets.JWT_EXPIRED_IN }}" >> ./.env
+            echo "REFRESH_TOKEN_EXPIRED_IN=${{ secrets.REFRESH_TOKEN_EXPIRED_IN }}" >> ./.env
             chmod +x deploy.sh
             source deploy.sh
       
