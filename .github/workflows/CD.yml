@@ -63,6 +63,7 @@ jobs:
             --build-arg JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }} \
             --build-arg JWT_EXPIRED_IN=${{ secrets.JWT_EXPIRED_IN }} \
             --build-arg REFRESH_TOKEN_EXPIRED_IN=${{ secrets.REFRESH_TOKEN_EXPIRED_IN }} \
+            --platform linux/amd64 \
             -f ./.deploy/Dockerfile \
             -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY }} .
           sudo docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY }}
