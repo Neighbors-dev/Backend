@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "`Letter`")
-public class Letter extends BaseEntity {
+public class LetterEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "letter_id")
@@ -25,11 +25,11 @@ public class Letter extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "address_id", nullable = true)
-    private Address address;
+    private AddressEntity address;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = true)
-    private User user;
+    private UserEntity user;
 
 
 }

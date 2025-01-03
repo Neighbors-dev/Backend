@@ -35,7 +35,9 @@ public class SecurityConfig {
                 "/v3/api-docs/**",
                 "/oauth/kakao/callback",
                 "/auth/refreshToken",
-                "/address");
+                "/address",
+                "/notice"
+        );
     }
 
     @Bean

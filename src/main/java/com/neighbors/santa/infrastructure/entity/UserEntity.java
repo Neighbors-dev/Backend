@@ -5,8 +5,8 @@ import com.neighbors.santa.infrastructure.entity.base.BaseEntity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(schema = "`User`")
-public class User extends BaseEntity {
+@Table(name = "`User`")
+public class UserEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")

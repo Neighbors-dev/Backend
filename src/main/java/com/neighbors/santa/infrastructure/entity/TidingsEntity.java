@@ -1,11 +1,10 @@
 package com.neighbors.santa.infrastructure.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
 
 @Entity
 @Table(name = "`Tidings`")
-public class Tidings {
+public class TidingsEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

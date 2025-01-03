@@ -8,6 +8,9 @@ public enum BaseResponseMessage {
     //oauth success
     로그인_성공했습니다("로그인 성공했습니다"),
 
+    //notice success
+    공지_조회_성공했습니댜("공지 조회 성공했습니댜"),
+
     //jwt error message
     JWT_토큰_오류입니다("JWT 토큰 오류입니다"),
     지원하지_않는_토큰_입니다("지원하지 않는 토큰 입니다"),
