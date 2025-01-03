@@ -1,0 +1,39 @@
+spring:
+  application:
+    name: santa
+
+  datasource:
+    url: ${DATASOURCE_URL_LOCAL}
+    username: ${DATASOURCE_USERNAME}
+    password: ${DATASOURCE_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    dbcp2:
+      validation-query: select 1
+  sql:
+    init:
+      platform: mysql
+
+  jpa:
+    open-in-view: true
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      ddl-auto: validate
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        default_batch_fetch_size: 100
+
+secret:
+  jwt-secret-key: ${JWT_SECRET_KEY}
+  jwt-expired-in:
+    access-token: ${JWT_EXPIRED_IN}
+    refresh-token: ${REFRESH_TOKEN_EXPIRED_IN}
+
+oauth:
+  kakao:
+    token-url: https://kauth.kakao.com/oauth/token
+    userInfo-url: https://kapi.kakao.com/v2/user/me
+    client-key: ${KAKAO_CLIENT_KEY}
+    redirect-uri: ${KAKAO_REDIRECT_URL}
