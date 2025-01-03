@@ -1,7 +1,7 @@
 package com.neighbors.santa.common.jwt;
 
 import com.neighbors.santa.common.enums.Role;
-import com.neighbors.santa.domain.model.User;
+import com.neighbors.santa.domain.login.model.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

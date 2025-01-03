@@ -1,6 +1,6 @@
 package com.neighbors.santa.presentation;
 
-import com.neighbors.santa.application.oauth.service.OAuthService;
+import com.neighbors.santa.application.login.service.OAuthService;
 import com.neighbors.santa.application.baseResponse.BaseResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;

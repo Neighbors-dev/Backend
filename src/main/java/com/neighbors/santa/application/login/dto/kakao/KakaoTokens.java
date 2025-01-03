@@ -1,4 +1,4 @@
-package com.neighbors.santa.application.oauth.dto.kakao;
+package com.neighbors.santa.application.login.dto.kakao;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package com.neighbors.santa.domain.notice.query;
+package com.neighbors.santa.domain.query;
 
 import com.neighbors.santa.domain.notice.model.Notice;
 import org.springframework.data.domain.Pageable;

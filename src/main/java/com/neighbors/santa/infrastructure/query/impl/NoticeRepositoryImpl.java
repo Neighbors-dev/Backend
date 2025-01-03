@@ -1,7 +1,7 @@
 package com.neighbors.santa.infrastructure.query.impl;
 
 import com.neighbors.santa.domain.notice.model.Notice;
-import com.neighbors.santa.domain.notice.query.NoticeRepository;
+import com.neighbors.santa.domain.query.NoticeRepository;
 import com.neighbors.santa.infrastructure.entity.NoticeEntity;
 import com.neighbors.santa.infrastructure.mapper.NoticeMapper;
 import com.neighbors.santa.infrastructure.repository.NoticeEntityRepository;

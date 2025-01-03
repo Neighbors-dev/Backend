@@ -2,7 +2,7 @@ package com.neighbors.santa.domain.notice.service;
 
 import com.neighbors.santa.common.annotaion.DomainService;
 import com.neighbors.santa.domain.notice.model.Notice;
-import com.neighbors.santa.domain.notice.query.NoticeRepository;
+import com.neighbors.santa.domain.query.NoticeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 

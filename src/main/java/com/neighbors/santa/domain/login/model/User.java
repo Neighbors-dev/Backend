@@ -1,4 +1,4 @@
-package com.neighbors.santa.domain.model;
+package com.neighbors.santa.domain.login.model;
 
 import com.neighbors.santa.common.enums.Role;
 import lombok.Builder;

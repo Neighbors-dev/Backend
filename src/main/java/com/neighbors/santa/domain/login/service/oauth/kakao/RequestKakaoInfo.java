@@ -1,7 +1,7 @@
-package com.neighbors.santa.domain.service.oauth.kakao;
+package com.neighbors.santa.domain.login.service.oauth.kakao;
 
-import com.neighbors.santa.application.oauth.dto.kakao.KakaoInfoResponse;
-import com.neighbors.santa.application.oauth.dto.kakao.KakaoTokens;
+import com.neighbors.santa.application.login.dto.kakao.KakaoInfoResponse;
+import com.neighbors.santa.application.login.dto.kakao.KakaoTokens;
 import com.neighbors.santa.common.annotaion.DomainService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

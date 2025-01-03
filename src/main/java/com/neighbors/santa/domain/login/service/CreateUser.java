@@ -1,6 +1,6 @@
-package com.neighbors.santa.domain.service;
+package com.neighbors.santa.domain.login.service;
 
-import com.neighbors.santa.domain.model.User;
+import com.neighbors.santa.domain.login.model.User;
 import org.springframework.stereotype.Component;
 
 @Component
