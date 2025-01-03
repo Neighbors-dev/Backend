@@ -11,9 +11,9 @@ public class Notice extends BaseEntity {
     @Column(name = "notice_id")
     private long noticeId;
 
-    @Column(name = "title")
-    private String title;
+    @Column(name = "notice_title")
+    private String noticeTitle;
 
-    @Column(name = "content")
-    private String content;
+    @Column(name = "notice_content")
+    private String noticeContent;
 }
