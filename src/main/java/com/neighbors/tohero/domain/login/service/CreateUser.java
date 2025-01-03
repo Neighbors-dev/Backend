@@ -1,11 +1,17 @@
 package com.neighbors.tohero.domain.login.service;
 
+import com.neighbors.tohero.common.annotaion.DomainService;
 import com.neighbors.tohero.domain.login.model.User;
-import org.springframework.stereotype.Component;
+import com.neighbors.tohero.domain.query.UserRepository;
+import lombok.RequiredArgsConstructor;
 
-@Component
+@DomainService
+@RequiredArgsConstructor
 public class CreateUser {
-    public void createUser(User user) {
 
+    private final UserRepository userRepository;
+
+    public void createUser(User user) {
+        userRepository.createUser(user);
     }
 }
