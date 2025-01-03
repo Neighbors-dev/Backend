@@ -4,4 +4,5 @@ import com.neighbors.tohero.domain.login.model.User;
 
 public interface UserRepository {
     User createUser(User user);
+    void updateUserName(long userId, String nickname);
 }
