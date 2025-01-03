@@ -1,0 +1,25 @@
+package com.neighbors.tohero.common.security;
+
+import com.neighbors.tohero.application.baseResponse.BaseResponseStatus;
+import com.neighbors.tohero.common.ErrorResponseUtil;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.stereotype.Component;
+
+import java.io.IOException;
+
+@Slf4j
+@Component
+public class CustomJwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
+
+    @Override
+    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
+        log.warn("[JwtAuthenticationEntryPoint.commence] error message: {}", authException.getMessage());
+
+        ErrorResponseUtil.setResponse(response, BaseResponseStatus.JWT_ERROR);
+    }
+}
