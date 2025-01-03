@@ -3,12 +3,11 @@ package com.neighbors.tohero.infrastructure.entity;
 import com.neighbors.tohero.common.enums.Role;
 import com.neighbors.tohero.infrastructure.entity.base.BaseEntity;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import lombok.Getter;
 
 @Entity
 @Table(name = "`User`")
-@Builder
+@Getter
 public class UserEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,11 +23,16 @@ public class UserEntity extends BaseEntity {
     @Column(name = "role", nullable = false)
     private Role role;
 
+    public UserEntity() {
+    }
+
+    public UserEntity(String nickName, String email, Role role){
+        this.nickName = nickName;
+        this.email = email;
+        this.role = role;
+    }
+
     public static UserEntity of(String nickName, String email, Role role) {
-        return UserEntity.builder()
-                .nickName(nickName)
-                .email(email)
-                .role(role)
-                .build();
+        return new UserEntity(nickName, email, role);
     }
 }
