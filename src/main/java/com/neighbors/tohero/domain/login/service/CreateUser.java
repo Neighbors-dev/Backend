@@ -12,7 +12,7 @@ public class CreateUser {
 
     private final UserRepository userRepository;
 
-    public User createUser(User user) throws UserException {
+    public User createUser(User user) {
         return userRepository.createUser(user);
     }
 }

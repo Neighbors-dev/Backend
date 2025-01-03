@@ -35,13 +35,8 @@ public class OAuthService {
                 .role(Role.USER)
                 .build();
 
-        AuthTokens authTokens = null;
-        try {
-            User createdUser = createUser.createUser(user);
-            authTokens = jwtProvider.createToken(JwtUserDetails.from(createdUser));
-        }catch(UserException e){
-            log.info(e.getMessage());
-        }
+        User createdUser = createUser.createUser(user);
+        AuthTokens authTokens = jwtProvider.createToken(JwtUserDetails.from(createdUser));
 
         return new BaseResponse<>(
             BaseResponseStatus.OK,
