@@ -1,6 +1,7 @@
 package com.neighbors.tohero.presentation.controller;
 
 import com.neighbors.tohero.application.baseResponse.BaseResponse;
+import com.neighbors.tohero.application.mainPage.service.MainPageService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
