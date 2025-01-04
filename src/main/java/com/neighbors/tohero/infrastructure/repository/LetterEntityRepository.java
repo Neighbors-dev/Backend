@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface LetterEntityRepository extends JpaRepository<LetterEntity, Long> {
 
-    @Query("SELECT n FROM LetterEntity n")
+    @Query("SELECT n FROM LetterEntity n JOIN FETCH n.user")
     Slice<LetterEntity> findPagedLetterEntity(Pageable pageable);
 }

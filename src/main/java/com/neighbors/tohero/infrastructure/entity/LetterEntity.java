@@ -19,9 +19,6 @@ public class LetterEntity extends BaseEntity {
     @Column(name = "is_opened", nullable = false)
     private boolean isOpened;
 
-    @Column(name = "from_user_name", nullable = false)
-    private String fromUserName;
-
     @Column(name = "target_name", nullable = true)
     private String targetName;
 

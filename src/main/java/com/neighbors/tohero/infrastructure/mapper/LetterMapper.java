@@ -11,7 +11,7 @@ public class LetterMapper {
                 letterEntity.getLetterId(),
                 letterEntity.getLetterContent(),
                 letterEntity.isOpened(),
-                letterEntity.getFromUserName(),
+                letterEntity.getUser().getNickName(),
                 letterEntity.getTargetName()
         );
     }
