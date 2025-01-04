@@ -17,4 +17,8 @@ public class GetNotice {
     public List<Notice> getPagedNotice(Pageable pageable) {
         return noticeRepository.getPagedNotice(pageable);
     }
+
+    public List<Notice> getTopNotices(int exposeNoticeNumber){
+        return null;
+    }
 }
