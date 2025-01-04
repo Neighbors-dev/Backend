@@ -6,8 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
 public interface LetterRepository {
-    int getTotalLetterNumber();
+    long getTotalLetterNumber();
     List<Letter> getPageableLetter(Pageable pageable);
 }

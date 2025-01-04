@@ -7,7 +7,7 @@ import java.util.List;
 
 public record GetMainPageInfoResponse(
         List<TopNotices> topNotices,
-        int writtenLetterNumber,
+        long writtenLetterNumber,
         List<OpenedLetter> openedLetters
 ) {
     public record TopNotices(

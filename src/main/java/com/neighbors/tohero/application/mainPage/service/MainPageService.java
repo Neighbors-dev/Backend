@@ -26,7 +26,7 @@ public class MainPageService {
 
     public BaseResponse<GetMainPageInfoResponse> getMainPageInfo(Pageable pageable){
         List<GetMainPageInfoResponse.TopNotices> topNotices = getTopNoticeFromDomain();
-        int writtenLetterNumber = getLetter.getTotalLetterNumber();
+        long writtenLetterNumber = getLetter.getTotalLetterNumber();
         List<GetMainPageInfoResponse.OpenedLetter> openedLetters = getLetterFromDomain(pageable);
 
         return new BaseResponse(

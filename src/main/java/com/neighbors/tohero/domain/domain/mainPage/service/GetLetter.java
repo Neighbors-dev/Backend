@@ -14,7 +14,7 @@ public class GetLetter {
 
     private final LetterRepository letterRepository;
 
-    public int getTotalLetterNumber(){
+    public long getTotalLetterNumber(){
         return letterRepository.getTotalLetterNumber();
     }
 
