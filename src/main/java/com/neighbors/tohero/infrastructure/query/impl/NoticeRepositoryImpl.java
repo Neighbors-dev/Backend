@@ -1,6 +1,6 @@
 package com.neighbors.tohero.infrastructure.query.impl;
 
-import com.neighbors.tohero.domain.notice.model.Notice;
+import com.neighbors.tohero.domain.domain.notice.model.Notice;
 import com.neighbors.tohero.domain.query.NoticeRepository;
 import com.neighbors.tohero.infrastructure.entity.NoticeEntity;
 import com.neighbors.tohero.infrastructure.mapper.NoticeMapper;
@@ -23,6 +23,15 @@ public class NoticeRepositoryImpl implements NoticeRepository {
         List<NoticeEntity> noticeEntities = noticeEntityRepository.findPagedNoticeEntity(pageable).getContent();
 
         return noticeEntities.stream()
+                .map(noticeMapper::toDomain)
+                .toList();
+    }
+
+    @Override
+    public List<Notice> getTopNotices(int exposeNoticeNumber) {
+        List<NoticeEntity> topNotices = noticeEntityRepository.findTopNoticeEntity(exposeNoticeNumber);
+
+        return topNotices.stream()
                 .map(noticeMapper::toDomain)
                 .toList();
     }

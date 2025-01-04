@@ -1,7 +1,7 @@
 package com.neighbors.tohero.common.jwt;
 
 import com.neighbors.tohero.common.enums.Role;
-import com.neighbors.tohero.domain.login.model.User;
+import com.neighbors.tohero.domain.domain.login.model.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

@@ -15,6 +15,11 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
+
+import java.util.List;
 
 @Configuration
 @RequiredArgsConstructor
@@ -35,6 +40,7 @@ public class SecurityConfig {
                 "/webjars/",
                 "/v3/api-docs/**",
                 "/oauth/kakao/callback",
+                "/oauth/kakao/callback2",
                 "/auth/refreshToken",
                 "/address"
         );
@@ -60,5 +66,20 @@ public class SecurityConfig {
                 });
 
         return http.build();
+    }
+
+    @Bean
+    public CorsFilter corsFilter() {
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowCredentials(true); // 쿠키 포함 허용
+        config.setAllowedOrigins(List.of("http://localhost:5173")); // 허용할 도메인
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")); // 허용할 HTTP 메서드
+        config.setAllowedHeaders(List.of("*")); // 모든 헤더 허용
+        config.setExposedHeaders(List.of("Authorization")); // 노출할 헤더
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config); // 모든 URL에 대해 설정 적용
+
+        return new CorsFilter(source);
     }
 }

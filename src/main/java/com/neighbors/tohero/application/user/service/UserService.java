@@ -3,7 +3,7 @@ package com.neighbors.tohero.application.user.service;
 import com.neighbors.tohero.application.baseResponse.BaseResponse;
 import com.neighbors.tohero.application.baseResponse.BaseResponseMessage;
 import com.neighbors.tohero.application.baseResponse.BaseResponseStatus;
-import com.neighbors.tohero.domain.user.service.UpdateUser;
+import com.neighbors.tohero.domain.domain.user.service.UpdateUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

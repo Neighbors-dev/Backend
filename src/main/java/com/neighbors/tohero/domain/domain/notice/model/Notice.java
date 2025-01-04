@@ -1,4 +1,4 @@
-package com.neighbors.tohero.domain.notice.model;
+package com.neighbors.tohero.domain.domain.notice.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

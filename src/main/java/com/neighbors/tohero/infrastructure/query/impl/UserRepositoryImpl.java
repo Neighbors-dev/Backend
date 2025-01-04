@@ -3,12 +3,11 @@ package com.neighbors.tohero.infrastructure.query.impl;
 import com.neighbors.tohero.application.baseResponse.BaseResponseMessage;
 import com.neighbors.tohero.application.baseResponse.BaseResponseStatus;
 import com.neighbors.tohero.common.exception.user.UserException;
-import com.neighbors.tohero.domain.login.model.User;
+import com.neighbors.tohero.domain.domain.login.model.User;
 import com.neighbors.tohero.domain.query.UserRepository;
 import com.neighbors.tohero.infrastructure.entity.UserEntity;
 import com.neighbors.tohero.infrastructure.mapper.UserMapper;
 import com.neighbors.tohero.infrastructure.repository.UserEntityRepository;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

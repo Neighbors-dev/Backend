@@ -2,9 +2,11 @@ package com.neighbors.tohero.infrastructure.entity;
 
 import com.neighbors.tohero.infrastructure.entity.base.BaseEntity;
 import jakarta.persistence.*;
+import lombok.Getter;
 
 @Entity
 @Table(name = "`Letter`")
+@Getter
 public class LetterEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,9 +19,6 @@ public class LetterEntity extends BaseEntity {
     @Column(name = "is_opened", nullable = false)
     private boolean isOpened;
 
-    @Column(name = "from_user_name", nullable = false)
-    private String fromUserName;
-
     @Column(name = "target_name", nullable = true)
     private String targetName;
 
@@ -31,5 +30,6 @@ public class LetterEntity extends BaseEntity {
     @JoinColumn(name = "user_id", nullable = true)
     private UserEntity user;
 
-
+    @Column(name = "is_public")
+    private Boolean isPublic;
 }
