@@ -25,28 +25,20 @@ public class RequestKakaoInfo {
     @Value("${oauth.kakao.client-key}")
     private String clientKey;
 
-    @Value("${oauth.kakao.redirect-uri}")
-    private String redirect_uri;
-
     private final RestTemplate restTemplate;
 
-    public KakaoInfoResponse requestKakaoInfo(String authorizationCode){
-        String kakaoAccessToken = requestToken(authorizationCode);
+    public KakaoInfoResponse requestKakaoInfo(String authorizationCode, String redirect_uri){
+        String kakaoAccessToken = requestToken(authorizationCode, redirect_uri);
         return requestUserInfo(kakaoAccessToken);
     }
 
-    private String requestToken(String code) {
+    private String requestToken(String code, String redirect_uri) {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
-        MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
-        body.add("grant_type", "authorization_code");
-        body.add("client_id", clientKey);
-        body.add("redirect_uri", redirect_uri);
-        body.add("code", code);
+        MultiValueMap<String, String> body = createRequestBodyWithRedirectUrl(code, redirect_uri);
 
         HttpEntity<?> request = new HttpEntity<>(body, httpHeaders);
-
         KakaoTokens response = restTemplate.postForObject(tokenUrl, request, KakaoTokens.class);
 
         assert response != null;
@@ -64,5 +56,15 @@ public class RequestKakaoInfo {
         HttpEntity<?> request = new HttpEntity<>(body, httpHeaders);
 
         return restTemplate.postForObject(userInfoUrl, request, KakaoInfoResponse.class);
+    }
+
+    private MultiValueMap<String, String> createRequestBodyWithRedirectUrl(String code, String redirect_uri){
+        MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
+        body.add("grant_type", "authorization_code");
+        body.add("client_id", clientKey);
+        body.add("redirect_uri", redirect_uri);
+        body.add("code", code);
+
+        return body;
     }
 }

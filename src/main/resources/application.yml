@@ -37,3 +37,4 @@ oauth:
     userInfo-url: https://kapi.kakao.com/v2/user/me
     client-key: ${KAKAO_CLIENT_KEY}
     redirect-uri: ${KAKAO_REDIRECT_URL}
+    redirect-client: ${KAKAO_REDIRECT_URL_TEST}
