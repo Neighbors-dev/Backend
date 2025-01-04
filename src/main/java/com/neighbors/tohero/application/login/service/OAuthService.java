@@ -15,6 +15,7 @@ import com.neighbors.tohero.domain.login.service.CreateUser;
 import com.neighbors.tohero.domain.login.service.oauth.kakao.RequestKakaoInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -26,9 +27,24 @@ public class OAuthService {
     private final CreateUser createUser;
     private final JwtProvider jwtProvider;
 
-    public BaseResponse<OAuthLoginResponse> oAuthKaKaoLoin(String code){
-        KakaoInfoResponse kakaoInfoResponse = requestUserInfo.requestKakaoInfo(code);
+    @Value("${oauth.kakao.redirect-uri}")
+    private String redirect_uri;
 
+    @Value("${oauth.kakao.redirect-client}")
+    private String redirect_uri_client;
+
+
+    public BaseResponse<OAuthLoginResponse> oAuthKaKaoLoin(String code){
+        KakaoInfoResponse kakaoInfoResponse = requestUserInfo.requestKakaoInfo(code, redirect_uri);
+        return afterAuthorizedOauth(kakaoInfoResponse);
+    }
+
+    public BaseResponse<OAuthLoginResponse> oAuthKaKaoLoinLocal(String code){
+        KakaoInfoResponse kakaoInfoResponse = requestUserInfo.requestKakaoInfo(code, redirect_uri_client);
+        return afterAuthorizedOauth(kakaoInfoResponse);
+    }
+
+    private BaseResponse<OAuthLoginResponse> afterAuthorizedOauth(KakaoInfoResponse kakaoInfoResponse){
         User user = User.builder()
                 .userName(kakaoInfoResponse.getNickname())
                 .email(kakaoInfoResponse.getEmail())
