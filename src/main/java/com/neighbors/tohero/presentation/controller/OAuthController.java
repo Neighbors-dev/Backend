@@ -1,4 +1,4 @@
-package com.neighbors.tohero.presentation;
+package com.neighbors.tohero.presentation.controller;
 
 import com.neighbors.tohero.application.login.service.OAuthService;
 import com.neighbors.tohero.application.baseResponse.BaseResponse;

@@ -32,6 +32,10 @@ public class UserEntity extends BaseEntity {
         this.role = role;
     }
 
+    public void changeNickname(final String nickName){
+        this.nickName = nickName;
+    }
+
     public static UserEntity of(String nickName, String email, Role role) {
         return new UserEntity(nickName, email, role);
     }
