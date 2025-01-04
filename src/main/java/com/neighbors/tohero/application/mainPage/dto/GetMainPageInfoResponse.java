@@ -1,7 +1,7 @@
 package com.neighbors.tohero.application.mainPage.dto;
 
-import com.neighbors.tohero.domain.mainPage.model.Letter;
-import com.neighbors.tohero.domain.notice.model.Notice;
+import com.neighbors.tohero.domain.domain.mainPage.model.Letter;
+import com.neighbors.tohero.domain.domain.notice.model.Notice;
 
 import java.util.List;
 

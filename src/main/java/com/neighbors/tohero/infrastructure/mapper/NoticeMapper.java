@@ -1,6 +1,6 @@
 package com.neighbors.tohero.infrastructure.mapper;
 
-import com.neighbors.tohero.domain.notice.model.Notice;
+import com.neighbors.tohero.domain.domain.notice.model.Notice;
 import com.neighbors.tohero.infrastructure.entity.NoticeEntity;
 import org.springframework.stereotype.Component;
 

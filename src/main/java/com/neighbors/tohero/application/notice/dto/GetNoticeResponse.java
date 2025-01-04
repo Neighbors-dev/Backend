@@ -1,6 +1,6 @@
 package com.neighbors.tohero.application.notice.dto;
 
-import com.neighbors.tohero.domain.notice.model.Notice;
+import com.neighbors.tohero.domain.domain.notice.model.Notice;
 
 import java.util.List;
 

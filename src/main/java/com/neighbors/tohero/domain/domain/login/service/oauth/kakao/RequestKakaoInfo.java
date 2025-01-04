@@ -1,4 +1,4 @@
-package com.neighbors.tohero.domain.login.service.oauth.kakao;
+package com.neighbors.tohero.domain.domain.login.service.oauth.kakao;
 
 import com.neighbors.tohero.application.login.dto.kakao.KakaoInfoResponse;
 import com.neighbors.tohero.application.login.dto.kakao.KakaoTokens;

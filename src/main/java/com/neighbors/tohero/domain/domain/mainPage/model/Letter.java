@@ -1,4 +1,4 @@
-package com.neighbors.tohero.domain.mainPage.model;
+package com.neighbors.tohero.domain.domain.mainPage.model;
 
 import lombok.Getter;
 
