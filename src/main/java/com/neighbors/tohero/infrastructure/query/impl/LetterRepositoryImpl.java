@@ -20,7 +20,7 @@ public class LetterRepositoryImpl implements LetterRepository {
 
     @Override
     public long getTotalLetterNumber() {
-        return letterEntityRepository.count();
+        return letterEntityRepository.countPublicLetter();
     }
 
     @Override
