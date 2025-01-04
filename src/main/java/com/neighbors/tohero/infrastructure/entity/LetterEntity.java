@@ -30,5 +30,6 @@ public class LetterEntity extends BaseEntity {
     @JoinColumn(name = "user_id", nullable = true)
     private UserEntity user;
 
-
+    @Column(name = "is_public")
+    private Boolean isPublic;
 }
