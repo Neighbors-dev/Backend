@@ -36,6 +36,10 @@ public class MainPageService {
         );
     }
 
+    public BaseResponse getMainPageLetterInfo(Pageable pageable){
+        return null;
+    }
+
     private List<GetMainPageInfoResponse.TopNotices> getTopNoticeFromDomain(){
         List<Notice> topNotices = getNotice.getTopNotices(EXPOSED_NOTICE_NUMBER);
 
