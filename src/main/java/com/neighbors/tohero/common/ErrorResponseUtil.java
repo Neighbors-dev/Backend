@@ -13,7 +13,7 @@ public class ErrorResponseUtil {
 
     public static void setResponse(HttpServletResponse response, BaseResponseStatus responseStatus) throws IOException {
 
-        BaseResponse errorResponse = new BaseResponse(responseStatus, "");
+        BaseResponse errorResponse = new BaseResponse(responseStatus, "JWT TOKEN 오류입니다.");
 
         response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         response.setContentType("application/json");
