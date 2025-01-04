@@ -19,6 +19,6 @@ public class GetNotice {
     }
 
     public List<Notice> getTopNotices(int exposeNoticeNumber){
-        return null;
+        return noticeRepository.getTopNotices(exposeNoticeNumber);
     }
 }

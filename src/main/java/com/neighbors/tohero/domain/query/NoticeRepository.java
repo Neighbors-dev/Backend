@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface NoticeRepository {
     List<Notice> getPagedNotice(Pageable pageable);
+    List<Notice> getTopNotices(int exposeNoticeNumber);
 }

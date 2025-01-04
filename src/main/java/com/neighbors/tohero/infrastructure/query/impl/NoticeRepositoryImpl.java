@@ -26,4 +26,13 @@ public class NoticeRepositoryImpl implements NoticeRepository {
                 .map(noticeMapper::toDomain)
                 .toList();
     }
+
+    @Override
+    public List<Notice> getTopNotices(int exposeNoticeNumber) {
+        List<NoticeEntity> topNotices = noticeEntityRepository.findTopNoticeEntity(exposeNoticeNumber);
+
+        return topNotices.stream()
+                .map(noticeMapper::toDomain)
+                .toList();
+    }
 }
