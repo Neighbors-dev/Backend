@@ -28,6 +28,9 @@ public class RequestKakaoInfo {
     @Value("${oauth.kakao.redirect-uri}")
     private String redirect_uri;
 
+    @Value("${oauth.kakao.redirect-client}")
+    private String redirect_uri_client;
+
     private final RestTemplate restTemplate;
 
     public KakaoInfoResponse requestKakaoInfo(String authorizationCode){
@@ -45,9 +48,16 @@ public class RequestKakaoInfo {
         body.add("redirect_uri", redirect_uri);
         body.add("code", code);
 
-        HttpEntity<?> request = new HttpEntity<>(body, httpHeaders);
-
-        KakaoTokens response = restTemplate.postForObject(tokenUrl, request, KakaoTokens.class);
+        KakaoTokens response= null;
+        try{
+            HttpEntity<?> request = new HttpEntity<>(body, httpHeaders);
+            response = restTemplate.postForObject(tokenUrl, request, KakaoTokens.class);
+        }catch (Exception e){
+            e.printStackTrace();
+            body.set("redirect_uri", redirect_uri_client);
+            HttpEntity<?> request = new HttpEntity<>(body, httpHeaders);
+            response = restTemplate.postForObject(tokenUrl, request, KakaoTokens.class);
+        }
 
         assert response != null;
         return response.getAccessToken();

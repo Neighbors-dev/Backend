@@ -18,6 +18,7 @@ jobs:
       REFRESH_TOKEN_EXPIRED_IN: ${{ secrets.REFRESH_TOKEN_EXPIRED_IN }}
       KAKAO_CLIENT_KEY: ${{ secrets.KAKAO_CLIENT_KEY }}
       KAKAO_REDIRECT_URL: ${{ secrets.KAKAO_REDIRECT_URL }}
+      KAKAO_REDIRECT_URL_TEST: ${{ secrets.KAKAO_REDIRECT_URL_TEST }}
 
     steps:
 
@@ -67,6 +68,7 @@ jobs:
             --build-arg REFRESH_TOKEN_EXPIRED_IN=${{ secrets.REFRESH_TOKEN_EXPIRED_IN }} \
             --build-arg KAKAO_CLIENT_KEY=${{ secrets.KAKAO_CLIENT_KEY }} \
             --build-arg KAKAO_REDIRECT_URL=${{ secrets.KAKAO_REDIRECT_URL }} \
+            --build-arg KAKAO_REDIRECT_URL_TEST=${{ secrets.KAKAO_REDIRECT_URL_TEST }} \
             --platform linux/amd64 \
             -f ./.deploy/Dockerfile \
             -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY }} .
@@ -107,6 +109,7 @@ jobs:
             echo "REFRESH_TOKEN_EXPIRED_IN=${{ secrets.REFRESH_TOKEN_EXPIRED_IN }}" >> ./.env
             echo "KAKAO_CLIENT_KEY=${{ secrets.KAKAO_CLIENT_KEY }}" >> ./.env
             echo "KAKAO_REDIRECT_URL=${{ secrets.KAKAO_REDIRECT_URL }}" >> ./.env
+            echo "KAKAO_REDIRECT_URL_TEST=${{ secrets.KAKAO_REDIRECT_URL_TEST }}" >> ./.env
             chmod +x deploy.sh
             source deploy.sh
       
