@@ -42,7 +42,9 @@ public class SecurityConfig {
                 "/oauth/kakao/callback",
                 "/oauth/kakao/callback2",
                 "/auth/refreshToken",
-                "/address"
+                "/address",
+                "/notice/**",
+                "/mainPage/**"
         );
     }
 
