@@ -4,9 +4,16 @@ import java.util.List;
 
 public record GetMainPageInfoResponse(
         List<TopNotices> topNotices,
-        int writtenLetterNumber
+        int writtenLetterNumber,
+        List<OpenedLetter> openedLetters
 ) {
     public record TopNotices(
             String title
+    ){}
+
+    public record OpenedLetter(
+            String to,
+            String from,
+            String content
     ){}
 }

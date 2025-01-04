@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 public class MainPageService {
 
     private final GetNotice getNotice;
+//    private final GetLetter getLetter;
 
     public BaseResponse<GetMainPageInfoResponse> getMainPageInfo(Pageable pageable){
         return null;
