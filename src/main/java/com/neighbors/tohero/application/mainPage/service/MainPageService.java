@@ -4,6 +4,8 @@ import com.neighbors.tohero.application.baseResponse.BaseResponse;
 import com.neighbors.tohero.application.baseResponse.BaseResponseMessage;
 import com.neighbors.tohero.application.baseResponse.BaseResponseStatus;
 import com.neighbors.tohero.application.mainPage.dto.GetMainPageInfoResponse;
+import com.neighbors.tohero.application.mainPage.dto.GetMainPageLetterInfoResponse;
+import com.neighbors.tohero.application.mainPage.dto.OpenedLetter;
 import com.neighbors.tohero.domain.domain.mainPage.model.Letter;
 import com.neighbors.tohero.domain.domain.mainPage.service.GetLetter;
 import com.neighbors.tohero.domain.domain.notice.model.Notice;
@@ -27,7 +29,7 @@ public class MainPageService {
     public BaseResponse<GetMainPageInfoResponse> getMainPageInfo(Pageable pageable){
         List<GetMainPageInfoResponse.TopNotices> topNotices = getTopNoticeFromDomain();
         long writtenLetterNumber = getLetter.getTotalLetterNumber();
-        List<GetMainPageInfoResponse.OpenedLetter> openedLetters = getLetterFromDomain(pageable);
+        List<OpenedLetter> openedLetters = getLetterFromDomain(pageable);
 
         return new BaseResponse(
                 BaseResponseStatus.OK,
@@ -36,8 +38,14 @@ public class MainPageService {
         );
     }
 
-    public BaseResponse getMainPageLetterInfo(Pageable pageable){
-        return null;
+    public BaseResponse<GetMainPageLetterInfoResponse> getMainPageLetterInfo(Pageable pageable){
+        List<OpenedLetter> openedLetters = getLetterFromDomain(pageable);
+
+        return new BaseResponse(
+                BaseResponseStatus.OK,
+                BaseResponseMessage.메인페이지_편지_무한페이징_조회가_정상적으로_실행되었습니다.getMessage(),
+                new GetMainPageLetterInfoResponse(openedLetters)
+        );
     }
 
     private List<GetMainPageInfoResponse.TopNotices> getTopNoticeFromDomain(){
@@ -48,11 +56,11 @@ public class MainPageService {
                 .toList();
     }
 
-    private List<GetMainPageInfoResponse.OpenedLetter> getLetterFromDomain(Pageable pageable){
+    private List<OpenedLetter> getLetterFromDomain(Pageable pageable){
         List<Letter> openedLetters = getLetter.getPageableLetter(pageable);
 
         return openedLetters.stream()
-                .map(GetMainPageInfoResponse.OpenedLetter::from)
+                .map(OpenedLetter::from)
                 .toList();
     }
 }
