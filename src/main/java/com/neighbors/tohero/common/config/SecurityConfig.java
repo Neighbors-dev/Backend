@@ -35,6 +35,7 @@ public class SecurityConfig {
                 "/webjars/",
                 "/v3/api-docs/**",
                 "/oauth/kakao/callback",
+                "/oauth/kakao/callback2",
                 "/auth/refreshToken",
                 "/address"
         );
