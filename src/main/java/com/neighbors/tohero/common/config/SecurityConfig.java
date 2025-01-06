@@ -42,7 +42,9 @@ public class SecurityConfig {
                 "/oauth/kakao/callback",
                 "/oauth/kakao/callback2",
                 "/auth/refreshToken",
-                "/address"
+                "/address",
+                "/notice/**",
+                "/mainPage/**"
         );
     }
 
@@ -72,7 +74,7 @@ public class SecurityConfig {
     public CorsFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true); // 쿠키 포함 허용
-        config.setAllowedOrigins(List.of("http://localhost:5173")); // 허용할 도메인
+        config.setAllowedOrigins(List.of("http://localhost:5173", "https://glittery-madeleine-215e2f.netlify.app")); // 허용할 도메인
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")); // 허용할 HTTP 메서드
         config.setAllowedHeaders(List.of("*")); // 모든 헤더 허용
         config.setExposedHeaders(List.of("Authorization")); // 노출할 헤더
