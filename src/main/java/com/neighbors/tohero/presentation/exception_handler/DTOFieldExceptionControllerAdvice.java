@@ -15,16 +15,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.neighbors.tohero.application.baseResponse.BaseResponseMessage.유저_이름의_길이는_1부터_5까지만_가능합니다;
+import static com.neighbors.tohero.application.baseResponse.BaseResponseMessage.주소_검색_쿼리의_길이는_1부터_50까지만_가능합니다;
 
 @Priority(0)
 @RestControllerAdvice
-public class UserExceptionControllerAdvice {
+public class DTOFieldExceptionControllerAdvice {
 
     private final Map<String, BaseResponseMessage> fieldErrorMapper;
 
-    public UserExceptionControllerAdvice() {
+    public DTOFieldExceptionControllerAdvice() {
         fieldErrorMapper = new HashMap<>();
         fieldErrorMapper.put("nickname", 유저_이름의_길이는_1부터_5까지만_가능합니다);
+        fieldErrorMapper.put("searchAddress", 주소_검색_쿼리의_길이는_1부터_50까지만_가능합니다);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
