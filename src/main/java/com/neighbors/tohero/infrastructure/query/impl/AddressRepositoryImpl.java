@@ -18,8 +18,8 @@ public class AddressRepositoryImpl implements AddressRepository {
     private final AddressMapper addressMapper;
 
     @Override
-    public List<Address> searchAddressByPath(String queryPath) {
-        List<AddressEntity> addressEntities = addressEntityRepository.findAllContainsPath(queryPath);
+    public List<Address> searchAddressByOfficeName(String queryPath) {
+        List<AddressEntity> addressEntities = addressEntityRepository.findAllContainsOfficeName(queryPath);
 
         return addressEntities.stream()
                 .map(addressMapper::toDomain)

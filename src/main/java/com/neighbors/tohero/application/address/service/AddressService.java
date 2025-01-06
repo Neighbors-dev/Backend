@@ -11,7 +11,10 @@ import com.neighbors.tohero.domain.domain.address.service.GetAddress;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -20,8 +23,8 @@ public class AddressService {
     private final GetAddress getAddress;
 
     public BaseResponse<SearchAddressResponse> searchAddress(SearchAddressRequest searchAddressRequest) {
-        List<Address> searchedAddresses = getAddress.searchAddressByPath(searchAddressRequest.searchAddress());
 
+        List<Address> searchedAddresses = getAddressByQuery(searchAddressRequest.searchAddress().trim());
         if(searchedAddresses.isEmpty()) {
             throw new AddressException(BaseResponseStatus.NO_RESULT, BaseResponseMessage.일치하는_관할서_정보가_없습니다.getMessage());
         }
@@ -31,5 +34,20 @@ public class AddressService {
                 BaseResponseMessage.주소_검색이_성공적으로_응답되었습니다.getMessage(),
                 SearchAddressResponse.from(searchedAddresses)
         );
+    }
+
+    private List<Address> getAddressByQuery(String officeName) {
+        List<Address> searchedAddressesByOfficeName = getAddress.searchAddressByOfficeName(officeName);
+        List<Address> searchedAddressesByRoadAddress = getAddress.searchAddressByRoadAddress(officeName);
+
+        return Stream.concat(searchedAddressesByOfficeName.stream(), searchedAddressesByRoadAddress.stream())
+                .collect(Collectors.toMap(
+                        Address::getAddressId,
+                        address -> address,
+                        (existing, replacement) -> existing
+                ))
+                .values()
+                .stream()
+                .toList();
     }
 }

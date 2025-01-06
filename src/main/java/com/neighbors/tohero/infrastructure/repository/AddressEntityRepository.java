@@ -10,7 +10,7 @@ import java.util.List;
 public interface AddressEntityRepository extends JpaRepository<AddressEntity, Long> {
 
     @Query("SELECT a FROM AddressEntity a WHERE a.queryPath LIKE %:queryPath%")
-    List<AddressEntity> findAllContainsPath(@Param("queryPath") String queryPath);
+    List<AddressEntity> findAllContainsOfficeName(@Param("queryPath") String queryPath);
 
     @Query("SELECT a FROM AddressEntity a WHERE a.roadAddress LIKE %:queryRoadAddress%")
     List<AddressEntity> findAllContainsRoadAddress(@Param("queryRoadAddress") String queryRoadAddress);

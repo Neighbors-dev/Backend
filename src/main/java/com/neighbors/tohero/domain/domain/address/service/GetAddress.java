@@ -13,7 +13,11 @@ public class GetAddress {
 
     private final AddressRepository addressRepository;
 
-    public List<Address> searchAddressByPath(String queryPath){
-        return addressRepository.searchAddressByPath(queryPath);
+    public List<Address> searchAddressByOfficeName(String queryPath){
+        return addressRepository.searchAddressByOfficeName(queryPath);
+    }
+
+    public List<Address> searchAddressByRoadAddress(String queryRoadAddress){
+        return addressRepository.searchAddressByRoadAddress(queryRoadAddress);
     }
 }
