@@ -1,5 +1,6 @@
 package com.neighbors.tohero.infrastructure.query.impl;
 
+import com.neighbors.tohero.common.enums.TargetJob;
 import com.neighbors.tohero.domain.domain.address.model.Address;
 import com.neighbors.tohero.domain.query.AddressRepository;
 import com.neighbors.tohero.infrastructure.entity.AddressEntity;
@@ -18,8 +19,8 @@ public class AddressRepositoryImpl implements AddressRepository {
     private final AddressMapper addressMapper;
 
     @Override
-    public List<Address> searchAddressByOfficeName(String queryPath) {
-        List<AddressEntity> addressEntities = addressEntityRepository.findAllContainsOfficeName(queryPath);
+    public List<Address> searchAddressByOfficeName(String queryPath, TargetJob targetJob) {
+        List<AddressEntity> addressEntities = addressEntityRepository.findAllContainsOfficeName(queryPath,targetJob);
 
         return addressEntities.stream()
                 .map(addressMapper::toDomain)
@@ -27,8 +28,8 @@ public class AddressRepositoryImpl implements AddressRepository {
     }
 
     @Override
-    public List<Address> searchAddressByRoadAddress(String queryRoadAddress) {
-        List<AddressEntity> addressEntities = addressEntityRepository.findAllContainsRoadAddress(queryRoadAddress);
+    public List<Address> searchAddressByRoadAddress(String queryRoadAddress, TargetJob targetJob) {
+        List<AddressEntity> addressEntities = addressEntityRepository.findAllContainsRoadAddress(queryRoadAddress,targetJob);
 
         return addressEntities.stream()
                 .map(addressMapper::toDomain)

@@ -5,6 +5,7 @@ import com.neighbors.tohero.application.address.dto.SearchAddressResponse;
 import com.neighbors.tohero.application.baseResponse.BaseResponse;
 import com.neighbors.tohero.application.baseResponse.BaseResponseMessage;
 import com.neighbors.tohero.application.baseResponse.BaseResponseStatus;
+import com.neighbors.tohero.common.enums.TargetJob;
 import com.neighbors.tohero.common.exception.address.AddressException;
 import com.neighbors.tohero.domain.domain.address.model.Address;
 import com.neighbors.tohero.domain.domain.address.service.GetAddress;
@@ -24,7 +25,7 @@ public class AddressService {
 
     public BaseResponse<SearchAddressResponse> searchAddress(SearchAddressRequest searchAddressRequest) {
 
-        List<Address> searchedAddresses = getAddressByQuery(searchAddressRequest.searchAddress().trim());
+        List<Address> searchedAddresses = getAddressByQuery(searchAddressRequest.searchAddress().trim(), searchAddressRequest.targetJob());
         if(searchedAddresses.isEmpty()) {
             throw new AddressException(BaseResponseStatus.NO_RESULT, BaseResponseMessage.일치하는_관할서_정보가_없습니다.getMessage());
         }
@@ -36,9 +37,9 @@ public class AddressService {
         );
     }
 
-    private List<Address> getAddressByQuery(String officeName) {
-        List<Address> searchedAddressesByOfficeName = getAddress.searchAddressByOfficeName(officeName);
-        List<Address> searchedAddressesByRoadAddress = getAddress.searchAddressByRoadAddress(officeName);
+    private List<Address> getAddressByQuery(String officeName, TargetJob targetJob) {
+        List<Address> searchedAddressesByOfficeName = getAddress.searchAddressByOfficeName(officeName, targetJob);
+        List<Address> searchedAddressesByRoadAddress = getAddress.searchAddressByRoadAddress(officeName, targetJob);
 
         return Stream.concat(searchedAddressesByOfficeName.stream(), searchedAddressesByRoadAddress.stream())
                 .collect(Collectors.toMap(
