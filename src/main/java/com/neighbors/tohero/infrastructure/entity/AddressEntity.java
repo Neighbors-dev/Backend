@@ -1,10 +1,13 @@
 package com.neighbors.tohero.infrastructure.entity;
 
+import com.neighbors.tohero.common.enums.TargetJob;
 import com.neighbors.tohero.infrastructure.entity.base.BaseEntity;
 import jakarta.persistence.*;
+import lombok.Getter;
 
 @Entity
 @Table(name = "`Address`")
+@Getter
 public class AddressEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,4 +25,8 @@ public class AddressEntity extends BaseEntity {
 
     @Column(name = "query_path")
     private String queryPath;
+
+    @Column(name = "target_job")
+    @Enumerated(value = EnumType.ORDINAL)
+    private TargetJob targetJob;
 }
