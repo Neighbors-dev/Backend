@@ -1,6 +1,7 @@
 package com.neighbors.tohero.presentation.controller;
 
 import com.neighbors.tohero.application.baseResponse.BaseResponse;
+import com.neighbors.tohero.application.user.dto.AuthenticateUserRequest;
 import com.neighbors.tohero.application.user.dto.UpdateUserName;
 import com.neighbors.tohero.application.user.service.UserService;
 import com.neighbors.tohero.common.jwt.JwtUserDetails;
@@ -11,10 +12,7 @@ import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -31,5 +29,12 @@ public class UserController {
     ){
         return ResponseEntity.ok()
                 .body(userService.updateUserName(jwtUserDetail.getUserId(), updateUserName.nickname()));
+    }
+
+    @Operation(summary = "유저 API", description = "사용자 인증 API입니다.")
+    @PostMapping("/user/auth")
+    public ResponseEntity<BaseResponse> authenticateUser(@RequestBody @Validated AuthenticateUserRequest authenticateUserRequest){
+        return ResponseEntity.ok()
+                .body(userService.authenticateUser(authenticateUserRequest));
     }
 }
