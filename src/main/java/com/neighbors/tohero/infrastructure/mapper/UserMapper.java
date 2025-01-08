@@ -1,6 +1,6 @@
 package com.neighbors.tohero.infrastructure.mapper;
 
-import com.neighbors.tohero.domain.domain.login.model.User;
+import com.neighbors.tohero.domain.domain.user.model.User;
 import com.neighbors.tohero.infrastructure.entity.UserEntity;
 import org.springframework.stereotype.Component;
 

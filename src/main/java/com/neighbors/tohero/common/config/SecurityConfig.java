@@ -41,6 +41,7 @@ public class SecurityConfig {
                 "/v3/api-docs/**",
                 "/oauth/kakao/callback",
                 "/oauth/kakao/callback2",
+                "/user/auth",
                 "/auth/refreshToken",
                 "/address",
                 "/notice/**",

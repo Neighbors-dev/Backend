@@ -17,8 +17,8 @@ public class UserAuthentication extends UsernamePasswordAuthenticationToken {
         return new UserAuthentication(jwtUserDetails, null, jwtUserDetails.getRole().getAuthority());
     }
 
-    public static UserAuthentication makeGuestAuthentication() {
-        return new UserAuthentication(JwtUserDetails.makeGuestJwtDetails(), null, Role.GUEST.getAuthority());
-    }
+//    public static UserAuthentication makeGuestAuthentication() {
+//        return new UserAuthentication(JwtUserDetails.makeGuestJwtDetails(), null, Role.GUEST.getAuthority());
+//    }
 
 }
