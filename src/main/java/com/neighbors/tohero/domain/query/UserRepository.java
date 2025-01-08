@@ -1,6 +1,6 @@
 package com.neighbors.tohero.domain.query;
 
-import com.neighbors.tohero.domain.domain.login.model.User;
+import com.neighbors.tohero.domain.domain.user.model.User;
 
 public interface UserRepository {
     User createUser(User user);

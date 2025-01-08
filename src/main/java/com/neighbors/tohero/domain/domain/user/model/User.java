@@ -1,4 +1,4 @@
-package com.neighbors.tohero.domain.domain.login.model;
+package com.neighbors.tohero.domain.domain.user.model;
 
 import com.neighbors.tohero.common.enums.Role;
 import lombok.AllArgsConstructor;
