@@ -21,4 +21,8 @@ public class GetNotice {
     public List<Notice> getTopNotices(int exposeNoticeNumber){
         return noticeRepository.getTopNotices(exposeNoticeNumber);
     }
+
+    public Notice getNotice(long noticeId) {
+        return noticeRepository.getNoticeById(noticeId);
+    }
 }

@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -23,5 +24,12 @@ public class NoticeController {
     public ResponseEntity<BaseResponse> getNotice(@ParameterObject Pageable pageable){
         return ResponseEntity.ok()
                 .body(noticeService.getNotice(pageable));
+    }
+
+    @Operation(summary = "공지 API", description = "공지사항 상세보기 API입니다.")
+    @GetMapping("/notice/detail")
+    public ResponseEntity<BaseResponse> getNoticeDetail(@RequestParam long noticeId){
+        return ResponseEntity.ok()
+                .body(noticeService.getNoticeDetail(noticeId));
     }
 }

@@ -24,8 +24,18 @@ public class NoticeService {
 
         return new BaseResponse<>(
                 BaseResponseStatus.OK,
-                BaseResponseMessage.공지_조회_성공했습니댜.getMessage(),
+                BaseResponseMessage.공지_무한페이징_조회_성공했습니댜.getMessage(),
                 GetNoticeResponse.createSuccessObjFrom(notices)
+        );
+    }
+
+    public BaseResponse<GetNoticeResponse.NoticeDTO> getNoticeDetail(long noticeId){
+        Notice notice = getNotice.getNotice(noticeId);
+
+        return new BaseResponse<>(
+                BaseResponseStatus.OK,
+                BaseResponseMessage.공지_조회_성공했습니댜.getMessage(),
+                GetNoticeResponse.NoticeDTO.from(notice)
         );
     }
 

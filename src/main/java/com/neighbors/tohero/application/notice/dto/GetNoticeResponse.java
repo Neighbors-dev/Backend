@@ -7,12 +7,14 @@ import java.util.List;
 public record GetNoticeResponse(List<NoticeDTO> noticeList) {
 
     public record NoticeDTO(
+            long noticeId,
             String title,
             String content,
             String createdAT
     ) {
         public static NoticeDTO from(Notice notice) {
             return new GetNoticeResponse.NoticeDTO(
+                    notice.getNoticeId(),
                     notice.getNoticeTitle(),
                     notice.getNoticeContent(),
                     notice.getCreatedAt().toLocalDate().toString()

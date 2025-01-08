@@ -1,5 +1,8 @@
 package com.neighbors.tohero.infrastructure.query.impl;
 
+import com.neighbors.tohero.application.baseResponse.BaseResponseMessage;
+import com.neighbors.tohero.application.baseResponse.BaseResponseStatus;
+import com.neighbors.tohero.common.exception.notice.NoticeException;
 import com.neighbors.tohero.domain.domain.notice.model.Notice;
 import com.neighbors.tohero.domain.query.NoticeRepository;
 import com.neighbors.tohero.infrastructure.entity.NoticeEntity;
@@ -10,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -34,5 +38,16 @@ public class NoticeRepositoryImpl implements NoticeRepository {
         return topNotices.stream()
                 .map(noticeMapper::toDomain)
                 .toList();
+    }
+
+    @Override
+    public Notice getNoticeById(long noticeId) {
+        NoticeEntity noticeEntity = noticeEntityRepository.findById(noticeId)
+                .orElseThrow(() -> new NoticeException(
+                        BaseResponseStatus.NO_RESULT,
+                        BaseResponseMessage.일치하는_공지가_없습니다.getMessage()
+                ));
+
+        return noticeMapper.toDomain(noticeEntity);
     }
 }
