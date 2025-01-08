@@ -24,7 +24,7 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public User createUser(User user) {
         try{
-            return getUserByEmail(user.getEmail());
+            return getUser(repo -> repo.findByEmail(user.getEmail()));
         }catch(UserException e){
             UserEntity userEntity = userMapper.toEntity(user);
             userEntityRepository.save(userEntity);
@@ -52,8 +52,8 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User getUserByEmail(String email) {
-        UserEntity userEntity = userEntityRepository.findByEmail(email)
+    public User getUser(Function<UserEntityRepository, Optional<UserEntity>> findUserFunction) {
+        UserEntity userEntity = findUserFunction.apply(userEntityRepository)
                 .orElseThrow(() -> new UserException(
                         BaseResponseStatus.NO_RESULT,
                         BaseResponseMessage.존재하지_않는_유저입니다.getMessage()
