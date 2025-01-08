@@ -11,6 +11,10 @@ public class GetUser {
     private final UserRepository userRepository;
 
     public User getUserByEmail(String email) {
-        return userRepository.getUserByEmail(email);
+        return userRepository.getUser(repo -> repo.findByEmail(email));
+    }
+
+    public User getUserById(long userId) {
+        return userRepository.getUser(repo -> repo.findByUserId(userId));
     }
 }

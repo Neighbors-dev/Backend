@@ -8,6 +8,9 @@ public enum BaseResponseMessage {
     //oauth success
     로그인_성공했습니다("로그인 성공했습니다"),
 
+    //auth
+    토큰_재발급이_성공했습니다("토큰 재발급이 성공했습니다"),
+
     //notice success
     공지_조회_성공했습니댜("공지 조회 성공했습니댜"),
 
