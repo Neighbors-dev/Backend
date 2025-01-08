@@ -24,9 +24,7 @@ import java.util.Optional;
 public class OAuthService {
 
     private final RequestKakaoInfo requestUserInfo;
-    private final CreateUser createUser;
     private final GetUser getUser;
-    private final JwtProvider jwtProvider;
 
     @Value("${oauth.kakao.redirect-uri}")
     private String redirect_uri;
@@ -51,7 +49,7 @@ public class OAuthService {
             matchedUser = getUser.getUserByEmail(kakaoInfoResponse.getEmail());
         }catch(UserException e){
             log.error(e.getMessage());
-            return returnNonUserResponse();
+            return returnNonUserResponse(kakaoInfoResponse.getEmail());
         }
 
         return new BaseResponse<>(
@@ -61,11 +59,11 @@ public class OAuthService {
         );
     }
 
-    private BaseResponse<OAuthLoginResponse> returnNonUserResponse(){
+    private BaseResponse<OAuthLoginResponse> returnNonUserResponse(String email){
         return new BaseResponse<>(
                 BaseResponseStatus.OK,
                 BaseResponseMessage.존재하지_않는_유저입니다.getMessage(),
-                OAuthLoginResponse.createNonUserResponse()
+                OAuthLoginResponse.createNonUserResponse(email)
         );
     }
 }

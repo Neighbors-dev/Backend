@@ -11,7 +11,10 @@ public record OAuthLoginResponse (
         boolean isMember,
 
         @JsonInclude(JsonInclude.Include.NON_NULL)
-        UserInfo userInfo
+        UserInfo userInfo,
+
+        @JsonInclude(JsonInclude.Include.NON_NULL)
+        String email
 ){
     public record UserInfo(
             long userId,
@@ -21,12 +24,12 @@ public record OAuthLoginResponse (
     ){
     }
 
-    public static OAuthLoginResponse createNonUserResponse(){
-        return new OAuthLoginResponse(false, null);
+    public static OAuthLoginResponse createNonUserResponse(String email){
+        return new OAuthLoginResponse(false, null, email);
     }
 
     public static OAuthLoginResponse createExistUserResponse(User user){
         UserInfo userInfo = new UserInfo(user.getUserId(), user.getUserName(), user.getEmail(), user.getRole());
-        return new OAuthLoginResponse(true, userInfo);
+        return new OAuthLoginResponse(true, userInfo, null);
     }
 }
