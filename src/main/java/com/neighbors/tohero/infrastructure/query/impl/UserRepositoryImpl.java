@@ -11,6 +11,8 @@ import com.neighbors.tohero.infrastructure.repository.UserEntityRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 @RequiredArgsConstructor
 public class UserRepositoryImpl implements UserRepository {
@@ -20,13 +22,14 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User createUser(User user) {
-        UserEntity existedUserEntity = userEntityRepository.findByEmail(user.getEmail());
-        if (existedUserEntity != null) {
-            return userMapper.toDomain(existedUserEntity);
-        }
         UserEntity userEntity = userMapper.toEntity(user);
         userEntityRepository.save(userEntity);
-        UserEntity createdUserEntity = userEntityRepository.findByEmail(user.getEmail());
+
+        UserEntity createdUserEntity = userEntityRepository.findByEmail(user.getEmail())
+                .orElseThrow(() -> new UserException(
+                        BaseResponseStatus.NO_RESULT,
+                        BaseResponseMessage.존재하지_않는_유저입니다.getMessage()
+                ));;
         return userMapper.toDomain(createdUserEntity);
     }
 
@@ -44,6 +47,12 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User getUserByEmail(String email) {
-        return null;
+        UserEntity userEntity = userEntityRepository.findByEmail(email)
+                .orElseThrow(() -> new UserException(
+                        BaseResponseStatus.NO_RESULT,
+                        BaseResponseMessage.존재하지_않는_유저입니다.getMessage()
+                ));
+
+        return userMapper.toDomain(userEntity);
     }
 }
