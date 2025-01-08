@@ -1,5 +1,6 @@
 package com.neighbors.tohero.domain.domain.user.model;
 
+import com.neighbors.tohero.application.user.dto.AuthenticateUserRequest;
 import com.neighbors.tohero.common.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,5 +17,13 @@ public class User {
 
     public static User of (Long userId, String userName, String email, Role role) {
         return new User(userId, userName, email, role);
+    }
+
+    public static User toEntity(AuthenticateUserRequest authenticateUserRequest) {
+        return User.builder()
+                .userName(authenticateUserRequest.nickname())
+                .email(authenticateUserRequest.email())
+                .role(authenticateUserRequest.role())
+                .build();
     }
 }

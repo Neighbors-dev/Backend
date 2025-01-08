@@ -14,8 +14,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.neighbors.tohero.application.baseResponse.BaseResponseMessage.유저_이름의_길이는_1부터_5까지만_가능합니다;
-import static com.neighbors.tohero.application.baseResponse.BaseResponseMessage.주소_검색_쿼리의_길이는_1부터_50까지만_가능합니다;
+import static com.neighbors.tohero.application.baseResponse.BaseResponseMessage.*;
 
 @Priority(0)
 @RestControllerAdvice
@@ -27,6 +26,8 @@ public class DTOFieldExceptionControllerAdvice {
         fieldErrorMapper = new HashMap<>();
         fieldErrorMapper.put("nickname", 유저_이름의_길이는_1부터_5까지만_가능합니다);
         fieldErrorMapper.put("searchAddress", 주소_검색_쿼리의_길이는_1부터_50까지만_가능합니다);
+        fieldErrorMapper.put("role", ROLE_필드는_필수입력입니다);
+        fieldErrorMapper.put("email", 이메일_형식이_올바르지_못합니다);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)

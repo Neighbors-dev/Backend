@@ -29,8 +29,6 @@ public class JwtProvider {
     private long REFRESH_TOKEN_EXPIRED_IN;
 
     public AuthTokens createToken(JwtUserDetails jwtUserDetails) {
-        log.info("JWT key={}", JWT_SECRET_KEY);
-
         Claims claims = Jwts.claims()
                 .setSubject(jwtUserDetails.getNickname())
                 .setIssuer("ToHero");
@@ -40,7 +38,7 @@ public class JwtProvider {
             claims.put("userId", jwtUserDetails.getUserId());
             claims.put("email", jwtUserDetails.getEmail());
         }
-        
+
         Date now = new Date();
         Date accessTokenExpiredAt = new Date(now.getTime() + JWT_EXPIRED_IN);
         Date refreshTokenExpiredAt = new Date(now.getTime() + REFRESH_TOKEN_EXPIRED_IN);
