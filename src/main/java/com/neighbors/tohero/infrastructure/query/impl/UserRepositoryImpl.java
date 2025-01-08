@@ -41,4 +41,9 @@ public class UserRepositoryImpl implements UserRepository {
         matchedUserEntity.changeNickname(nickname);
         userEntityRepository.save(matchedUserEntity);
     }
+
+    @Override
+    public User getUserByEmail(String email) {
+        return null;
+    }
 }
