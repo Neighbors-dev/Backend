@@ -32,12 +32,15 @@ public class JwtProvider {
         log.info("JWT key={}", JWT_SECRET_KEY);
 
         Claims claims = Jwts.claims()
-                .setSubject(jwtUserDetails.getEmail())
-                .setIssuer("zipkok");
+                .setSubject(jwtUserDetails.getNickname())
+                .setIssuer("ToHero");
 
         claims.put("role", jwtUserDetails.getRole());
-        claims.put("id", jwtUserDetails.getUserId());
-
+        if(jwtUserDetails.getRole() == Role.USER) {
+            claims.put("userId", jwtUserDetails.getUserId());
+            claims.put("email", jwtUserDetails.getEmail());
+        }
+        
         Date now = new Date();
         Date accessTokenExpiredAt = new Date(now.getTime() + JWT_EXPIRED_IN);
         Date refreshTokenExpiredAt = new Date(now.getTime() + REFRESH_TOKEN_EXPIRED_IN);
@@ -118,9 +121,10 @@ public class JwtProvider {
         Claims claims = getBody(token);
 
         return JwtUserDetails.builder()
-                .email(String.valueOf(claims.getSubject()))
-                .userId(Long.valueOf(claims.get("id").toString()))
+                .nickname(String.valueOf(claims.getSubject()))
                 .role(Role.valueOf(claims.get("role").toString()))
+                .email(claims.get("email").toString())
+                .userId(Long.parseLong(claims.get("userId").toString()))
                 .build();
 
     }

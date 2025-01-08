@@ -6,7 +6,9 @@ import com.neighbors.tohero.application.baseResponse.BaseResponse;
 import com.neighbors.tohero.application.baseResponse.BaseResponseMessage;
 import com.neighbors.tohero.application.baseResponse.BaseResponseStatus;
 import com.neighbors.tohero.common.exception.user.UserException;
+import com.neighbors.tohero.common.jwt.AuthTokens;
 import com.neighbors.tohero.common.jwt.JwtProvider;
+import com.neighbors.tohero.common.jwt.JwtUserDetails;
 import com.neighbors.tohero.domain.domain.user.model.User;
 import com.neighbors.tohero.domain.domain.user.service.CreateUser;
 import com.neighbors.tohero.domain.domain.login.service.oauth.kakao.RequestKakaoInfo;
@@ -25,6 +27,7 @@ public class OAuthService {
 
     private final RequestKakaoInfo requestUserInfo;
     private final GetUser getUser;
+    private final JwtProvider jwtProvider;
 
     @Value("${oauth.kakao.redirect-uri}")
     private String redirect_uri;
@@ -45,8 +48,10 @@ public class OAuthService {
 
     private BaseResponse<OAuthLoginResponse> makeOauthResponseDependingOnExist(KakaoInfoResponse kakaoInfoResponse){
         User matchedUser = null;
+        AuthTokens authTokens = null;
         try{
             matchedUser = getUser.getUserByEmail(kakaoInfoResponse.getEmail());
+            authTokens = jwtProvider.createToken(JwtUserDetails.from(matchedUser));
         }catch(UserException e){
             log.error(e.getMessage());
             return returnNonUserResponse(kakaoInfoResponse.getEmail());
@@ -55,7 +60,7 @@ public class OAuthService {
         return new BaseResponse<>(
             BaseResponseStatus.OK,
             BaseResponseMessage.로그인_성공했습니다.getMessage(),
-            OAuthLoginResponse.createExistUserResponse(matchedUser)
+            OAuthLoginResponse.createExistUserResponse(matchedUser,authTokens)
         );
     }
 

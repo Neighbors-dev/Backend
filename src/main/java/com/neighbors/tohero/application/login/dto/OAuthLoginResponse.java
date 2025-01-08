@@ -14,22 +14,25 @@ public record OAuthLoginResponse (
         UserInfo userInfo,
 
         @JsonInclude(JsonInclude.Include.NON_NULL)
+        AuthTokens authTokens,
+
+        @JsonInclude(JsonInclude.Include.NON_NULL)
         String email
 ){
     public record UserInfo(
             long userId,
-            String nickName,
+            String nickname,
             String email,
             Role role
     ){
     }
 
     public static OAuthLoginResponse createNonUserResponse(String email){
-        return new OAuthLoginResponse(false, null, email);
+        return new OAuthLoginResponse(false, null, null, email);
     }
 
-    public static OAuthLoginResponse createExistUserResponse(User user){
+    public static OAuthLoginResponse createExistUserResponse(User user, AuthTokens authTokens){
         UserInfo userInfo = new UserInfo(user.getUserId(), user.getUserName(), user.getEmail(), user.getRole());
-        return new OAuthLoginResponse(true, userInfo, null);
+        return new OAuthLoginResponse(true, userInfo, authTokens,null);
     }
 }
