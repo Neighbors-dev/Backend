@@ -1,5 +1,6 @@
 package com.neighbors.tohero.common.security;
 
+import com.neighbors.tohero.common.enums.Role;
 import com.neighbors.tohero.common.jwt.JwtProvider;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -29,8 +30,8 @@ public class AuthenticationUtil {
         });
     }
 
-    private Boolean isRequestAvailableToGuest(HttpServletRequest request) {
-        return request.getRequestURI().contains("/realEstate") && request.getMethod().equals("GET");
+    private Boolean isRequestAvailableToGuest(String token) {
+        return jwtProvider.getJwtUserDetails(token).getRole() == Role.GUEST;
     }
 
     private Optional<UserAuthentication> makeAuthentication(HttpServletRequest request, String token) {
@@ -40,12 +41,15 @@ public class AuthenticationUtil {
         UserAuthentication authentication = null;
 
         if(isTokenValid(token)) {
-            String role = jwtProvider.getJwtUserDetails(token).getRole().toString();
-            log.info("[AuthenticationUtil.makeAuthentication : {} 권한 부여]", role);
-            authentication =  UserAuthentication.from(jwtProvider.getJwtUserDetails(token));
-        } else if (isRequestAvailableToGuest(request)) {
-            log.info("[AuthenticationUtil.makeAuthentication : Guest 권한 부여]");
-//            authentication = UserAuthentication.makeGuestAuthentication();
+            if (isRequestAvailableToGuest(token)) {
+                log.info("[AuthenticationUtil.makeAuthentication : Guest 권한 부여]");
+                String nickname = jwtProvider.getJwtUserDetails(token).getNickname();
+                authentication = UserAuthentication.makeGuestAuthentication(nickname);
+            }
+            else {
+                log.info("[AuthenticationUtil.makeAuthentication : User 권한 부여]");
+                authentication = UserAuthentication.from(jwtProvider.getJwtUserDetails(token));
+            }
         }
 
         if(authentication != null) {

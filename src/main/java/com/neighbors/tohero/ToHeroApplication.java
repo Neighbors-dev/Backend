@@ -8,10 +8,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @SpringBootApplication
 @EnableJpaAuditing
 @EntityScan(basePackages = "com.neighbors.tohero.infrastructure.entity")
-public class SantaApplication {
+public class ToHeroApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SantaApplication.class, args);
+		SpringApplication.run(ToHeroApplication.class, args);
 	}
 
 }

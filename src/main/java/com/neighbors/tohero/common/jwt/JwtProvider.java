@@ -35,7 +35,7 @@ public class JwtProvider {
 
         claims.put("role", jwtUserDetails.getRole());
         if(jwtUserDetails.getRole() == Role.USER) {
-            claims.put("id", jwtUserDetails.getUserId());
+            claims.put("userId", jwtUserDetails.getUserId());
             claims.put("email", jwtUserDetails.getEmail());
         }
 
