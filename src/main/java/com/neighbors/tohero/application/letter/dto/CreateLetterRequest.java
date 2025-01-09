@@ -14,7 +14,7 @@ public record CreateLetterRequest (
     TargetJob targetJob,
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    long addressId,
+    Long addressId,
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @Length(min = 1, max = 100)

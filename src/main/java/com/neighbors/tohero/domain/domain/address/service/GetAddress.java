@@ -21,4 +21,8 @@ public class GetAddress {
     public List<Address> searchAddressByRoadAddress(String queryRoadAddress, TargetJob targetJob){
         return addressRepository.searchAddressByRoadAddress(queryRoadAddress, targetJob);
     }
+
+    public boolean existAddressById(long addressId) {
+        return addressRepository.existAddressById(addressId);
+    }
 }

@@ -35,4 +35,9 @@ public class AddressRepositoryImpl implements AddressRepository {
                 .map(addressMapper::toDomain)
                 .toList();
     }
+
+    @Override
+    public boolean existAddressById(long addressId) {
+        return addressEntityRepository.existsById(addressId);
+    }
 }

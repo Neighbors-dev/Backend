@@ -27,6 +27,6 @@ public class LetterController {
             @RequestBody @Validated CreateLetterRequest createLetterRequest
     ) {
         return ResponseEntity.ok()
-                .body(letterService.createLetter(createLetterRequest));
+                .body(letterService.createLetter(jwtUserDetail, createLetterRequest));
     }
 }
