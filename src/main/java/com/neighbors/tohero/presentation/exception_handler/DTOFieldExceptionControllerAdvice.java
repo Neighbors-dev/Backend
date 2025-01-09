@@ -32,7 +32,7 @@ public class DTOFieldExceptionControllerAdvice {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<BaseResponse> handle_UserValidationException(MethodArgumentNotValidException e) {
+    public ResponseEntity<BaseResponse> handle_fieldValidationException(MethodArgumentNotValidException e) {
         BaseResponse response = new BaseResponse(
                 BaseResponseStatus.BAD_REQUEST,
                 fieldErrorMapper.get(e.getBindingResult().getFieldError().getField()).getMessage()
