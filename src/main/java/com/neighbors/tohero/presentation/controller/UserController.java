@@ -45,4 +45,14 @@ public class UserController {
         return ResponseEntity.ok()
                 .body(userService.logout(httpSession));
     }
+
+    @Operation(summary = "유저 API", description = "사용자 탈퇴하기 API입니다.")
+    @PostMapping("/signout")
+    public ResponseEntity<BaseResponse> signout(
+            @Parameter(hidden=true) @AuthenticationPrincipal JwtUserDetails jwtUserDetail,
+            @Parameter(hidden=true) HttpSession httpSession
+    ){
+        return ResponseEntity.ok()
+                .body(userService.signout(jwtUserDetail, httpSession));
+    }
 }

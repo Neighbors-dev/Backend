@@ -11,6 +11,7 @@ import com.neighbors.tohero.common.jwt.JwtProvider;
 import com.neighbors.tohero.common.jwt.JwtUserDetails;
 import com.neighbors.tohero.domain.domain.user.model.User;
 import com.neighbors.tohero.domain.domain.user.service.CreateUser;
+import com.neighbors.tohero.domain.domain.user.service.DeleteUser;
 import com.neighbors.tohero.domain.domain.user.service.UpdateUser;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ public class UserService {
 
     private final UpdateUser updateUser;
     private final CreateUser createUser;
+    private final DeleteUser deleteUser;
     private final JwtProvider jwtProvider;
 
     public BaseResponse updateUserName(long userId, String nickname){
@@ -46,6 +48,17 @@ public class UserService {
         return new BaseResponse<>(
                 BaseResponseStatus.OK,
                 BaseResponseMessage.로그아웃이_성공적으로_실행되었습니다.getMessage()
+        );
+    }
+
+    public BaseResponse signout(JwtUserDetails jwtUserDetails, HttpSession httpSession){
+        httpSession.invalidate();
+
+        deleteUser.signout(jwtUserDetails.getUserId());
+
+        return new BaseResponse<>(
+                BaseResponseStatus.OK,
+                BaseResponseMessage.성공적으로_탈퇴했습니다.getMessage()
         );
     }
 
