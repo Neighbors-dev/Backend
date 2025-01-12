@@ -82,6 +82,11 @@ public class LetterService {
         );
     }
 
+    @Transactional
+    public BaseResponse deleteLetter(long userId, long letterId){
+        return null;
+    }
+
 
     private BaseResponse<CreateLetterResponse> createGuestLetter(final String nickname, final CreateLetterRequest createLetterRequest) {
         long createdLetterId = createLetter.createGuestLetter(

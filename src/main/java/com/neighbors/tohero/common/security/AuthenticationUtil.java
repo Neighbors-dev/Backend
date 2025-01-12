@@ -32,6 +32,7 @@ public class AuthenticationUtil {
         addToOnlyUserRequest("GET", "/letter");
         addToOnlyUserRequest("PUT", "/letter");
         addToOnlyUserRequest("GET", "/auth/refreshToken");
+        addToOnlyUserRequest("DELETE", "/letter");
     }
 
     private void addToOnlyUserRequest(String method, String url) {
