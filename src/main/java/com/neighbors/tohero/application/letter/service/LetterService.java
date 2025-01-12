@@ -5,6 +5,7 @@ import com.neighbors.tohero.application.baseResponse.BaseResponseMessage;
 import com.neighbors.tohero.application.baseResponse.BaseResponseStatus;
 import com.neighbors.tohero.application.letter.dto.CreateLetterRequest;
 import com.neighbors.tohero.application.letter.dto.CreateLetterResponse;
+import com.neighbors.tohero.common.enums.Role;
 import com.neighbors.tohero.common.exception.address.AddressException;
 import com.neighbors.tohero.common.exception.letter.LetterException;
 import com.neighbors.tohero.common.jwt.JwtUserDetails;
@@ -24,15 +25,35 @@ public class LetterService {
     private final GetAddress getAddress;
 
     public BaseResponse<CreateLetterResponse> createLetter(final JwtUserDetails jwtUserDetail, final CreateLetterRequest createLetterRequest) {
-        String writer = jwtUserDetail.getNickname();
 
         throwExceptionIfAddressIsNotExist(createLetterRequest.addressId());
+
+        if(jwtUserDetail.getRole() == Role.GUEST){
+            return createGuestLetter(jwtUserDetail.getNickname(), createLetterRequest);
+        }
         long createdLetterId = createLetter.createLetter(
-                writer,
+                jwtUserDetail.getUserId(),
+                jwtUserDetail.getNickname(),
+                createLetterRequest
+        );
+
+        throwIfLetterNotCreate(createdLetterId);
+
+        return new BaseResponse<>(
+                BaseResponseStatus.OK,
+                BaseResponseMessage.편지가_성공적으로_생성_되었습니다.getMessage(),
+                new CreateLetterResponse(createdLetterId)
+        );
+    }
+
+    private BaseResponse<CreateLetterResponse> createGuestLetter(final String nickname, final CreateLetterRequest createLetterRequest) {
+        long createdLetterId = createLetter.createGuestLetter(
+                nickname,
                 createLetterRequest.content(),
                 createLetterRequest.targetJob(),
                 createLetterRequest.addressId(),
-                createLetterRequest.heroName()
+                createLetterRequest.heroName(),
+                createLetterRequest.isPublic()
         );
 
         throwIfLetterNotCreate(createdLetterId);

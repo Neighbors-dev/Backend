@@ -131,4 +131,14 @@ public class JwtProvider {
                 .build();
 
     }
+
+    public JwtUserDetails getGuestJwtUserDetails(String token) {
+        Claims claims = getBody(token);
+
+        return JwtUserDetails.builder()
+                .nickname(String.valueOf(claims.getSubject()))
+                .role(Role.valueOf(claims.get("role").toString()))
+                .build();
+
+    }
 }

@@ -1,16 +1,27 @@
 package com.neighbors.tohero.domain.domain.mainPage.model;
 
+import com.neighbors.tohero.domain.domain.address.model.Address;
+import com.neighbors.tohero.domain.domain.user.model.User;
+import com.neighbors.tohero.infrastructure.entity.LetterEntity;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
+@Builder
 @AllArgsConstructor
 public class Letter {
     private long letterId;
     private String letterContent;
     private boolean isOpened;
-    private String fromUserName;
     private String targetName;
+    private boolean isPublic;
+    private boolean readingAlarm;
+
+    private Address address;
+
+    private String writer;
+    private User user;
 
     public String getTargetName(){
         if(targetName == null) {
@@ -19,7 +30,57 @@ public class Letter {
         return targetName;
     }
 
-    public static Letter of(long letterId, String letterContent, boolean isOpened, String fromUserName, String targetName) {
-        return new Letter(letterId, letterContent, isOpened, fromUserName, targetName);
+    public static Letter createNonUserAndAddress(LetterEntity letterEntity) {
+        return new Letter(
+                letterEntity.getLetterId(),
+                letterEntity.getLetterContent(),
+                letterEntity.isOpened(),
+                letterEntity.getTargetName(),
+                letterEntity.getIsPublic(),
+                letterEntity.getReadingAlarm(),
+                null,letterEntity.getWriter(),null
+        );
+    }
+
+    public static Letter createNonUser(LetterEntity letterEntity, Address address) {
+        return new Letter(
+                letterEntity.getLetterId(),
+                letterEntity.getLetterContent(),
+                letterEntity.isOpened(),
+                letterEntity.getTargetName(),
+                letterEntity.getIsPublic(),
+                letterEntity.getReadingAlarm(),
+                address
+                ,letterEntity.getWriter(),
+                null
+        );
+    }
+
+    public static Letter createNonAddress(LetterEntity letterEntity, User user) {
+        return new Letter(
+                letterEntity.getLetterId(),
+                letterEntity.getLetterContent(),
+                letterEntity.isOpened(),
+                letterEntity.getTargetName(),
+                letterEntity.getIsPublic(),
+                letterEntity.getReadingAlarm(),
+                null,
+                letterEntity.getUser().getNickName(),
+                user
+        );
+    }
+
+    public static Letter from(LetterEntity letterEntity, Address address, User user) {
+        return new Letter(
+                letterEntity.getLetterId(),
+                letterEntity.getLetterContent(),
+                letterEntity.isOpened(),
+                letterEntity.getTargetName(),
+                letterEntity.getIsPublic(),
+                letterEntity.getReadingAlarm(),
+                address,
+                letterEntity.getUser().getNickName(),
+                user
+        );
     }
 }

@@ -31,7 +31,7 @@ public class AuthenticationUtil {
     }
 
     private Boolean isRequestAvailableToGuest(String token) {
-        return jwtProvider.getJwtUserDetails(token).getRole() == Role.GUEST;
+        return jwtProvider.getGuestJwtUserDetails(token).getRole() == Role.GUEST;
     }
 
     private Optional<UserAuthentication> makeAuthentication(HttpServletRequest request, String token) {
@@ -43,7 +43,7 @@ public class AuthenticationUtil {
         if(isTokenValid(token)) {
             if (isRequestAvailableToGuest(token)) {
                 log.info("[AuthenticationUtil.makeAuthentication : Guest 권한 부여]");
-                String nickname = jwtProvider.getJwtUserDetails(token).getNickname();
+                String nickname = jwtProvider.getGuestJwtUserDetails(token).getNickname();
                 authentication = UserAuthentication.makeGuestAuthentication(nickname);
             }
             else {

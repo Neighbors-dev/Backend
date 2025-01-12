@@ -3,11 +3,15 @@ package com.neighbors.tohero.infrastructure.entity;
 import com.neighbors.tohero.common.enums.TargetJob;
 import com.neighbors.tohero.infrastructure.entity.base.BaseEntity;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "`Address`")
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class AddressEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,4 +33,8 @@ public class AddressEntity extends BaseEntity {
     @Column(name = "target_job")
     @Enumerated(value = EnumType.ORDINAL)
     private TargetJob targetJob;
+
+    public static AddressEntity of(long addressId, String branchOffice, String roadAddress, String phoneNumber, String queryPath, TargetJob targetJob) {
+        return new AddressEntity(addressId, branchOffice, roadAddress, phoneNumber, queryPath, targetJob);
+    }
 }

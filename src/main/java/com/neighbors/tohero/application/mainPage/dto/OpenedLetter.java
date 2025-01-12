@@ -8,6 +8,6 @@ public record OpenedLetter(
         String content
 ){
     public static OpenedLetter from(Letter letter){
-        return new OpenedLetter(letter.getTargetName(), letter.getFromUserName(), letter.getLetterContent());
+        return new OpenedLetter(letter.getTargetName(), letter.getWriter(), letter.getLetterContent());
     }
 }
