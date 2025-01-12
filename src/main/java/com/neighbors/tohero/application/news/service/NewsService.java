@@ -7,9 +7,9 @@ import com.neighbors.tohero.application.news.dto.GetPagedNewsResponse;
 import com.neighbors.tohero.domain.domain.news.model.News;
 import com.neighbors.tohero.domain.domain.news.service.GetNews;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Pageable;
 import java.util.List;
 
 @Service

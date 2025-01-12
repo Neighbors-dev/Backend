@@ -47,7 +47,8 @@ public class SecurityConfig {
                 "/address",
                 "/notice/**",
                 "/mainPage/**",
-                "/letter/detail"
+                "/letter/detail",
+                "/news"
         );
     }
 
