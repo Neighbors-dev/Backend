@@ -105,7 +105,7 @@ public class JwtProvider {
 
     public Long getId(String token) {
         Claims claims = getBody(token);
-        return Long.parseLong(claims.get("id").toString());
+        return Long.parseLong(claims.get("userId").toString());
     }
 
     private Claims getBody(String token) {
