@@ -3,6 +3,7 @@ package com.neighbors.tohero.presentation.controller;
 import com.neighbors.tohero.application.baseResponse.BaseResponse;
 import com.neighbors.tohero.application.letter.dto.CreateLetterRequest;
 import com.neighbors.tohero.application.letter.dto.GetLetterDetailRequest;
+import com.neighbors.tohero.application.letter.dto.UpdateLetterPublic;
 import com.neighbors.tohero.application.letter.service.LetterService;
 import com.neighbors.tohero.common.jwt.JwtUserDetails;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -39,5 +40,14 @@ public class LetterController {
     public ResponseEntity<BaseResponse> getMyLetters(@Parameter(hidden = true) @AuthenticationPrincipal JwtUserDetails jwtUserDetail){
         return ResponseEntity.ok()
                 .body(letterService.getMyLetters(jwtUserDetail.getUserId()));
+    }
+
+    @PutMapping("")
+    public ResponseEntity<BaseResponse> updateLetterPublic(
+            @Parameter(hidden = true) @AuthenticationPrincipal JwtUserDetails jwtUserDetail,
+            @RequestBody @Validated UpdateLetterPublic updateLetterPublic
+    ){
+        return ResponseEntity.ok()
+                .body(letterService.updateLetterPublic(jwtUserDetail.getUserId(), updateLetterPublic));
     }
 }

@@ -68,6 +68,11 @@ public class LetterService {
         );
     }
 
+    public BaseResponse updateLetterPublic(long userId, UpdateLetterPublic updateLetterPublic){
+        return null;
+    }
+
+
     private BaseResponse<CreateLetterResponse> createGuestLetter(final String nickname, final CreateLetterRequest createLetterRequest) {
         long createdLetterId = createLetter.createGuestLetter(
                 nickname,
