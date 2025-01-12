@@ -76,7 +76,7 @@ public class SecurityConfig {
         // 여러 도메인 허용
         List<String> allowedOrigins = new ArrayList<>();
         allowedOrigins.add("https://glittery-madeleine-215e2f.netlify.app");
-        allowedOrigins.add("https://tohero.co.kr");
+//        allowedOrigins.add("https://tohero.co.kr");
         config.setAllowedOrigins(allowedOrigins); // 여러 도메인 추가
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")); // 허용할 HTTP 메서드
         config.setAllowedHeaders(List.of("*")); // 모든 헤더 허용

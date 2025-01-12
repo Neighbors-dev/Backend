@@ -29,7 +29,7 @@ public class SwaggerConfig {
                 .addSecurityItem(securityRequirement)
                 .components(components)
                 .servers(Arrays.asList(new Server().url("https://tohero.co.kr"),
-                        new Server().url("http://localhost:8080"),new Server().url("https://tohero.co.kr")));
+                        new Server().url("http://localhost:8080")));
     }
     private Info apiInfo() {
         return new Info()
