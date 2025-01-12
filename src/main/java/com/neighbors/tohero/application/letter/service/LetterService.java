@@ -3,10 +3,7 @@ package com.neighbors.tohero.application.letter.service;
 import com.neighbors.tohero.application.baseResponse.BaseResponse;
 import com.neighbors.tohero.application.baseResponse.BaseResponseMessage;
 import com.neighbors.tohero.application.baseResponse.BaseResponseStatus;
-import com.neighbors.tohero.application.letter.dto.CreateLetterRequest;
-import com.neighbors.tohero.application.letter.dto.CreateLetterResponse;
-import com.neighbors.tohero.application.letter.dto.GetLetterDetailRequest;
-import com.neighbors.tohero.application.letter.dto.GetLetterDetailResponse;
+import com.neighbors.tohero.application.letter.dto.*;
 import com.neighbors.tohero.common.enums.Role;
 import com.neighbors.tohero.common.exception.address.AddressException;
 import com.neighbors.tohero.common.exception.letter.LetterException;
@@ -58,6 +55,16 @@ public class LetterService {
                 BaseResponseStatus.OK,
                 BaseResponseMessage.편지가_성공적으로_조회되었습니다.getMessage(),
                 GetLetterDetailResponse.from(matchedLetter)
+        );
+    }
+
+    public BaseResponse<GetMyLettersResponse> getMyLetters(long userId){
+        List<Letter> myLetters = getLetter.getMyLetters(userId);
+
+        return new BaseResponse<>(
+                BaseResponseStatus.OK,
+                BaseResponseMessage.편지가_성공적으로_조회되었습니다.getMessage(),
+                GetMyLettersResponse.from(myLetters)
         );
     }
 

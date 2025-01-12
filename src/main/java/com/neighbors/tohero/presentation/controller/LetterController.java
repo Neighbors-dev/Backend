@@ -34,4 +34,10 @@ public class LetterController {
         return ResponseEntity.ok()
                 .body(letterService.getLetterDetail(getLetterDetailRequest));
     }
+
+    @GetMapping("")
+    public ResponseEntity<BaseResponse> getMyLetters(@Parameter(hidden = true) @AuthenticationPrincipal JwtUserDetails jwtUserDetail){
+        return ResponseEntity.ok()
+                .body(letterService.getMyLetters(jwtUserDetail.getUserId()));
+    }
 }

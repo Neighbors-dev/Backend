@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -29,8 +30,12 @@ public class LetterRepositoryImpl implements LetterRepository {
     }
 
     @Override
-    public List<Letter> getPageableLetter(Pageable pageable) {
-        List<LetterEntity> letterEntities =  letterEntityRepository.findPagedLetterEntity(pageable).getContent();
+    public List<Letter> getLetters(Function<LetterEntityRepository, Optional<List<LetterEntity>>> function) {
+        List<LetterEntity> letterEntities =  function.apply(letterEntityRepository)
+                .orElseThrow(()-> new LetterException(
+                        BaseResponseStatus.NO_RESULT,
+                        BaseResponseMessage.일치하는_편지가_없습니다.getMessage()
+                ));
 
         return letterEntities.stream()
                 .map(letterMapper::toDomain)
@@ -47,6 +52,7 @@ public class LetterRepositoryImpl implements LetterRepository {
     @Override
     public void remainLetterWithoutUser(long userId) {
         letterEntityRepository.findAllByUserId(userId)
+                .orElse(new ArrayList<>())
                 .forEach(letter -> {
                     letter.remainLetterWithoutUser();
                     letterEntityRepository.save(letter);

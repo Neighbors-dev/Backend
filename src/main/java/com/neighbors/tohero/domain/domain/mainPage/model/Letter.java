@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Builder
 @AllArgsConstructor
@@ -23,6 +25,8 @@ public class Letter {
     private String writer;
     private User user;
 
+    private LocalDateTime createdDate;
+
     public String getTargetName(){
         if(targetName == null) {
             return "익명의";
@@ -38,7 +42,8 @@ public class Letter {
                 letterEntity.getTargetName(),
                 letterEntity.getIsPublic(),
                 letterEntity.getReadingAlarm(),
-                null,letterEntity.getWriter(),null
+                null,letterEntity.getWriter(),null,
+                letterEntity.created_at
         );
     }
 
@@ -52,7 +57,8 @@ public class Letter {
                 letterEntity.getReadingAlarm(),
                 address
                 ,letterEntity.getWriter(),
-                null
+                null,
+                letterEntity.created_at
         );
     }
 
@@ -66,7 +72,8 @@ public class Letter {
                 letterEntity.getReadingAlarm(),
                 null,
                 letterEntity.getUser().getNickName(),
-                user
+                user,
+                letterEntity.created_at
         );
     }
 
@@ -80,7 +87,8 @@ public class Letter {
                 letterEntity.getReadingAlarm(),
                 address,
                 letterEntity.getUser().getNickName(),
-                user
+                user,
+                letterEntity.created_at
         );
     }
 }

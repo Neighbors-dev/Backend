@@ -19,10 +19,14 @@ public class GetLetter {
     }
 
     public List<Letter> getPageableLetter(Pageable pageable){
-        return letterRepository.getPageableLetter(pageable);
+        return letterRepository.getLetters(repo -> repo.findPagedLetterEntity(pageable));
     }
 
     public Letter getLetterById(long letterId){
         return letterRepository.getLetter(repo -> repo.findByIdAndPublic(letterId));
+    }
+
+    public List<Letter> getMyLetters(long userId){
+        return letterRepository.getLetters(repo -> repo.findAllByUserId(userId));
     }
 }
