@@ -75,4 +75,9 @@ public class LetterRepositoryImpl implements LetterRepository {
     public void updateLetter(Consumer<LetterEntityRepository> consumer) {
         consumer.accept(letterEntityRepository);
     }
+
+    @Override
+    public void deleteLetter(Consumer<LetterEntityRepository> consumer) {
+        consumer.accept(letterEntityRepository);
+    }
 }

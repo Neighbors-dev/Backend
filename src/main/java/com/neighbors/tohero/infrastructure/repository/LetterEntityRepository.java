@@ -34,4 +34,11 @@ public interface LetterEntityRepository extends JpaRepository<LetterEntity, Long
             @Param("letterId") long letterId,
             @Param("isPublic") boolean isPublic
     );
+
+    @Modifying
+    @Query("DELETE FROM LetterEntity le WHERE le.user.userId = :userId AND le.letterId = :letterId")
+    void deleteByUserIdAndLetterId(
+            @Param("userId") long userId,
+            @Param("letterId") long letterId
+    );
 }
