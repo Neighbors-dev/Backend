@@ -19,6 +19,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
@@ -72,7 +73,11 @@ public class SecurityConfig {
     public CorsFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true); // 쿠키 포함 허용
-        config.setAllowedOrigins(List.of("http://localhost:5173", "https://glittery-madeleine-215e2f.netlify.app", "https://tohero.co.kr")); // 허용할 도메인
+        // 여러 도메인 허용
+        List<String> allowedOrigins = new ArrayList<>();
+        allowedOrigins.add("https://glittery-madeleine-215e2f.netlify.app");
+        allowedOrigins.add("https://tohero.co.kr");
+        config.setAllowedOrigins(allowedOrigins); // 여러 도메인 추가
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")); // 허용할 HTTP 메서드
         config.setAllowedHeaders(List.of("*")); // 모든 헤더 허용
         config.setExposedHeaders(List.of("Authorization")); // 노출할 헤더
