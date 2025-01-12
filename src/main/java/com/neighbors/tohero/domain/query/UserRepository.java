@@ -5,10 +5,12 @@ import com.neighbors.tohero.infrastructure.entity.UserEntity;
 import com.neighbors.tohero.infrastructure.repository.UserEntityRepository;
 
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 public interface UserRepository {
     User createUser(User user);
     User updateUserName(Function<UserEntityRepository, Optional<UserEntity>> findUserFunction, String nickname);
     User getUser(Function<UserEntityRepository, Optional<UserEntity>> findUserFunction);
+    void deleteUser(Consumer<UserEntityRepository> findUserConsumer);
 }

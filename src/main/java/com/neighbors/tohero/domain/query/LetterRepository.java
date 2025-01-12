@@ -10,4 +10,5 @@ public interface LetterRepository {
     long getTotalLetterNumber();
     List<Letter> getPageableLetter(Pageable pageable);
     Letter createLetter(Letter letter);
+    void remainLetterWithoutUser(long userId);
 }

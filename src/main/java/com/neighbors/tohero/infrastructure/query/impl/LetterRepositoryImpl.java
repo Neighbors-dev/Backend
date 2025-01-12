@@ -38,4 +38,13 @@ public class LetterRepositoryImpl implements LetterRepository {
         LetterEntity createdLetterEntity =  letterEntityRepository.save(newLetterEntity);
         return letterMapper.toDomain(createdLetterEntity);
     }
+
+    @Override
+    public void remainLetterWithoutUser(long userId) {
+        letterEntityRepository.findAllByUserId(userId)
+                .forEach(letter -> {
+                    letter.remainLetterWithoutUser();
+                    letterEntityRepository.save(letter);
+                });
+    }
 }
