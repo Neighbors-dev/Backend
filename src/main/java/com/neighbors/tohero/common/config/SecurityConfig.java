@@ -64,7 +64,10 @@ public class SecurityConfig {
                 {
                     exception.authenticationEntryPoint(customJwtAuthenticationEntryPoint);
                     exception.accessDeniedHandler(customAccessDeniedHandler);
-                });
+                })
+                .authorizeHttpRequests(auth -> auth
+                        .anyRequest().authenticated()
+                );
 
         return http.build();
     }
