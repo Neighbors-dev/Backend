@@ -10,8 +10,10 @@ import com.neighbors.tohero.common.exception.letter.LetterException;
 import com.neighbors.tohero.common.jwt.JwtUserDetails;
 import com.neighbors.tohero.domain.domain.address.service.GetAddress;
 import com.neighbors.tohero.domain.domain.letter.service.CreateLetter;
+import com.neighbors.tohero.domain.domain.letter.service.UpdateLetter;
 import com.neighbors.tohero.domain.domain.mainPage.model.Letter;
 import com.neighbors.tohero.domain.domain.mainPage.service.GetLetter;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +27,7 @@ public class LetterService {
     private final CreateLetter createLetter;
     private final GetLetter getLetter;
     private final GetAddress getAddress;
+    private final UpdateLetter updateLetter;
 
     public BaseResponse<CreateLetterResponse> createLetter(final JwtUserDetails jwtUserDetail, final CreateLetterRequest createLetterRequest) {
 
@@ -67,6 +70,18 @@ public class LetterService {
                 GetMyLettersResponse.from(myLetters)
         );
     }
+
+    @Transactional
+    public BaseResponse<UpdateLetterPublicResponse> updateLetterPublic(long userId, UpdateLetterPublic updateLetterPublic){
+        updateLetter.updateLetterPublic(userId, updateLetterPublic.letterId(), updateLetterPublic.isPublic());
+
+        return new BaseResponse<>(
+                BaseResponseStatus.OK,
+                BaseResponseMessage.편지_공개_여부가_수정되었습니다.getMessage(),
+                UpdateLetterPublicResponse.of(updateLetterPublic.isPublic())
+        );
+    }
+
 
     private BaseResponse<CreateLetterResponse> createGuestLetter(final String nickname, final CreateLetterRequest createLetterRequest) {
         long createdLetterId = createLetter.createGuestLetter(

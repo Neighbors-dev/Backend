@@ -5,6 +5,7 @@ import io.lettuce.core.dynamic.annotation.Param;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -25,4 +26,12 @@ public interface LetterEntityRepository extends JpaRepository<LetterEntity, Long
 
     @Query("SELECT le FROM LetterEntity le WHERE le.letterId = :letterId AND le.isPublic = true")
     Optional<LetterEntity> findByIdAndPublic(@Param("letterId") long letterId);
+
+    @Modifying
+    @Query("UPDATE LetterEntity le SET le.isPublic = :isPublic WHERE le.user.userId = :userId AND le.letterId = :letterId")
+    void updateLetterPublic(
+            @Param("userId") long userId,
+            @Param("letterId") long letterId,
+            @Param("isPublic") boolean isPublic
+    );
 }
