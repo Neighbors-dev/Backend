@@ -1,5 +1,8 @@
 package com.neighbors.tohero.infrastructure.query.impl;
 
+import com.neighbors.tohero.application.baseResponse.BaseResponseMessage;
+import com.neighbors.tohero.application.baseResponse.BaseResponseStatus;
+import com.neighbors.tohero.common.exception.letter.LetterException;
 import com.neighbors.tohero.domain.domain.mainPage.model.Letter;
 import com.neighbors.tohero.domain.query.LetterRepository;
 import com.neighbors.tohero.infrastructure.entity.LetterEntity;
@@ -51,7 +54,13 @@ public class LetterRepositoryImpl implements LetterRepository {
     }
 
     @Override
-    public Letter getLetter(Function<LetterRepository, Optional<Letter>> function) {
-        return null;
+    public Letter getLetter(Function<LetterEntityRepository, Optional<LetterEntity>> function) {
+        LetterEntity letterEntity = function.apply(letterEntityRepository)
+                .orElseThrow(()-> new LetterException(
+                        BaseResponseStatus.NO_RESULT,
+                        BaseResponseMessage.일치하는_편지가_없습니다.getMessage()
+                ));
+
+        return letterMapper.toDomain(letterEntity);
     }
 }

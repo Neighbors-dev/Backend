@@ -23,6 +23,6 @@ public class GetLetter {
     }
 
     public Letter getLetterById(long letterId){
-        return null;
+        return letterRepository.getLetter(repo -> repo.findByIdAndPublic(letterId));
     }
 }

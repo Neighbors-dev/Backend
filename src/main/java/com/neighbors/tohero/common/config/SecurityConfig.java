@@ -46,7 +46,8 @@ public class SecurityConfig {
                 "/auth/refreshToken",
                 "/address",
                 "/notice/**",
-                "/mainPage/**"
+                "/mainPage/**",
+                "/letter/detail"
         );
     }
 
