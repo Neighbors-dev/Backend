@@ -21,4 +21,8 @@ public class GetLetter {
     public List<Letter> getPageableLetter(Pageable pageable){
         return letterRepository.getPageableLetter(pageable);
     }
+
+    public Letter getLetterById(long letterId){
+        return null;
+    }
 }

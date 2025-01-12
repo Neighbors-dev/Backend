@@ -10,6 +10,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Function;
 
 @Repository
 @RequiredArgsConstructor
@@ -46,5 +48,10 @@ public class LetterRepositoryImpl implements LetterRepository {
                     letter.remainLetterWithoutUser();
                     letterEntityRepository.save(letter);
                 });
+    }
+
+    @Override
+    public Letter getLetter(Function<LetterRepository, Optional<Letter>> function) {
+        return null;
     }
 }

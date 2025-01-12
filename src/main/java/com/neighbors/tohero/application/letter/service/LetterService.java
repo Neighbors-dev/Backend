@@ -5,12 +5,16 @@ import com.neighbors.tohero.application.baseResponse.BaseResponseMessage;
 import com.neighbors.tohero.application.baseResponse.BaseResponseStatus;
 import com.neighbors.tohero.application.letter.dto.CreateLetterRequest;
 import com.neighbors.tohero.application.letter.dto.CreateLetterResponse;
+import com.neighbors.tohero.application.letter.dto.GetLetterDetailRequest;
+import com.neighbors.tohero.application.letter.dto.GetLetterDetailResponse;
 import com.neighbors.tohero.common.enums.Role;
 import com.neighbors.tohero.common.exception.address.AddressException;
 import com.neighbors.tohero.common.exception.letter.LetterException;
 import com.neighbors.tohero.common.jwt.JwtUserDetails;
 import com.neighbors.tohero.domain.domain.address.service.GetAddress;
 import com.neighbors.tohero.domain.domain.letter.service.CreateLetter;
+import com.neighbors.tohero.domain.domain.mainPage.model.Letter;
+import com.neighbors.tohero.domain.domain.mainPage.service.GetLetter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +26,7 @@ import java.util.List;
 public class LetterService {
 
     private final CreateLetter createLetter;
+    private final GetLetter getLetter;
     private final GetAddress getAddress;
 
     public BaseResponse<CreateLetterResponse> createLetter(final JwtUserDetails jwtUserDetail, final CreateLetterRequest createLetterRequest) {
@@ -43,6 +48,16 @@ public class LetterService {
                 BaseResponseStatus.OK,
                 BaseResponseMessage.편지가_성공적으로_생성_되었습니다.getMessage(),
                 new CreateLetterResponse(createdLetterId)
+        );
+    }
+
+    public BaseResponse<GetLetterDetailResponse> getLetterDetail(GetLetterDetailRequest getLetterDetailRequest){
+        Letter matchedLetter = getLetter.getLetterById(getLetterDetailRequest.letterId());
+
+        return new BaseResponse<>(
+                BaseResponseStatus.OK,
+                BaseResponseMessage.편지가_성공적으로_조회되었습니다.getMessage(),
+                GetLetterDetailResponse.from(matchedLetter)
         );
     }
 
