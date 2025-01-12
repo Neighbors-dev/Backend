@@ -35,7 +35,7 @@ public class JwtProvider {
 
         claims.put("role", jwtUserDetails.getRole());
         if(jwtUserDetails.getRole() == Role.USER) {
-            claims.put("id", jwtUserDetails.getUserId());
+            claims.put("userId", jwtUserDetails.getUserId());
             claims.put("email", jwtUserDetails.getEmail());
         }
 
@@ -105,7 +105,7 @@ public class JwtProvider {
 
     public Long getId(String token) {
         Claims claims = getBody(token);
-        return Long.parseLong(claims.get("id").toString());
+        return Long.parseLong(claims.get("userId").toString());
     }
 
     private Claims getBody(String token) {
@@ -128,6 +128,16 @@ public class JwtProvider {
                 .role(Role.valueOf(claims.get("role").toString()))
                 .email(claims.get("email").toString())
                 .userId(Long.parseLong(claims.get("userId").toString()))
+                .build();
+
+    }
+
+    public JwtUserDetails getGuestJwtUserDetails(String token) {
+        Claims claims = getBody(token);
+
+        return JwtUserDetails.builder()
+                .nickname(String.valueOf(claims.getSubject()))
+                .role(Role.valueOf(claims.get("role").toString()))
                 .build();
 
     }

@@ -12,7 +12,22 @@ public class AddressMapper {
                 addressEntity.getBranchOffice(),
                 addressEntity.getRoadAddress(),
                 addressEntity.getPhoneNumber(),
-                addressEntity.getQueryPath()
+                addressEntity.getQueryPath(),
+                addressEntity.getTargetJob()
+        );
+    }
+
+    public AddressEntity toEntity(Address address) {
+        if(address == null) {
+            return null;
+        }
+        return AddressEntity.of(
+                address.getAddressId(),
+                address.getOfficeName(),
+                address.getRoadAddress(),
+                address.getPhoneNumber(),
+                address.getQueryPath(),
+                address.getTargetJob()
         );
     }
 }

@@ -6,12 +6,17 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class UserMapper {
-    public UserEntity toEntity(User user){
-        return UserEntity.of(
+    public UserEntity toNewEntity(User user){
+        return UserEntity.returnNewObjectOf(
                 user.getUserName(),
                 user.getEmail(),
                 user.getRole()
         );
+    }
+
+    public UserEntity toEntity(User user){
+        if(user == null) return null;
+        return UserEntity.from(user);
     }
 
     public User toDomain(UserEntity userEntity){

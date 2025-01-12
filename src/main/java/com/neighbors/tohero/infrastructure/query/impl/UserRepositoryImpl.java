@@ -26,7 +26,7 @@ public class UserRepositoryImpl implements UserRepository {
         try{
             return getUser(repo -> repo.findByEmail(user.getEmail()));
         }catch(UserException e){
-            UserEntity userEntity = userMapper.toEntity(user);
+            UserEntity userEntity = userMapper.toNewEntity(user);
             userEntityRepository.save(userEntity);
 
             UserEntity createdUserEntity = userEntityRepository.findByEmail(user.getEmail())

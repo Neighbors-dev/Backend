@@ -31,4 +31,11 @@ public class LetterRepositoryImpl implements LetterRepository {
                 .map(letterMapper::toDomain)
                 .toList();
     }
+
+    @Override
+    public Letter createLetter(Letter letter) {
+        LetterEntity newLetterEntity = letterMapper.toEntity(letter);
+        LetterEntity createdLetterEntity =  letterEntityRepository.save(newLetterEntity);
+        return letterMapper.toDomain(createdLetterEntity);
+    }
 }
