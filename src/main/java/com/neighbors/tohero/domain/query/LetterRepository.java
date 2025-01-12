@@ -12,7 +12,7 @@ import java.util.function.Function;
 
 public interface LetterRepository {
     long getTotalLetterNumber();
-    List<Letter> getPageableLetter(Pageable pageable);
+    List<Letter> getLetters(Function<LetterEntityRepository, Optional<List<LetterEntity>>> function);
     Letter createLetter(Letter letter);
     void remainLetterWithoutUser(long userId);
     Letter getLetter(Function<LetterEntityRepository, Optional<LetterEntity>> function);
