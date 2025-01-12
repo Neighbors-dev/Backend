@@ -16,13 +16,13 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("")
+@RequestMapping("/user")
 public class UserController {
 
     private final UserService userService;
 
     @Operation(summary = "유저 API", description = "유저 이름 변경 API입니다.")
-    @PutMapping("/user/name")
+    @PutMapping("/name")
     public ResponseEntity<BaseResponse> updateUserName(
             @Parameter(hidden=true) @AuthenticationPrincipal JwtUserDetails jwtUserDetail,
             @ParameterObject @Validated  UpdateUserName updateUserName
@@ -32,7 +32,7 @@ public class UserController {
     }
 
     @Operation(summary = "유저 API", description = "사용자 인증 API입니다.")
-    @PostMapping("/user/auth")
+    @PostMapping("/auth")
     public ResponseEntity<BaseResponse> authenticateUser(@RequestBody @Validated AuthenticateUserRequest authenticateUserRequest){
         return ResponseEntity.ok()
                 .body(userService.authenticateUser(authenticateUserRequest));
