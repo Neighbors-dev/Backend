@@ -16,7 +16,7 @@ public class AddressExceptionControllerAdvice {
     @ExceptionHandler(AddressException.class)
     public ResponseEntity<BaseResponse> handle_NoticeException(AddressException e) {
         BaseResponse response = new BaseResponse(
-                BaseResponseStatus.NO_RESULT,
+                e.getStatus(),
                 e.getMessage()
         );
 

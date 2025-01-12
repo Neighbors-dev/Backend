@@ -45,4 +45,9 @@ public class LetterEntity extends BaseEntity {
 
     @Column(name = "reading_alarm")
     private Boolean readingAlarm;
+
+    public void remainLetterWithoutUser(){
+        this.user = null;
+        this.isPublic = false;
+    }
 }

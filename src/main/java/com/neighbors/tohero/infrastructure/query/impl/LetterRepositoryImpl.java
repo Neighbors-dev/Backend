@@ -1,5 +1,8 @@
 package com.neighbors.tohero.infrastructure.query.impl;
 
+import com.neighbors.tohero.application.baseResponse.BaseResponseMessage;
+import com.neighbors.tohero.application.baseResponse.BaseResponseStatus;
+import com.neighbors.tohero.common.exception.letter.LetterException;
 import com.neighbors.tohero.domain.domain.mainPage.model.Letter;
 import com.neighbors.tohero.domain.query.LetterRepository;
 import com.neighbors.tohero.infrastructure.entity.LetterEntity;
@@ -10,6 +13,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Function;
 
 @Repository
 @RequiredArgsConstructor
@@ -37,5 +42,25 @@ public class LetterRepositoryImpl implements LetterRepository {
         LetterEntity newLetterEntity = letterMapper.toEntity(letter);
         LetterEntity createdLetterEntity =  letterEntityRepository.save(newLetterEntity);
         return letterMapper.toDomain(createdLetterEntity);
+    }
+
+    @Override
+    public void remainLetterWithoutUser(long userId) {
+        letterEntityRepository.findAllByUserId(userId)
+                .forEach(letter -> {
+                    letter.remainLetterWithoutUser();
+                    letterEntityRepository.save(letter);
+                });
+    }
+
+    @Override
+    public Letter getLetter(Function<LetterEntityRepository, Optional<LetterEntity>> function) {
+        LetterEntity letterEntity = function.apply(letterEntityRepository)
+                .orElseThrow(()-> new LetterException(
+                        BaseResponseStatus.NO_RESULT,
+                        BaseResponseMessage.일치하는_편지가_없습니다.getMessage()
+                ));
+
+        return letterMapper.toDomain(letterEntity);
     }
 }

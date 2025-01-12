@@ -46,7 +46,9 @@ public class SecurityConfig {
                 "/auth/refreshToken",
                 "/address",
                 "/notice/**",
-                "/mainPage/**"
+                "/mainPage/**",
+                "/letter/detail",
+                "/news"
         );
     }
 
@@ -64,7 +66,10 @@ public class SecurityConfig {
                 {
                     exception.authenticationEntryPoint(customJwtAuthenticationEntryPoint);
                     exception.accessDeniedHandler(customAccessDeniedHandler);
-                });
+                })
+                .authorizeHttpRequests(auth -> auth
+                        .anyRequest().authenticated()
+                );
 
         return http.build();
     }

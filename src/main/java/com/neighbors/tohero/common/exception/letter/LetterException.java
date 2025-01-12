@@ -1,7 +1,9 @@
 package com.neighbors.tohero.common.exception.letter;
 
 import com.neighbors.tohero.application.baseResponse.BaseResponseStatus;
+import lombok.Getter;
 
+@Getter
 public class LetterException extends RuntimeException {
 
     private final BaseResponseStatus status;

@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 @Repository
@@ -60,5 +61,10 @@ public class UserRepositoryImpl implements UserRepository {
                 ));
 
         return userMapper.toDomain(userEntity);
+    }
+
+    @Override
+    public void deleteUser(Consumer<UserEntityRepository> findUserConsumer) {
+        findUserConsumer.accept(userEntityRepository);
     }
 }
