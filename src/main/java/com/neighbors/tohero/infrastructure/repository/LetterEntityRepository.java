@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface LetterEntityRepository extends JpaRepository<LetterEntity, Long> {
 
-    @Query("SELECT n FROM LetterEntity n JOIN FETCH n.user WHERE n.isPublic = true")
+    @Query("SELECT n FROM LetterEntity n WHERE n.isPublic = true")
     Slice<LetterEntity> findPagedLetterEntity(Pageable pageable);
 
     @Query("SELECT COUNT(n) FROM LetterEntity n WHERE n.isPublic = true")

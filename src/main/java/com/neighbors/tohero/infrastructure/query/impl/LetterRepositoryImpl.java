@@ -27,10 +27,6 @@ public class LetterRepositoryImpl implements LetterRepository {
     public List<Letter> getPageableLetter(Pageable pageable) {
         List<LetterEntity> letterEntities =  letterEntityRepository.findPagedLetterEntity(pageable).getContent();
 
-        for(LetterEntity letterEntity : letterEntities) {
-            System.out.println(letterEntity.getLetterContent());
-        }
-
         return letterEntities.stream()
                 .map(letterMapper::toDomain)
                 .toList();
