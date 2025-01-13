@@ -10,6 +10,7 @@ import com.neighbors.tohero.common.exception.letter.LetterException;
 import com.neighbors.tohero.common.jwt.JwtUserDetails;
 import com.neighbors.tohero.domain.domain.address.service.GetAddress;
 import com.neighbors.tohero.domain.domain.letter.service.CreateLetter;
+import com.neighbors.tohero.domain.domain.letter.service.DeleteLetter;
 import com.neighbors.tohero.domain.domain.letter.service.UpdateLetter;
 import com.neighbors.tohero.domain.domain.mainPage.model.Letter;
 import com.neighbors.tohero.domain.domain.mainPage.service.GetLetter;
@@ -28,6 +29,7 @@ public class LetterService {
     private final GetLetter getLetter;
     private final GetAddress getAddress;
     private final UpdateLetter updateLetter;
+    private final DeleteLetter deleteLetter;
 
     public BaseResponse<CreateLetterResponse> createLetter(final JwtUserDetails jwtUserDetail, final CreateLetterRequest createLetterRequest) {
 
@@ -79,6 +81,16 @@ public class LetterService {
                 BaseResponseStatus.OK,
                 BaseResponseMessage.편지_공개_여부가_수정되었습니다.getMessage(),
                 UpdateLetterPublicResponse.of(updateLetterPublic.isPublic())
+        );
+    }
+
+    @Transactional
+    public BaseResponse deleteLetter(long userId, long letterId){
+        deleteLetter.deleteLetterByUserIdAndLetterId(userId, letterId);
+
+        return new BaseResponse<>(
+                BaseResponseStatus.OK,
+                BaseResponseMessage.편지가_성공적으로_삭제_되었습니다.getMessage()
         );
     }
 

@@ -16,4 +16,5 @@ public interface LetterRepository {
     void remainLetterWithoutUser(long userId);
     Letter getLetter(Function<LetterEntityRepository, Optional<LetterEntity>> function);
     void updateLetter(Consumer<LetterEntityRepository> consumer);
+    void deleteLetter(Consumer<LetterEntityRepository> consumer);
 }

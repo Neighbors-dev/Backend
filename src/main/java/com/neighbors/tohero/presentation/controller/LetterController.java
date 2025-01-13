@@ -2,6 +2,7 @@ package com.neighbors.tohero.presentation.controller;
 
 import com.neighbors.tohero.application.baseResponse.BaseResponse;
 import com.neighbors.tohero.application.letter.dto.CreateLetterRequest;
+import com.neighbors.tohero.application.letter.dto.DeleteLetterRequest;
 import com.neighbors.tohero.application.letter.dto.GetLetterDetailRequest;
 import com.neighbors.tohero.application.letter.dto.UpdateLetterPublic;
 import com.neighbors.tohero.application.letter.service.LetterService;
@@ -22,7 +23,7 @@ public class LetterController {
 
     private final LetterService letterService;
 
-    @Operation(summary = "편지 API", description = "편지를 생성하는 API입니다. content, isPublic은 필수 정보입니다. TargetJob, addressId, heroName은 사용자에게 입력받은 여부에 따라 json에 포함/미포함 할 수 있습니다. readingAlarm은 열람여부를 메시지로 받을지 여부이며, 로그인한 유저일 경우만 json에 포함시키면 됩니다. ")
+    @Operation(summary = "편지 API", description = "편지를 생성하는 API입니다. content, isPublic은 필수 정보입니다. TargetJob, addressId, heroName은 사용자에게 입력받은 여부에 따라 json에 포함/미포함 할 수 있습니다. readingAlarm은 열람여부를 메시지로 받을지 여부이며, 로그인한 유저일 경우만 json에 포함시키면 됩니다. TargetJob에 경찰서면 POLICE_OFFICER, 소방서면 FIRE_FIGHTER로 입력해주시면 됩니다.")
     @PostMapping("")
     public ResponseEntity<BaseResponse> createLetter(
             @Parameter(hidden=true) @AuthenticationPrincipal JwtUserDetails jwtUserDetail,
@@ -54,5 +55,15 @@ public class LetterController {
     ){
         return ResponseEntity.ok()
                 .body(letterService.updateLetterPublic(jwtUserDetail.getUserId(), updateLetterPublic));
+    }
+
+    @Operation(summary = "편지 API", description = "편지를 삭제하는 API입니다. 로그인한 유저만 사용할 수 있습니다.")
+    @DeleteMapping("")
+    public ResponseEntity<BaseResponse> deleteLetter(
+            @Parameter(hidden = true) @AuthenticationPrincipal JwtUserDetails jwtUserDetail,
+            @RequestBody @Validated DeleteLetterRequest deleteLetterRequest
+    ){
+        return ResponseEntity.ok()
+                .body(letterService.deleteLetter(jwtUserDetail.getUserId(), deleteLetterRequest.letterId()));
     }
 }
