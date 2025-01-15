@@ -12,6 +12,7 @@ import com.neighbors.tohero.common.jwt.JwtProvider;
 import com.neighbors.tohero.common.jwt.JwtUserDetails;
 import com.neighbors.tohero.domain.domain.user.model.User;
 import com.neighbors.tohero.domain.domain.user.service.CreateUser;
+import com.neighbors.tohero.domain.domain.user.service.CreateUserOpinion;
 import com.neighbors.tohero.domain.domain.user.service.DeleteUser;
 import com.neighbors.tohero.domain.domain.user.service.UpdateUser;
 import jakarta.servlet.http.HttpSession;
@@ -26,6 +27,7 @@ public class UserService {
     private final CreateUser createUser;
     private final DeleteUser deleteUser;
     private final JwtProvider jwtProvider;
+    private final CreateUserOpinion createUserOpinion;
 
     public BaseResponse updateUserName(long userId, String nickname){
 
@@ -55,6 +57,7 @@ public class UserService {
     public BaseResponse signout(JwtUserDetails jwtUserDetails, HttpSession httpSession, SignOutRequest signOutRequest){
         httpSession.invalidate();
 
+        createUserOpinion.createSignOutOpinion(signOutRequest.reasonCategory(), signOutRequest.opinionForService());
         deleteUser.signout(jwtUserDetails.getUserId());
 
         return new BaseResponse<>(
