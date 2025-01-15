@@ -57,7 +57,7 @@ public class UserService {
     public BaseResponse signout(JwtUserDetails jwtUserDetails, HttpSession httpSession, SignOutRequest signOutRequest){
         httpSession.invalidate();
 
-        createUserOpinion.createSignOutOpinion(signOutRequest.reasonCategory(), signOutRequest.opinionForService());
+        createUserOpinion.createSignOutOpinion(signOutRequest.reasonCategory(), signOutRequest.opinionForService(), jwtUserDetails.getEmail());
         deleteUser.signout(jwtUserDetails.getUserId());
 
         return new BaseResponse<>(
