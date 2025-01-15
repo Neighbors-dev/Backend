@@ -2,6 +2,7 @@ package com.neighbors.tohero.presentation.controller;
 
 import com.neighbors.tohero.application.baseResponse.BaseResponse;
 import com.neighbors.tohero.application.user.dto.AuthenticateUserRequest;
+import com.neighbors.tohero.application.user.dto.SignOutRequest;
 import com.neighbors.tohero.application.user.dto.UpdateUserName;
 import com.neighbors.tohero.application.user.service.UserService;
 import com.neighbors.tohero.common.jwt.JwtUserDetails;
@@ -50,9 +51,10 @@ public class UserController {
     @PostMapping("/signout")
     public ResponseEntity<BaseResponse> signout(
             @Parameter(hidden=true) @AuthenticationPrincipal JwtUserDetails jwtUserDetail,
-            @Parameter(hidden=true) HttpSession httpSession
+            @Parameter(hidden=true) HttpSession httpSession,
+            @RequestBody @Validated SignOutRequest signOutRequest
     ){
         return ResponseEntity.ok()
-                .body(userService.signout(jwtUserDetail, httpSession));
+                .body(userService.signout(jwtUserDetail, httpSession, signOutRequest));
     }
 }

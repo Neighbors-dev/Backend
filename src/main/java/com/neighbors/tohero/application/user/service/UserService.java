@@ -5,6 +5,7 @@ import com.neighbors.tohero.application.baseResponse.BaseResponseMessage;
 import com.neighbors.tohero.application.baseResponse.BaseResponseStatus;
 import com.neighbors.tohero.application.user.dto.AuthenticateUserRequest;
 import com.neighbors.tohero.application.user.dto.AuthenticateUserResponse;
+import com.neighbors.tohero.application.user.dto.SignOutRequest;
 import com.neighbors.tohero.common.enums.Role;
 import com.neighbors.tohero.common.jwt.AuthTokens;
 import com.neighbors.tohero.common.jwt.JwtProvider;
@@ -51,7 +52,7 @@ public class UserService {
         );
     }
 
-    public BaseResponse signout(JwtUserDetails jwtUserDetails, HttpSession httpSession){
+    public BaseResponse signout(JwtUserDetails jwtUserDetails, HttpSession httpSession, SignOutRequest signOutRequest){
         httpSession.invalidate();
 
         deleteUser.signout(jwtUserDetails.getUserId());
