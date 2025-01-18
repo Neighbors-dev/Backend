@@ -5,12 +5,14 @@ import com.neighbors.tohero.application.baseResponse.BaseResponseMessage;
 import com.neighbors.tohero.application.baseResponse.BaseResponseStatus;
 import com.neighbors.tohero.application.user.dto.AuthenticateUserRequest;
 import com.neighbors.tohero.application.user.dto.AuthenticateUserResponse;
+import com.neighbors.tohero.application.user.dto.SignOutRequest;
 import com.neighbors.tohero.common.enums.Role;
 import com.neighbors.tohero.common.jwt.AuthTokens;
 import com.neighbors.tohero.common.jwt.JwtProvider;
 import com.neighbors.tohero.common.jwt.JwtUserDetails;
 import com.neighbors.tohero.domain.domain.user.model.User;
 import com.neighbors.tohero.domain.domain.user.service.CreateUser;
+import com.neighbors.tohero.domain.domain.user.service.CreateUserOpinion;
 import com.neighbors.tohero.domain.domain.user.service.DeleteUser;
 import com.neighbors.tohero.domain.domain.user.service.UpdateUser;
 import jakarta.servlet.http.HttpSession;
@@ -25,6 +27,7 @@ public class UserService {
     private final CreateUser createUser;
     private final DeleteUser deleteUser;
     private final JwtProvider jwtProvider;
+    private final CreateUserOpinion createUserOpinion;
 
     public BaseResponse updateUserName(long userId, String nickname){
 
@@ -51,9 +54,10 @@ public class UserService {
         );
     }
 
-    public BaseResponse signout(JwtUserDetails jwtUserDetails, HttpSession httpSession){
+    public BaseResponse signout(JwtUserDetails jwtUserDetails, HttpSession httpSession, SignOutRequest signOutRequest){
         httpSession.invalidate();
 
+        createUserOpinion.createSignOutOpinion(signOutRequest.reasonCategory(), signOutRequest.opinionForService(), jwtUserDetails.getEmail());
         deleteUser.signout(jwtUserDetails.getUserId());
 
         return new BaseResponse<>(
