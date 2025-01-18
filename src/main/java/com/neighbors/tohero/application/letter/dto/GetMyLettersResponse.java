@@ -2,8 +2,6 @@ package com.neighbors.tohero.application.letter.dto;
 
 import com.neighbors.tohero.domain.domain.mainPage.model.Letter;
 
-import java.text.Format;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -16,7 +14,8 @@ public record GetMyLettersResponse (
             String from,
             String createdAt,
             boolean isOpened,
-            String content
+            String content,
+            boolean isPublic
     ){
         public static MyLetterInfo from(Letter letter){
             return new MyLetterInfo(
@@ -25,7 +24,9 @@ public record GetMyLettersResponse (
                     letter.getWriter(),
                     letter.getCreatedDate().format(DateTimeFormatter.ofPattern("YY.MM.dd")),
                     letter.isOpened(),
-                    letter.getLetterContent());
+                    letter.getLetterContent(),
+                    letter.isPublic()
+            );
         }
     }
 
