@@ -4,12 +4,12 @@ import com.neighbors.tohero.application.baseResponse.BaseResponse;
 import com.neighbors.tohero.application.baseResponse.BaseResponseMessage;
 import com.neighbors.tohero.application.baseResponse.BaseResponseStatus;
 import com.neighbors.tohero.application.sharing.dto.GetRecommenderCodeResponse;
+import com.neighbors.tohero.common.jwt.JwtProvider;
 import com.neighbors.tohero.domain.domain.user.model.User;
 import com.neighbors.tohero.domain.domain.user.service.GetUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -17,6 +17,7 @@ import java.util.List;
 public class SharingService {
 
     private final GetUser getUser;
+    private final JwtProvider jwtProvider;
 
     public BaseResponse<GetRecommenderCodeResponse> getRecommenderCode(String userEmail){
         User user = getUser.getUserByEmail(userEmail);
@@ -39,9 +40,11 @@ public class SharingService {
             recommenderEmails.remove(0);
         }
 
-        return String
-                .join("/", recommenderEmails)
+        String recommenderEmailsWithUserEmailDividedBySlash =
+                String.join("/", recommenderEmails)
                 .replaceAll("^/+", "");
+
+        return jwtProvider.createRecommenderCode(user.getEmail(), recommenderEmailsWithUserEmailDividedBySlash);
     }
 
 }
