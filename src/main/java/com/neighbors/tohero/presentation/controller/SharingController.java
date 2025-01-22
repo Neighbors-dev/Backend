@@ -21,7 +21,7 @@ public class SharingController {
             @Parameter(hidden=true) @AuthenticationPrincipal JwtUserDetails jwtUserDetail
     ){
         return ResponseEntity.ok()
-                .body(sharingService.getRecommenderCode(jwtUserDetail.getUserId()));
+                .body(sharingService.getRecommenderCode(jwtUserDetail.getEmail()));
     }
 
 }

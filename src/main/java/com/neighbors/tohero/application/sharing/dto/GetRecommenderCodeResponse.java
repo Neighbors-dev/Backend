@@ -1,4 +1,6 @@
 package com.neighbors.tohero.application.sharing.dto;
 
-public record GetRecommenderCodeResponse() {
+public record GetRecommenderCodeResponse(
+        String recommenderCode
+) {
 }

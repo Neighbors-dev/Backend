@@ -14,9 +14,10 @@ public class User {
     private String userName;
     private String email;
     private Role role;
+    private String recommenders;
 
-    public static User of (Long userId, String userName, String email, Role role) {
-        return new User(userId, userName, email, role);
+    public static User of (Long userId, String userName, String email, Role role, String recommenders) {
+        return new User(userId, userName, email, role, recommenders);
     }
 
     public static User toEntity(AuthenticateUserRequest authenticateUserRequest) {
@@ -25,5 +26,10 @@ public class User {
                 .email(authenticateUserRequest.email())
                 .role(authenticateUserRequest.role())
                 .build();
+    }
+
+    public String getRecommenders() {
+        if(recommenders == null) return "";
+        return recommenders;
     }
 }
