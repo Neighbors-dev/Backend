@@ -32,14 +32,16 @@ public class SharingService {
 
     private String createRecommenderCode(User user){
         String recommenderEmailsDividedBySlash = user.getRecommenders();
-        List<String> recommenderEmails = Arrays.stream(recommenderEmailsDividedBySlash.split("/")).toList();
+        List<String> recommenderEmails = new java.util.ArrayList<>(List.of(recommenderEmailsDividedBySlash.split("/")));
         recommenderEmails.add(user.getEmail());
 
         if (recommenderEmails.size() > 5) {
             recommenderEmails.remove(0);
         }
 
-        return String.join("/", recommenderEmails);
+        return String
+                .join("/", recommenderEmails)
+                .replaceAll("^/+", "");
     }
 
 }

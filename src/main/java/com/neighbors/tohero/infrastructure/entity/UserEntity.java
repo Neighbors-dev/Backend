@@ -26,7 +26,7 @@ public class UserEntity extends BaseEntity {
     @Column(name = "role", nullable = false)
     private Role role;
 
-    @Column(name = "recommenders", nullable = false)
+    @Column(name = "recommenders", nullable = true)
     private String recommenders;
 
     public UserEntity() {
