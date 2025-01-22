@@ -23,7 +23,7 @@ public class GetLetter {
     }
 
     public Letter getLetterById(long letterId){
-        return letterRepository.getLetter(repo -> repo.findByIdAndPublic(letterId));
+        return letterRepository.getLetter(repo -> repo.findById(letterId));
     }
 
     public List<Letter> getMyLetters(long userId){

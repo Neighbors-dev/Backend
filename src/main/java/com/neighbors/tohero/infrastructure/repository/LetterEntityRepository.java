@@ -24,8 +24,8 @@ public interface LetterEntityRepository extends JpaRepository<LetterEntity, Long
     @Query("SELECT le FROM LetterEntity le WHERE le.user.userId = :userId")
     Optional<List<LetterEntity>> findAllByUserId(@Param("userId") Long userId);
 
-    @Query("SELECT le FROM LetterEntity le WHERE le.letterId = :letterId AND le.isPublic = true")
-    Optional<LetterEntity> findByIdAndPublic(@Param("letterId") long letterId);
+    @Query("SELECT le FROM LetterEntity le WHERE le.letterId = :letterId")
+    Optional<LetterEntity> findById(@Param("letterId") long letterId);
 
     @Modifying
     @Query("UPDATE LetterEntity le SET le.isPublic = :isPublic WHERE le.user.userId = :userId AND le.letterId = :letterId")
