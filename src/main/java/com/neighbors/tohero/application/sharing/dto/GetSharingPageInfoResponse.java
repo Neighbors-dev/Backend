@@ -1,4 +1,9 @@
 package com.neighbors.tohero.application.sharing.dto;
 
-public record GetSharingPageInfoResponse() {
+import java.util.List;
+
+public record GetSharingPageInfoResponse(
+        int numberOfWriter,
+        List<String> nameOfWriters
+) {
 }

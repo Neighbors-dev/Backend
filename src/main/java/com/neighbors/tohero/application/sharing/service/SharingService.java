@@ -33,7 +33,13 @@ public class SharingService {
     }
 
     public BaseResponse<GetSharingPageInfoResponse> getSharingPageInfo(long userId){
-        return null;
+        List<String> nameOfWriters = getUser.getNameOfWritersByUserId(userId);
+
+        return new BaseResponse<>(
+                BaseResponseStatus.OK,
+                BaseResponseMessage.공유하기_페이지_조회가_성공했습니다.getMessage(),
+                new GetSharingPageInfoResponse(nameOfWriters.size(), nameOfWriters)
+        );
     }
 
     private String createRecommenderCode(User user){
