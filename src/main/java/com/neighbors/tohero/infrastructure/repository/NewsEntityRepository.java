@@ -10,5 +10,5 @@ import java.util.Optional;
 
 public interface NewsEntityRepository extends JpaRepository<NewsEntity, Long> {
     @Query("SELECT ne FROM NewsEntity ne")
-    Optional<List<NewsEntity>> findAllByPagable(Pageable pageable);
+    Optional<List<NewsEntity>> findAllByPageable(Pageable pageable);
 }

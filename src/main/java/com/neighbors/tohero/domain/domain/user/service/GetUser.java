@@ -5,6 +5,8 @@ import com.neighbors.tohero.domain.domain.user.model.User;
 import com.neighbors.tohero.domain.query.UserRepository;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 @DomainService
 @RequiredArgsConstructor
 public class GetUser {
@@ -16,5 +18,9 @@ public class GetUser {
 
     public User getUserById(long userId) {
         return userRepository.getUser(repo -> repo.findByUserId(userId));
+    }
+
+    public List<String> getNameOfWritersByUserId(long userId){
+        return userRepository.getNameOfWriters(repo -> repo.findNameOfWritersByUserId(userId));
     }
 }

@@ -4,6 +4,7 @@ import com.neighbors.tohero.application.letter.dto.CreateLetterRequest;
 import com.neighbors.tohero.common.annotaion.DomainService;
 import com.neighbors.tohero.common.enums.TargetJob;
 import com.neighbors.tohero.common.exception.address.AddressException;
+import com.neighbors.tohero.common.jwt.JwtProvider;
 import com.neighbors.tohero.domain.domain.address.model.Address;
 import com.neighbors.tohero.domain.domain.mainPage.model.Letter;
 import com.neighbors.tohero.domain.domain.user.model.User;
@@ -12,6 +13,8 @@ import com.neighbors.tohero.domain.query.LetterRepository;
 import com.neighbors.tohero.domain.query.UserRepository;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 @DomainService
 @RequiredArgsConstructor
 public class CreateLetter {
@@ -19,6 +22,7 @@ public class CreateLetter {
     private final LetterRepository letterRepository;
     private final UserRepository userRepository;
     private final AddressRepository addressRepository;
+    private final JwtProvider jwtProvider;
 
     public long createLetter(long userId, String writer, CreateLetterRequest createLetterRequest){
         User user = userRepository.getUser(repo -> repo.findByUserId(userId));
@@ -49,10 +53,12 @@ public class CreateLetter {
         }
 
         Letter createdLetter = letterRepository.createLetter(newLetter);
+        reflectRecommendation(writer, createLetterRequest.recommenderCode());
+
         return createdLetter.getLetterId();
     }
 
-    public long createGuestLetter(String writer, String content, TargetJob targetJob, Long addressId, String heroName, boolean isPublic){
+    public long createGuestLetter(String writer, String content, TargetJob targetJob, Long addressId, String heroName, boolean isPublic, String recommenderCode){
         Letter newLetter;
         if(addressId == null){
             newLetter = Letter.builder()
@@ -81,6 +87,17 @@ public class CreateLetter {
         }
 
         Letter createdLetter = letterRepository.createLetter(newLetter);
+        //todo 비회원 편지 작성 공유하기 반영 막으려면 이거 주석처리
+        reflectRecommendation(writer, recommenderCode);
+
         return createdLetter.getLetterId();
+    }
+
+    private void reflectRecommendation(String writer, String recommenderCode){
+        if(recommenderCode != null){
+            String recommenderEmailsDividedBySlash = jwtProvider.getRecommenderEmails(recommenderCode);
+            List<String> recommenderEmails = List.of(recommenderEmailsDividedBySlash.split("/"));
+            userRepository.reflectRecommendation(writer, recommenderEmails);
+        }
     }
 }

@@ -25,6 +25,9 @@ public record CreateLetterRequest (
     Boolean readingAlarm,
 
     @NotNull
-    boolean isPublic
+    boolean isPublic,
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    String recommenderCode
 ){
 }

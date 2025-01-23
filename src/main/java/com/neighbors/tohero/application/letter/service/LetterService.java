@@ -18,7 +18,6 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -102,7 +101,8 @@ public class LetterService {
                 createLetterRequest.targetJob(),
                 createLetterRequest.addressId(),
                 createLetterRequest.heroName(),
-                createLetterRequest.isPublic()
+                createLetterRequest.isPublic(),
+                createLetterRequest.recommenderCode()
         );
 
         throwIfLetterNotCreate(createdLetterId);

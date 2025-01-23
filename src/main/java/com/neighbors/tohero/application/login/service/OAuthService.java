@@ -10,15 +10,12 @@ import com.neighbors.tohero.common.jwt.AuthTokens;
 import com.neighbors.tohero.common.jwt.JwtProvider;
 import com.neighbors.tohero.common.jwt.JwtUserDetails;
 import com.neighbors.tohero.domain.domain.user.model.User;
-import com.neighbors.tohero.domain.domain.user.service.CreateUser;
 import com.neighbors.tohero.domain.domain.login.service.oauth.kakao.RequestKakaoInfo;
 import com.neighbors.tohero.domain.domain.user.service.GetUser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Slf4j
 @Service

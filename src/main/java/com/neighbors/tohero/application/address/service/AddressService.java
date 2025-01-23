@@ -12,7 +12,6 @@ import com.neighbors.tohero.domain.domain.address.service.GetAddress;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;

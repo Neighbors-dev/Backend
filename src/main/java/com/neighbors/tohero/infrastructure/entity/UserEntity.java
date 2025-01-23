@@ -6,6 +6,7 @@ import com.neighbors.tohero.infrastructure.entity.base.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "`User`")
@@ -26,8 +27,13 @@ public class UserEntity extends BaseEntity {
     @Column(name = "role", nullable = false)
     private Role role;
 
+    @Setter
     @Column(name = "recommenders", nullable = true)
     private String recommenders;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "recommend_id", nullable = false)
+    private RecommendEntity recommendEntity;
 
     public UserEntity() {
     }
@@ -47,11 +53,15 @@ public class UserEntity extends BaseEntity {
     }
 
     public static UserEntity from(User user) {
-        return new UserEntity(user.getUserId(), user.getUserName(), user.getEmail(), user.getRole(),user.getRecommenders());
+        return new UserEntity(user.getUserId(), user.getUserName(), user.getEmail(), user.getRole(),user.getRecommenders(), null);
     }
 
     public String getRecommenders() {
         if(recommenders == null) return "";
         return recommenders;
+    }
+
+    public void setRecommenders(RecommendEntity recommendEntity) {
+        this.recommendEntity = recommendEntity;
     }
 }
