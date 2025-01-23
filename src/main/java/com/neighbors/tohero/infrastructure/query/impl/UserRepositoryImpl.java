@@ -13,6 +13,7 @@ import com.neighbors.tohero.infrastructure.repository.UserEntityRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -60,13 +61,18 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User getUser(Function<UserEntityRepository, Optional<UserEntity>> findUserFunction) {
+        UserEntity userEntity = getUserEntity(findUserFunction);
+
+        return userMapper.toDomain(userEntity);
+    }
+
+    private UserEntity getUserEntity(Function<UserEntityRepository, Optional<UserEntity>> findUserFunction) {
         UserEntity userEntity = findUserFunction.apply(userEntityRepository)
                 .orElseThrow(() -> new UserException(
                         BaseResponseStatus.NO_RESULT,
                         BaseResponseMessage.존재하지_않는_유저입니다.getMessage()
                 ));
-
-        return userMapper.toDomain(userEntity);
+        return userEntity;
     }
 
     @Override
@@ -82,5 +88,14 @@ public class UserRepositoryImpl implements UserRepository {
                 .forEach(recommendEntity -> recommendEntity.addRecommendedPeopleName(writer));
 
         recommendEntityRepository.saveAll(recommendEntities);
+    }
+
+    @Override
+    public List<String> getNameOfWriters(Function<UserEntityRepository, Optional<UserEntity>> findUserFunction) {
+        UserEntity matchedUserEntity = getUserEntity(findUserFunction);
+
+        return Arrays.stream(matchedUserEntity.getRecommendEntity().getRecommendedPeopleName()
+                .split(","))
+                .toList();
     }
 }

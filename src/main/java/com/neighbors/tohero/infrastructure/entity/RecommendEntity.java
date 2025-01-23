@@ -1,6 +1,7 @@
 package com.neighbors.tohero.infrastructure.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
@@ -13,6 +14,7 @@ public class RecommendEntity {
     private long recommendId;
 
     @Column(name = "recommendedPeopleName")
+    @Getter
     private String recommendedPeopleName;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

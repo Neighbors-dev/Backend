@@ -21,6 +21,6 @@ public class GetUser {
     }
 
     public List<String> getNameOfWritersByUserId(long userId){
-        return null;
+        return userRepository.getNameOfWriters(repo -> repo.findNameOfWritersByUserId(userId));
     }
 }
