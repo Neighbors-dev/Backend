@@ -11,7 +11,6 @@ import com.neighbors.tohero.infrastructure.repository.NewsEntityRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;

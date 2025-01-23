@@ -9,7 +9,6 @@ import com.neighbors.tohero.infrastructure.entity.LetterEntity;
 import com.neighbors.tohero.infrastructure.mapper.LetterMapper;
 import com.neighbors.tohero.infrastructure.repository.LetterEntityRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;

@@ -7,7 +7,6 @@ import com.neighbors.tohero.application.letter.dto.*;
 import com.neighbors.tohero.common.enums.Role;
 import com.neighbors.tohero.common.exception.address.AddressException;
 import com.neighbors.tohero.common.exception.letter.LetterException;
-import com.neighbors.tohero.common.jwt.JwtProvider;
 import com.neighbors.tohero.common.jwt.JwtUserDetails;
 import com.neighbors.tohero.domain.domain.address.service.GetAddress;
 import com.neighbors.tohero.domain.domain.letter.service.CreateLetter;
@@ -19,7 +18,6 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
