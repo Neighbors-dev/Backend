@@ -28,4 +28,12 @@ public class SharingController {
                 .body(sharingService.getRecommenderCode(jwtUserDetail.getEmail()));
     }
 
+    @Operation(summary = "공유하기 API", description = "공유하기 페이지 조회하는 API입니다.")
+    @GetMapping("")
+    public ResponseEntity<BaseResponse> getSharingPageInfo(
+            @Parameter(hidden=true) @AuthenticationPrincipal JwtUserDetails jwtUserDetail
+    ){
+        return ResponseEntity.ok()
+                .body(sharingService.getSharingPageInfo(jwtUserDetail.getUserId()));
+    }
 }

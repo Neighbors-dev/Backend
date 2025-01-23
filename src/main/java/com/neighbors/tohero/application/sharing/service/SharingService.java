@@ -4,6 +4,7 @@ import com.neighbors.tohero.application.baseResponse.BaseResponse;
 import com.neighbors.tohero.application.baseResponse.BaseResponseMessage;
 import com.neighbors.tohero.application.baseResponse.BaseResponseStatus;
 import com.neighbors.tohero.application.sharing.dto.GetRecommenderCodeResponse;
+import com.neighbors.tohero.application.sharing.dto.GetSharingPageInfoResponse;
 import com.neighbors.tohero.common.jwt.JwtProvider;
 import com.neighbors.tohero.domain.domain.user.model.User;
 import com.neighbors.tohero.domain.domain.user.service.GetUser;
@@ -29,6 +30,10 @@ public class SharingService {
                 BaseResponseMessage.추천인_코드_생성이_정상실행_되었습니다.getMessage(),
                 new GetRecommenderCodeResponse(recommenderCode)
         );
+    }
+
+    public BaseResponse<GetSharingPageInfoResponse> getSharingPageInfo(long userId){
+        return null;
     }
 
     private String createRecommenderCode(User user){
