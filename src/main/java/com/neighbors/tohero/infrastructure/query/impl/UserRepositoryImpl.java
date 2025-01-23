@@ -5,12 +5,15 @@ import com.neighbors.tohero.application.baseResponse.BaseResponseStatus;
 import com.neighbors.tohero.common.exception.user.UserException;
 import com.neighbors.tohero.domain.domain.user.model.User;
 import com.neighbors.tohero.domain.query.UserRepository;
+import com.neighbors.tohero.infrastructure.entity.RecommendEntity;
 import com.neighbors.tohero.infrastructure.entity.UserEntity;
 import com.neighbors.tohero.infrastructure.mapper.UserMapper;
+import com.neighbors.tohero.infrastructure.repository.RecommendEntityRepository;
 import com.neighbors.tohero.infrastructure.repository.UserEntityRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -20,6 +23,7 @@ import java.util.function.Function;
 public class UserRepositoryImpl implements UserRepository {
 
     private final UserEntityRepository userEntityRepository;
+    private final RecommendEntityRepository recommendEntityRepository;
     private final UserMapper userMapper;
 
     @Override
@@ -28,6 +32,8 @@ public class UserRepositoryImpl implements UserRepository {
             return getUser(repo -> repo.findByEmail(user.getEmail()));
         }catch(UserException e){
             UserEntity userEntity = userMapper.toNewEntity(user);
+            RecommendEntity recommendEntity = new RecommendEntity(userEntity);
+            userEntity.setRecommenders(recommendEntity);
             userEntityRepository.save(userEntity);
 
             UserEntity createdUserEntity = userEntityRepository.findByEmail(user.getEmail())
@@ -66,5 +72,15 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public void deleteUser(Consumer<UserEntityRepository> findUserConsumer) {
         findUserConsumer.accept(userEntityRepository);
+    }
+
+    @Override
+    public void reflectRecommendation(String writer, List<String> recommenderEmails) {
+        List<RecommendEntity> recommendEntities = recommendEntityRepository.findAllByUserEmailIn(recommenderEmails);
+
+        recommendEntities
+                .forEach(recommendEntity -> recommendEntity.addRecommendedPeopleName(writer));
+
+        recommendEntityRepository.saveAll(recommendEntities);
     }
 }

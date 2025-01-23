@@ -15,6 +15,6 @@ public class GetNews {
     private final NewsRepository newsRepository;
 
     public List<News> getPagedNews(Pageable pageable){
-        return newsRepository.getNewsList(repo -> repo.findAllByPagable(pageable));
+        return newsRepository.getNewsList(repo -> repo.findAllByPageable(pageable));
     }
 }
