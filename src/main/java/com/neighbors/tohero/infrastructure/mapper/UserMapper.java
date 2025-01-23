@@ -24,7 +24,8 @@ public class UserMapper {
                 userEntity.getUserId(),
                 userEntity.getNickName(),
                 userEntity.getEmail(),
-                userEntity.getRole()
+                userEntity.getRole(),
+                userEntity.getRecommenders()
         );
     }
 }

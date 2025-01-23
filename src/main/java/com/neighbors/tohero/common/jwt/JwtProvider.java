@@ -60,6 +60,25 @@ public class JwtProvider {
         return AuthTokens.of(accessToken, refreshToken, JWT_EXPIRED_IN, REFRESH_TOKEN_EXPIRED_IN);
     }
 
+    public String createRecommenderCode(String userEmail, String recommenderEmails){
+        Claims claims = Jwts.claims()
+                .setSubject(userEmail)
+                .setIssuer("ToHero");
+
+        Date now = new Date();
+        claims.put("recommenderEmails", recommenderEmails);
+        claims.put("issueTime", now);
+
+        Date accessTokenExpiredAt = new Date(now.getTime() + JWT_EXPIRED_IN);
+
+        return Jwts.builder()
+                .setClaims(claims)
+                .setIssuedAt(now)
+                .setExpiration(accessTokenExpiredAt)
+                .signWith(SignatureAlgorithm.HS256, JWT_SECRET_KEY)
+                .compact();
+    }
+
     public boolean isExpiredToken(String token) throws JwtInvalidTokenException {
         log.info("[JwtTokenProvider.isExpiredToken] token={}", token);
         try {
@@ -130,6 +149,11 @@ public class JwtProvider {
                 .userId(Long.parseLong(claims.get("userId").toString()))
                 .build();
 
+    }
+
+    public String getRecommenderEmails(String token) {
+        Claims claims = getBody(token);
+        return claims.get("recommenderEmails").toString();
     }
 
     public JwtUserDetails getGuestJwtUserDetails(String token) {

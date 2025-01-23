@@ -26,6 +26,9 @@ public class UserEntity extends BaseEntity {
     @Column(name = "role", nullable = false)
     private Role role;
 
+    @Column(name = "recommenders", nullable = true)
+    private String recommenders;
+
     public UserEntity() {
     }
 
@@ -44,6 +47,11 @@ public class UserEntity extends BaseEntity {
     }
 
     public static UserEntity from(User user) {
-        return new UserEntity(user.getUserId(), user.getUserName(), user.getEmail(), user.getRole());
+        return new UserEntity(user.getUserId(), user.getUserName(), user.getEmail(), user.getRole(),user.getRecommenders());
+    }
+
+    public String getRecommenders() {
+        if(recommenders == null) return "";
+        return recommenders;
     }
 }
