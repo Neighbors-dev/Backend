@@ -13,6 +13,7 @@ import com.neighbors.tohero.infrastructure.repository.UserEntityRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -94,7 +95,10 @@ public class UserRepositoryImpl implements UserRepository {
     public List<String> getNameOfWriters(Function<UserEntityRepository, Optional<UserEntity>> findUserFunction) {
         UserEntity matchedUserEntity = getUserEntity(findUserFunction);
 
-        return Arrays.stream(matchedUserEntity.getRecommendEntity().getRecommendedPeopleName()
+        String recommendedPeopleName = matchedUserEntity.getRecommendEntity().getRecommendedPeopleName();
+
+        if(recommendedPeopleName == null) {return new ArrayList<>();}
+        return Arrays.stream(recommendedPeopleName
                 .split(","))
                 .toList();
     }
