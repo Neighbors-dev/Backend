@@ -18,7 +18,7 @@ public class RecommendEntity {
     private String recommendedPeopleName;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = true)
     private UserEntity userEntity;
 
     public RecommendEntity(UserEntity user){

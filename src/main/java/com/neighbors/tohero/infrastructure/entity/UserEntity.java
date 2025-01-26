@@ -32,7 +32,7 @@ public class UserEntity extends BaseEntity {
     private String recommenders;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "recommend_id", nullable = false)
+    @JoinColumn(name = "recommend_id", nullable = true)
     private RecommendEntity recommendEntity;
 
     public UserEntity() {
