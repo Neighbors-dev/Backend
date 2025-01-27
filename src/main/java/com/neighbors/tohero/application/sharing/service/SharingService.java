@@ -8,9 +8,12 @@ import com.neighbors.tohero.application.sharing.dto.GetSharingPageInfoResponse;
 import com.neighbors.tohero.common.jwt.JwtProvider;
 import com.neighbors.tohero.domain.domain.user.model.User;
 import com.neighbors.tohero.domain.domain.user.service.GetUser;
+import com.neighbors.tohero.domain.domain.user.service.UpdateUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -18,6 +21,7 @@ import java.util.List;
 public class SharingService {
 
     private final GetUser getUser;
+    private final UpdateUser updateUser;
     private final JwtProvider jwtProvider;
 
     public BaseResponse<GetRecommenderCodeResponse> getRecommenderCode(String userEmail){
@@ -33,12 +37,15 @@ public class SharingService {
     }
 
     public BaseResponse<GetSharingPageInfoResponse> getSharingPageInfo(long userId){
-        List<String> nameOfWriters = getUser.getNameOfWritersByUserId(userId);
+        User user = getUser.getUserForSharing(userId);
+        String recommendedPeopleName = user.getRecommenders();
+        List<String> recommendedPeopleNameList = new ArrayList<>(Arrays.asList(recommendedPeopleName
+                .split(",")));
 
         return new BaseResponse<>(
                 BaseResponseStatus.OK,
                 BaseResponseMessage.공유하기_페이지_조회가_성공했습니다.getMessage(),
-                new GetSharingPageInfoResponse(nameOfWriters.size(), nameOfWriters)
+                new GetSharingPageInfoResponse(user.isFirstSharing(), recommendedPeopleNameList.size(), recommendedPeopleNameList)
         );
     }
 

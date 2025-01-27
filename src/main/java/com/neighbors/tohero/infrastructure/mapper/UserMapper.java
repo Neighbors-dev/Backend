@@ -26,7 +26,8 @@ public class UserMapper {
                 userEntity.getNickName(),
                 userEntity.getEmail(),
                 userEntity.getRole(),
-                userEntity.getRecommenders()
+                userEntity.getRecommenders(),
+                userEntity.isFirstSharing()
         );
     }
 }
