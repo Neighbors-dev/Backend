@@ -33,4 +33,11 @@ public class RecommendEntity {
         }
         this.recommendedPeopleName = recommendedPeopleName;
     }
+
+    public String getRecommendedPeopleName(){
+        if(recommendedPeopleName == null){
+            return "";
+        }
+        return recommendedPeopleName;
+    }
 }

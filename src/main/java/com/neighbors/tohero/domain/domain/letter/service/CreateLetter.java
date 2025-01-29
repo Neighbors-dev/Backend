@@ -13,6 +13,7 @@ import com.neighbors.tohero.domain.query.LetterRepository;
 import com.neighbors.tohero.domain.query.UserRepository;
 import lombok.RequiredArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @DomainService
@@ -53,7 +54,7 @@ public class CreateLetter {
         }
 
         Letter createdLetter = letterRepository.createLetter(newLetter);
-        reflectRecommendation(writer, createLetterRequest.recommenderCode());
+        reflectRecommendation(user, writer, createLetterRequest.recommenderCode());
 
         return createdLetter.getLetterId();
     }
@@ -98,6 +99,15 @@ public class CreateLetter {
             String recommenderEmailsDividedBySlash = jwtProvider.getRecommenderEmails(recommenderCode);
             List<String> recommenderEmails = List.of(recommenderEmailsDividedBySlash.split("/"));
             userRepository.reflectRecommendation(writer, recommenderEmails);
+        }
+    }
+
+    private void reflectRecommendation(User user, String writer, String recommenderCode){
+        if(recommenderCode != null){
+            String recommenderEmailsDividedBySlash = jwtProvider.getRecommenderEmails(recommenderCode);
+            List<String> recommenderEmails = List.of(recommenderEmailsDividedBySlash.split("/"));
+            userRepository.reflectRecommendation(writer, recommenderEmails);
+            userRepository.updateUserRecommenders(user, recommenderEmailsDividedBySlash);
         }
     }
 }

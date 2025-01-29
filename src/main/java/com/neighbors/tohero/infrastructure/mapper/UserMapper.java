@@ -5,6 +5,8 @@ import com.neighbors.tohero.infrastructure.entity.RecommendEntity;
 import com.neighbors.tohero.infrastructure.entity.UserEntity;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
+
 @Component
 public class UserMapper {
     public UserEntity toNewEntity(User user){
@@ -27,7 +29,8 @@ public class UserMapper {
                 userEntity.getEmail(),
                 userEntity.getRole(),
                 userEntity.getRecommenders(),
-                userEntity.isFirstSharing()
+                userEntity.isFirstSharing(),
+                Arrays.stream(userEntity.getRecommendEntity().getRecommendedPeopleName().split(",")).toList()
         );
     }
 }

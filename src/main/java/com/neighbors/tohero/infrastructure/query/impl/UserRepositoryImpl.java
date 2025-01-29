@@ -103,4 +103,31 @@ public class UserRepositoryImpl implements UserRepository {
 
         return user;
     }
+
+    @Override
+    public void updateUserRecommenders(User user, String recommenderEmailsDividedBySlash) {
+        if(user.getRecommenders().isEmpty()){
+           user.setRecommenders(recommenderEmailsDividedBySlash);
+        }
+        else{
+            queueingUserRecommenders(user, recommenderEmailsDividedBySlash);
+        }
+        userEntityRepository.save(userMapper.toEntity(user));
+    }
+
+    private void queueingUserRecommenders(User user, String recommenderEmailsDividedBySlash) {
+        List<String> existedRecommendersEmail = Arrays.stream(user.getRecommenders().split("/")).toList();
+        List<String> addedRecommendersEmail = Arrays.stream(recommenderEmailsDividedBySlash.split("/")).toList();
+
+        String result = user.getRecommenders() + "/" + recommenderEmailsDividedBySlash;
+        if(existedRecommendersEmail.size() + addedRecommendersEmail.size() > 5){
+            existedRecommendersEmail.addAll(addedRecommendersEmail);
+
+            int size = existedRecommendersEmail.size();
+            List<String> lastFive = existedRecommendersEmail.subList(Math.max(0, size - 5), size);
+
+            result = String.join("/", lastFive);
+        }
+        user.setRecommenders(result);
+    }
 }
