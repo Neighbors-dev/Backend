@@ -28,6 +28,10 @@ public class UserEntity extends BaseEntity {
     private Role role;
 
     @Setter
+    @Column(name = "isFirstSharing", nullable = false)
+    private boolean isFirstSharing = true;
+
+    @Setter
     @Column(name = "recommenders", nullable = true)
     private String recommenders;
 
@@ -53,7 +57,7 @@ public class UserEntity extends BaseEntity {
     }
 
     public static UserEntity from(User user) {
-        return new UserEntity(user.getUserId(), user.getUserName(), user.getEmail(), user.getRole(),user.getRecommenders(), null);
+        return new UserEntity(user.getUserId(), user.getUserName(), user.getEmail(), user.getRole(), user.isFirstSharing(), user.getRecommenders(), null);
     }
 
     public String getRecommenders() {

@@ -92,14 +92,15 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public List<String> getNameOfWriters(Function<UserEntityRepository, Optional<UserEntity>> findUserFunction) {
+    public User getUserForSharing(Function<UserEntityRepository, Optional<UserEntity>> findUserFunction) {
         UserEntity matchedUserEntity = getUserEntity(findUserFunction);
 
-        String recommendedPeopleName = matchedUserEntity.getRecommendEntity().getRecommendedPeopleName();
+        User user = userMapper.toDomain(matchedUserEntity);
+        if(matchedUserEntity.isFirstSharing()){
+            matchedUserEntity.setFirstSharing(false);
+            userEntityRepository.save(matchedUserEntity);
+        }
 
-        if(recommendedPeopleName == null) {return new ArrayList<>();}
-        return Arrays.stream(recommendedPeopleName
-                .split(","))
-                .toList();
+        return user;
     }
 }

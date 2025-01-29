@@ -20,7 +20,7 @@ public class GetUser {
         return userRepository.getUser(repo -> repo.findByUserId(userId));
     }
 
-    public List<String> getNameOfWritersByUserId(long userId){
-        return userRepository.getNameOfWriters(repo -> repo.findNameOfWritersByUserId(userId));
+    public User getUserForSharing(long userId){
+        return userRepository.getUserForSharing(repo -> repo.findByUserId(userId));
     }
 }

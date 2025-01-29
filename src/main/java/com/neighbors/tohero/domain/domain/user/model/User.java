@@ -5,6 +5,7 @@ import com.neighbors.tohero.common.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 @Builder
 @Getter
@@ -15,9 +16,11 @@ public class User {
     private String email;
     private Role role;
     private String recommenders;
+    @Setter
+    private boolean isFirstSharing;
 
-    public static User of (Long userId, String userName, String email, Role role, String recommenders) {
-        return new User(userId, userName, email, role, recommenders);
+    public static User of (Long userId, String userName, String email, Role role, String recommenders, boolean isFirstSharing) {
+        return new User(userId, userName, email, role, recommenders, isFirstSharing);
     }
 
     public static User toEntity(AuthenticateUserRequest authenticateUserRequest) {
