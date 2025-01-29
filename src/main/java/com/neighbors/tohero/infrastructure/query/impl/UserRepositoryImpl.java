@@ -121,6 +121,11 @@ public class UserRepositoryImpl implements UserRepository {
         else{
             queueingUserRecommenders(userEntity, recommenderEmailsDividedBySlash);
         }
+
+        //이전 사람 이름 저장
+        String lastUserEmail = recommenderEmailsDividedBySlash.split("/")[recommenderEmailsDividedBySlash.split("/").length - 1];
+        UserEntity lastUserEntity = getUserEntity(repo -> repo.findByEmail(lastUserEmail));
+        userEntity.getRecommendEntity().addRecommendedPeopleName(lastUserEntity.getNickName());
         userEntityRepository.save(userEntity);
     }
 
