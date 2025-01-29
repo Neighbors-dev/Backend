@@ -13,7 +13,6 @@ import com.neighbors.tohero.infrastructure.repository.UserEntityRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -35,7 +34,7 @@ public class UserRepositoryImpl implements UserRepository {
         }catch(UserException e){
             UserEntity userEntity = userMapper.toNewEntity(user);
             RecommendEntity recommendEntity = new RecommendEntity(userEntity);
-            userEntity.setRecommenders(recommendEntity);
+            userEntity.setRecommendEntity(recommendEntity);
             userEntityRepository.save(userEntity);
 
             UserEntity createdUserEntity = userEntityRepository.findByEmail(user.getEmail())
@@ -105,21 +104,31 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void updateUserRecommenders(User user, String recommenderEmailsDividedBySlash) {
-        if(user.getRecommenders().isEmpty()){
-           user.setRecommenders(recommenderEmailsDividedBySlash);
+    public User getUserAndUpdateRecommenders(Function<UserEntityRepository, Optional<UserEntity>> findUserFunction, String recommenderCode) {
+        UserEntity userEntity = getUserEntity(findUserFunction);
+
+        if(recommenderCode != null && !recommenderCode.isEmpty()){
+            updateUserRecommenders(userEntity, recommenderCode);
         }
-        else{
-            queueingUserRecommenders(user, recommenderEmailsDividedBySlash);
-        }
-        userEntityRepository.save(userMapper.toEntity(user));
+
+        return userMapper.toDomain(userEntity);
     }
 
-    private void queueingUserRecommenders(User user, String recommenderEmailsDividedBySlash) {
-        List<String> existedRecommendersEmail = Arrays.stream(user.getRecommenders().split("/")).toList();
+    private void updateUserRecommenders(UserEntity userEntity, String recommenderEmailsDividedBySlash) {
+        if(userEntity.getRecommenders().isEmpty()){
+            userEntity.setRecommenders(recommenderEmailsDividedBySlash);
+        }
+        else{
+            queueingUserRecommenders(userEntity, recommenderEmailsDividedBySlash);
+        }
+        userEntityRepository.save(userEntity);
+    }
+
+    private void queueingUserRecommenders(UserEntity userEntity, String recommenderEmailsDividedBySlash) {
+        List<String> existedRecommendersEmail = new java.util.ArrayList<>(Arrays.stream(userEntity.getRecommenders().split("/")).toList());
         List<String> addedRecommendersEmail = Arrays.stream(recommenderEmailsDividedBySlash.split("/")).toList();
 
-        String result = user.getRecommenders() + "/" + recommenderEmailsDividedBySlash;
+        String result = userEntity.getRecommenders() + "/" + recommenderEmailsDividedBySlash;
         if(existedRecommendersEmail.size() + addedRecommendersEmail.size() > 5){
             existedRecommendersEmail.addAll(addedRecommendersEmail);
 
@@ -128,6 +137,6 @@ public class UserRepositoryImpl implements UserRepository {
 
             result = String.join("/", lastFive);
         }
-        user.setRecommenders(result);
+        userEntity.setRecommenders(result);
     }
 }

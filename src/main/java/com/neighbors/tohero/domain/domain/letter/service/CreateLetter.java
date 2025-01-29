@@ -26,7 +26,11 @@ public class CreateLetter {
     private final JwtProvider jwtProvider;
 
     public long createLetter(long userId, String writer, CreateLetterRequest createLetterRequest){
-        User user = userRepository.getUser(repo -> repo.findByUserId(userId));
+        String recommenderEmailDividedBySlash = null;
+        if(createLetterRequest.recommenderCode() != null){
+            recommenderEmailDividedBySlash = jwtProvider.getRecommenderEmails(createLetterRequest.recommenderCode());
+        }
+        User user = userRepository.getUserAndUpdateRecommenders(repo -> repo.findByUserId(userId), recommenderEmailDividedBySlash);
         Letter newLetter;
         try{
             Address address = addressRepository.getAddressById(createLetterRequest.addressId());
@@ -107,7 +111,6 @@ public class CreateLetter {
             String recommenderEmailsDividedBySlash = jwtProvider.getRecommenderEmails(recommenderCode);
             List<String> recommenderEmails = List.of(recommenderEmailsDividedBySlash.split("/"));
             userRepository.reflectRecommendation(writer, recommenderEmails);
-            userRepository.updateUserRecommenders(user, recommenderEmailsDividedBySlash);
         }
     }
 }

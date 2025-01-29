@@ -12,4 +12,7 @@ import java.util.List;
 public interface RecommendEntityRepository extends JpaRepository<RecommendEntity, Long> {
     @Query("SELECT re FROM RecommendEntity re WHERE re.userEntity.email IN :emails")
     List<RecommendEntity> findAllByUserEmailIn(@Param("emails") List<String> emails);
+
+    @Query("SELECT re FROM RecommendEntity re WHERE re.userEntity.userId = :userId")
+    RecommendEntity findByUserId(@Param("userId") Long userId);
 }

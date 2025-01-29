@@ -35,6 +35,7 @@ public class UserEntity extends BaseEntity {
     @Column(name = "recommenders", nullable = true)
     private String recommenders;
 
+    @Setter
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "recommend_id", nullable = true)
     private RecommendEntity recommendEntity;
@@ -63,9 +64,5 @@ public class UserEntity extends BaseEntity {
     public String getRecommenders() {
         if(recommenders == null) return "";
         return recommenders;
-    }
-
-    public void setRecommenders(RecommendEntity recommendEntity) {
-        this.recommendEntity = recommendEntity;
     }
 }
