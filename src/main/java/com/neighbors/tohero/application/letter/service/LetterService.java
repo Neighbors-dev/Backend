@@ -30,6 +30,7 @@ public class LetterService {
     private final UpdateLetter updateLetter;
     private final DeleteLetter deleteLetter;
 
+    @Transactional
     public BaseResponse<CreateLetterResponse> createLetter(final JwtUserDetails jwtUserDetail, final CreateLetterRequest createLetterRequest) {
 
         throwExceptionIfAddressIsNotExist(createLetterRequest.addressId());

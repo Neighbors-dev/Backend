@@ -31,6 +31,7 @@ public class CreateLetter {
             recommenderEmailDividedBySlash = jwtProvider.getRecommenderEmails(createLetterRequest.recommenderCode());
         }
         User user = userRepository.getUserAndUpdateRecommenders(repo -> repo.findByUserId(userId), recommenderEmailDividedBySlash);
+
         Letter newLetter;
         try{
             Address address = addressRepository.getAddressById(createLetterRequest.addressId());
@@ -110,7 +111,7 @@ public class CreateLetter {
         if(recommenderCode != null){
             String recommenderEmailsDividedBySlash = jwtProvider.getRecommenderEmails(recommenderCode);
             List<String> recommenderEmails = List.of(recommenderEmailsDividedBySlash.split("/"));
-            userRepository.reflectRecommendation(writer, recommenderEmails);
+            userRepository.reflectRecommendation(writer, recommenderEmails, user.getUserId());
         }
     }
 }

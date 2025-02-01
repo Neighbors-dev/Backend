@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "`Recommend`")
 @NoArgsConstructor
+@Getter
 public class RecommendEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,8 +15,10 @@ public class RecommendEntity {
     private long recommendId;
 
     @Column(name = "recommendedPeopleName")
-    @Getter
     private String recommendedPeopleName;
+
+    @Column(name = "recommendedPeopleId")
+    private String recommendedPeopleId = null;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", nullable = true)
@@ -34,10 +37,25 @@ public class RecommendEntity {
         this.recommendedPeopleName = recommendedPeopleName;
     }
 
+    public void addRecommendedPeopleId(long recommendedPeopleId){
+        if(this.recommendedPeopleId != null){
+            this.recommendedPeopleId += "," +recommendedPeopleId;
+            return;
+        }
+        this.recommendedPeopleId = String.valueOf(recommendedPeopleId);
+    }
+
     public String getRecommendedPeopleName(){
         if(recommendedPeopleName == null){
             return "";
         }
         return recommendedPeopleName;
+    }
+
+    public String getRecommendedPeopleId(){
+        if(recommendedPeopleId == null){
+            return "";
+        }
+        return recommendedPeopleId;
     }
 }
