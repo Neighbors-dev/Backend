@@ -13,9 +13,7 @@ import com.neighbors.tohero.infrastructure.repository.UserEntityRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -91,6 +89,24 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
+    public void reflectRecommendation(String writer, List<String> recommenderEmails, long userId) {
+        List<RecommendEntity> recommendEntities = recommendEntityRepository.findAllByUserEmailIn(recommenderEmails);
+
+        String userIdStr = String.valueOf(userId);
+        recommendEntities.stream()
+                        .filter(entity ->
+                            Arrays.stream(entity.getRecommendedPeopleId().split(","))
+                                    .noneMatch(id -> id.equals(userIdStr))
+                        )
+                        .forEach(entity -> {
+                            entity.addRecommendedPeopleId(userId);
+                            entity.addRecommendedPeopleName(writer);
+                        });
+
+        recommendEntityRepository.saveAll(recommendEntities);
+    }
+
+    @Override
     public User getUserForSharing(Function<UserEntityRepository, Optional<UserEntity>> findUserFunction) {
         UserEntity matchedUserEntity = getUserEntity(findUserFunction);
 
@@ -125,23 +141,32 @@ public class UserRepositoryImpl implements UserRepository {
         //이전 사람 이름 저장
         String lastUserEmail = recommenderEmailsDividedBySlash.split("/")[recommenderEmailsDividedBySlash.split("/").length - 1];
         UserEntity lastUserEntity = getUserEntity(repo -> repo.findByEmail(lastUserEmail));
-        userEntity.getRecommendEntity().addRecommendedPeopleName(lastUserEntity.getNickName());
+
+        boolean isNotExistId = false;
+        isNotExistId = Arrays.stream(userEntity.getRecommendEntity().getRecommendedPeopleId().split(","))
+                .noneMatch(id -> id.equals(String.valueOf(lastUserEntity.getUserId())));
+
+        if(isNotExistId){
+            userEntity.getRecommendEntity().addRecommendedPeopleName(lastUserEntity.getNickName());
+            userEntity.getRecommendEntity().addRecommendedPeopleId(lastUserEntity.getUserId());
+        }
         userEntityRepository.save(userEntity);
     }
 
     private void queueingUserRecommenders(UserEntity userEntity, String recommenderEmailsDividedBySlash) {
-        List<String> existedRecommendersEmail = new java.util.ArrayList<>(Arrays.stream(userEntity.getRecommenders().split("/")).toList());
-        List<String> addedRecommendersEmail = Arrays.stream(recommenderEmailsDividedBySlash.split("/")).toList();
+        List<String> existedRecommendersEmail = new ArrayList<>(Arrays.asList(userEntity.getRecommenders().split("/")));
+        List<String> addedRecommendersEmail = Arrays.asList(recommenderEmailsDividedBySlash.split("/"));
 
-        String result = userEntity.getRecommenders() + "/" + recommenderEmailsDividedBySlash;
-        if(existedRecommendersEmail.size() + addedRecommendersEmail.size() > 5){
-            existedRecommendersEmail.addAll(addedRecommendersEmail);
+        // 순서를 유지하며 중복 제거
+        LinkedHashSet<String> uniqueEmails = new LinkedHashSet<>(existedRecommendersEmail);
+        uniqueEmails.addAll(addedRecommendersEmail);
 
-            int size = existedRecommendersEmail.size();
-            List<String> lastFive = existedRecommendersEmail.subList(Math.max(0, size - 5), size);
+        // 마지막 5개만 유지
+        List<String> lastFive = new ArrayList<>(uniqueEmails);
+        int size = lastFive.size();
+        List<String> resultEmails = lastFive.subList(Math.max(0, size - 5), size);
 
-            result = String.join("/", lastFive);
-        }
-        userEntity.setRecommenders(result);
+        // 추천인 리스트 업데이트
+        userEntity.setRecommenders(String.join("/", resultEmails));
     }
 }

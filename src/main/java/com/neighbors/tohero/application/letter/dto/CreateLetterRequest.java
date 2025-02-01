@@ -8,7 +8,7 @@ import org.hibernate.validator.constraints.Length;
 
 public record CreateLetterRequest (
     @NotBlank
-    @Length(min =1, max = 1000)
+    @Length(min =1, max = 500)
     String content,
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
