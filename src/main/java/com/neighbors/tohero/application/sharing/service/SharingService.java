@@ -55,7 +55,10 @@ public class SharingService {
     private String createRecommenderCode(User user){
         String recommenderEmailsDividedBySlash = user.getRecommenders();
         List<String> recommenderEmails = new java.util.ArrayList<>(List.of(recommenderEmailsDividedBySlash.split("/")));
-        recommenderEmails.add(user.getEmail());
+        boolean isNotExistEmail = recommenderEmails.stream().noneMatch(email -> email.equals(user.getEmail()));
+        if(isNotExistEmail) {
+            recommenderEmails.add(user.getEmail());
+        }
 
         if (recommenderEmails.size() > 5) {
             recommenderEmails.remove(0);
