@@ -13,6 +13,7 @@ import com.neighbors.tohero.domain.query.LetterRepository;
 import com.neighbors.tohero.domain.query.UserRepository;
 import lombok.RequiredArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @DomainService
@@ -25,7 +26,11 @@ public class CreateLetter {
     private final JwtProvider jwtProvider;
 
     public long createLetter(long userId, String writer, CreateLetterRequest createLetterRequest){
-        User user = userRepository.getUser(repo -> repo.findByUserId(userId));
+        String recommenderEmailDividedBySlash = null;
+        if(createLetterRequest.recommenderCode() != null){
+            recommenderEmailDividedBySlash = jwtProvider.getRecommenderEmails(createLetterRequest.recommenderCode());
+        }
+        User user = userRepository.getUserAndUpdateRecommenders(repo -> repo.findByUserId(userId), recommenderEmailDividedBySlash);
         Letter newLetter;
         try{
             Address address = addressRepository.getAddressById(createLetterRequest.addressId());
@@ -53,7 +58,7 @@ public class CreateLetter {
         }
 
         Letter createdLetter = letterRepository.createLetter(newLetter);
-        reflectRecommendation(writer, createLetterRequest.recommenderCode());
+        reflectRecommendation(user, writer, createLetterRequest.recommenderCode());
 
         return createdLetter.getLetterId();
     }
@@ -94,6 +99,14 @@ public class CreateLetter {
     }
 
     private void reflectRecommendation(String writer, String recommenderCode){
+        if(recommenderCode != null){
+            String recommenderEmailsDividedBySlash = jwtProvider.getRecommenderEmails(recommenderCode);
+            List<String> recommenderEmails = List.of(recommenderEmailsDividedBySlash.split("/"));
+            userRepository.reflectRecommendation(writer, recommenderEmails);
+        }
+    }
+
+    private void reflectRecommendation(User user, String writer, String recommenderCode){
         if(recommenderCode != null){
             String recommenderEmailsDividedBySlash = jwtProvider.getRecommenderEmails(recommenderCode);
             List<String> recommenderEmails = List.of(recommenderEmailsDividedBySlash.split("/"));

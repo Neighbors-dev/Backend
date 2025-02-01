@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -38,14 +39,16 @@ public class SharingService {
 
     public BaseResponse<GetSharingPageInfoResponse> getSharingPageInfo(long userId){
         User user = getUser.getUserForSharing(userId);
-        String recommendedPeopleName = user.getRecommenders();
-        List<String> recommendedPeopleNameList = new ArrayList<>(Arrays.asList(recommendedPeopleName
-                .split(",")));
+        List<String> recommendedPeopleName = user.getNameOfRecommendedWriter();
+
+        if(recommendedPeopleName.size() == 1 && Objects.equals(recommendedPeopleName.get(0), "")){
+            recommendedPeopleName = new ArrayList<>();
+        }
 
         return new BaseResponse<>(
                 BaseResponseStatus.OK,
                 BaseResponseMessage.공유하기_페이지_조회가_성공했습니다.getMessage(),
-                new GetSharingPageInfoResponse(user.isFirstSharing(), recommendedPeopleNameList.size(), recommendedPeopleNameList)
+                new GetSharingPageInfoResponse(user.isFirstSharing(), recommendedPeopleName.size(), recommendedPeopleName)
         );
     }
 

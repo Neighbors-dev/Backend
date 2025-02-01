@@ -13,7 +13,6 @@ import com.neighbors.tohero.infrastructure.repository.UserEntityRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -35,7 +34,7 @@ public class UserRepositoryImpl implements UserRepository {
         }catch(UserException e){
             UserEntity userEntity = userMapper.toNewEntity(user);
             RecommendEntity recommendEntity = new RecommendEntity(userEntity);
-            userEntity.setRecommenders(recommendEntity);
+            userEntity.setRecommendEntity(recommendEntity);
             userEntityRepository.save(userEntity);
 
             UserEntity createdUserEntity = userEntityRepository.findByEmail(user.getEmail())
@@ -102,5 +101,47 @@ public class UserRepositoryImpl implements UserRepository {
         }
 
         return user;
+    }
+
+    @Override
+    public User getUserAndUpdateRecommenders(Function<UserEntityRepository, Optional<UserEntity>> findUserFunction, String recommenderCode) {
+        UserEntity userEntity = getUserEntity(findUserFunction);
+
+        if(recommenderCode != null && !recommenderCode.isEmpty()){
+            updateUserRecommenders(userEntity, recommenderCode);
+        }
+
+        return userMapper.toDomain(userEntity);
+    }
+
+    private void updateUserRecommenders(UserEntity userEntity, String recommenderEmailsDividedBySlash) {
+        if(userEntity.getRecommenders().isEmpty()){
+            userEntity.setRecommenders(recommenderEmailsDividedBySlash);
+        }
+        else{
+            queueingUserRecommenders(userEntity, recommenderEmailsDividedBySlash);
+        }
+
+        //이전 사람 이름 저장
+        String lastUserEmail = recommenderEmailsDividedBySlash.split("/")[recommenderEmailsDividedBySlash.split("/").length - 1];
+        UserEntity lastUserEntity = getUserEntity(repo -> repo.findByEmail(lastUserEmail));
+        userEntity.getRecommendEntity().addRecommendedPeopleName(lastUserEntity.getNickName());
+        userEntityRepository.save(userEntity);
+    }
+
+    private void queueingUserRecommenders(UserEntity userEntity, String recommenderEmailsDividedBySlash) {
+        List<String> existedRecommendersEmail = new java.util.ArrayList<>(Arrays.stream(userEntity.getRecommenders().split("/")).toList());
+        List<String> addedRecommendersEmail = Arrays.stream(recommenderEmailsDividedBySlash.split("/")).toList();
+
+        String result = userEntity.getRecommenders() + "/" + recommenderEmailsDividedBySlash;
+        if(existedRecommendersEmail.size() + addedRecommendersEmail.size() > 5){
+            existedRecommendersEmail.addAll(addedRecommendersEmail);
+
+            int size = existedRecommendersEmail.size();
+            List<String> lastFive = existedRecommendersEmail.subList(Math.max(0, size - 5), size);
+
+            result = String.join("/", lastFive);
+        }
+        userEntity.setRecommenders(result);
     }
 }

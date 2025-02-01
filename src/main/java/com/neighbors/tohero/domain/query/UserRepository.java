@@ -16,4 +16,5 @@ public interface UserRepository {
     void deleteUser(Consumer<UserEntityRepository> findUserConsumer);
     void reflectRecommendation(String writer, List<String> recommenderEmails);
     User getUserForSharing(Function<UserEntityRepository, Optional<UserEntity>> findUserFunction);
+    User getUserAndUpdateRecommenders(Function<UserEntityRepository, Optional<UserEntity>> findUserFunction, String recommenderCode);
 }
