@@ -107,11 +107,15 @@ public class JwtProvider {
     }
 
     public String getNickname(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(JWT_SECRET_KEY).build()
-                .parseClaimsJws(token)
-                .getBody()
-                .getSubject();
+        Claims claims = getBody(token);
+
+        return String.valueOf(claims.getSubject());
+    }
+
+    public boolean isGuestToken(String token) {
+        Claims claims = getBody(token);
+
+        return Role.valueOf(claims.get("role").toString()) == Role.GUEST;
     }
 
     public void loggingToken(String token) {

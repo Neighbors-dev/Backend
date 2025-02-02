@@ -22,6 +22,15 @@ public class AuthService {
     public BaseResponse<ReissueTokenResponse> reissueToken(String refreshToken){
         //TODO : Redis에 refreshToken 확인 작업
         jwtProvider.isExpiredToken(refreshToken);
+        if(jwtProvider.isGuestToken(refreshToken)){
+            String nickname = jwtProvider.getNickname(refreshToken);
+            AuthTokens authTokens = jwtProvider.createToken(JwtUserDetails.makeGuestJwtDetails(nickname));
+            return new BaseResponse(
+                    BaseResponseStatus.OK,
+                    BaseResponseMessage.토큰_재발급이_성공했습니다.getMessage(),
+                    new ReissueTokenResponse(authTokens)
+            );
+        }
         long userId = jwtProvider.getId(refreshToken);
         User user = getUser.getUserById(userId);
         AuthTokens authTokens = jwtProvider.createToken(JwtUserDetails.from(user));
