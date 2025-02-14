@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/")
+@RequestMapping("/api")
 public class TestController {
     @GetMapping("/test")
     public String test(@RequestParam String code) {

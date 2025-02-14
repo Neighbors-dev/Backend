@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/sharing")
+@RequestMapping("/api/sharing")
 public class SharingController {
 
     private final SharingService sharingService;

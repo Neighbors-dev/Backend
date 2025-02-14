@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/letter")
+@RequestMapping("/api/letter")
 public class LetterController {
 
     private final LetterService letterService;
