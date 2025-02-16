@@ -40,15 +40,15 @@ public class SecurityConfig {
                 "/swagger-resources/*",
                 "/webjars/",
                 "/v3/api-docs/**",
-                "/oauth/kakao/callback",
-                "/oauth/kakao/callback2",
-                "/user/auth",
-                "/auth/refreshToken",
-                "/address",
-                "/notice/**",
-                "/mainPage/**",
-                "/letter/detail",
-                "/news"
+                "/api/oauth/kakao/callback",
+                "/api/oauth/kakao/callback2",
+                "/api/user/auth",
+                "/api/auth/refreshToken",
+                "/api/address",
+                "/api/notice/**",
+                "/api/mainPage/**",
+                "/api/letter/detail",
+                "/api/news"
         );
     }
 
