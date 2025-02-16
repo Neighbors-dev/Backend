@@ -14,7 +14,7 @@ import java.util.Optional;
 @Repository
 public interface LetterEntityRepository extends JpaRepository<LetterEntity, Long> {
 
-    @Query("SELECT le FROM LetterEntity le WHERE le.isPublic = true")
+    @Query("SELECT le FROM LetterEntity le WHERE le.isPublic = true ORDER BY le.created_at DESC ")
     Optional<List<LetterEntity>> findPagedLetterEntity(Pageable pageable);
 
     @Query("SELECT COUNT(le) FROM LetterEntity le")

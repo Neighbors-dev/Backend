@@ -58,7 +58,7 @@ STOP_CONTAINER_ID=$(sudo docker ps --filter "name=$STOP_TARGET" --quiet)
 if [ -n "$STOP_CONTAINER_ID" ]; then
   sudo docker stop $STOP_CONTAINER_ID
   sudo docker rm $STOP_CONTAINER_ID
-  sudo docker image prune -af
+  sudo docker system prune -a
 fi
 
 rm .env
